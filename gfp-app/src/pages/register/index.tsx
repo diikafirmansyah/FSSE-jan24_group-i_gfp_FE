@@ -8,6 +8,7 @@ import { FaEyeSlash } from "react-icons/fa";
 import { FaUser } from "react-icons/fa";
 import { IoIosMail } from "react-icons/io";
 import { GiPadlock } from "react-icons/gi";
+import { BsPhone } from "react-icons/bs";
 
 
 const Register = () => {
@@ -59,59 +60,99 @@ const Register = () => {
 			</div>
       <div className="relative z-10">
 				<div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 drop-shadow-2xl">
-					<div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+					<div className="md:flex-wrap w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-2xl xl:p-0 dark:bg-gray-800 dark:border-gray-700">
 						<div className="p-6 space-y-4 md:space-y-6 sm:p-8">
 							<div className="w-40 h-20 mx-auto">
 								<img src="./assets/logo.png" alt="logo"/>
 							</div>
 							<h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white text-center">Register Here</h1>
 							<form action="#" className="space-y-4 md:space-y-6">
-								<div>
-									<div className='flex gap-2'>
-										<FaUser className='mt-[2px]'/>
-										<label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
+								<div className='flex flex-row justify-between gap-[2.5em]'>
+									<div className="w-1/2">
+										<div className='flex gap-2'>
+											<FaUser className='mt-[2px]'/>
+											<label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
+										</div>
+										<input
+											id = "name"
+											name="name"
+											type="text"
+											placeholder="your name"
+											className="border border-blue-500 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:ring-blue-500 focus:border-blue-500"
+										/>
 									</div>
-									<input
-										id = "name"
-										name="name"
-										type="text"
-										placeholder="your name"
-										className="border border-blue-500 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:ring-blue-500 focus:border-blue-500"
-									/>
-								</div>
-								<div>
-									<div className='flex gap-2 '>
-										<IoIosMail className='mt-[3px]'/>
-										<label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email address</label>
+									<div className="w-1/2">
+										<div className='flex gap-2 '>
+											<IoIosMail className='mt-[3px]'/>
+											<label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email address</label>
+										</div>
+										<input
+											id = "email"
+											name="email"
+											type="email"
+											placeholder="example123@ex.com"
+											className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+										/>
 									</div>
-									<input
-										id = "email"
-										name="email"
-										type="email"
-										placeholder="example123@ex.com"
-										className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-									/>
 								</div>
 								
-								<div>
-									<div className='flex gap-2 '>
-										<GiPadlock className='mt-[3px]'/>
-										<label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-									</div>
-									<div className = "flex justify-between items-center p-2.5 rounded-lg space-x-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-										<input
-											id = "password"
-											name="password"
-											// value={password}
-											type={visible ? 'password' : 'text'}
-											placeholder="**********"
-											// onChange={(e) => setPassword(e.target.value)}
-											className="block w-full  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
-										</input>
-										<div className='cursor-pointer' onClick={() => setVisible(!visible)}>
-											{visible?  <FaEyeSlash /> : <IoEyeSharp />}
+								<div className='flex flex-row justify-between gap-[2.5em]'>
+									<div className="w-1/2">
+											<div className='flex gap-2'>
+												<BsPhone className='mt-[2px]'/>
+												<label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone</label>
+											</div>
+											<input
+												id = "name"
+												name="name"
+												type="number"
+												placeholder="your phone number"
+												className="border border-blue-500 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:ring-blue-500 focus:border-blue-500"
+											/>
+											</div>
+									<div className="w-1/2">
+										<div className='flex gap-2 '>
+											<GiPadlock className='mt-[3px]'/>
+											<label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
 										</div>
-									</div>
+										<div className = "flex justify-between items-center p-2.5 rounded-lg space-x-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+											<input
+												id = "password"
+												name="password"
+												// value={password}
+												type={visible ? 'password' : 'text'}
+												placeholder="**********"
+												// onChange={(e) => setPassword(e.target.value)}
+												className="block w-full  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+											</input>
+											<div className='cursor-pointer' onClick={() => setVisible(!visible)}>
+												{visible?  <FaEyeSlash /> : <IoEyeSharp />}
+											</div>
+										</div>
+									</div>	
+								</div>	
+								<div className='flex gap-10 justify-center'>
+									<h4 className="items-center mt-[13px] font-bold">Role:</h4>
+									<div className="flex justify-center gap-[3em] cursor-pointer">
+										<div className="flex items-center  ">
+											<input 
+												id="bordered-1" 
+												type="radio"
+												value=""
+												name="bordered-radio"
+												className="w-4 h-4 cursor-pointer text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+											<label htmlFor='bordered-1' className='w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300'>Seller</label>
+										</div>
+										<div className="flex items-center ">
+											<input 
+												id="bordered-1" 
+												type="radio"
+												value=""
+												name="bordered-radio"
+												className="w-4 h-4 cursor-pointer text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+											<label htmlFor='bordered-1' className='w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300'>Customer</label>
+										</div>	
+									</div>	
 								</div>
 								<div className="flex items-start">
 									<div className="flex items-center h-5">
