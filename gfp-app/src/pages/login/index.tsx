@@ -1,87 +1,160 @@
-// pages/login.js
-import Head from "next/head";
+import { useState } from "react";
+// import { Formik, Form, Field, ErrorMessage } from 'formik';
+// import * as Yup from 'yup';
+// import { useRouter } from 'next/router';
 
-export default function Login() {
+import { IoEyeSharp } from "react-icons/io5";
+import { FaEyeSlash } from "react-icons/fa";
+import { FaUser } from "react-icons/fa";
+import { IoIosMail } from "react-icons/io";
+import { GiPadlock } from "react-icons/gi";
+
+const Login = () => {
+  // const [name, setName] = useState<string>('');
+  // const [email, setEmail] = useState<string>('');
+  // const [password, setPassword] = useState<string>('');
+  const [visible, setVisible] = useState<boolean>(true);
+
+  // const initialValues = {
+  //   name: '',
+  //   email: '',
+  //   password: '',
+  // };
+
+  // const router = useRouter();
+
+  // const onChangeName = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   setName(event.target.value);
+  // };
+
+  // const onChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   setEmail(event.target.value);
+  // };
+
+  // const onChangePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   setPassword(event.target.value);
+  // };
+
+  // const registerSchema = Yup.object().shape({
+  //   name: Yup.string().required('Name is required').min(3, 'Name must be at least 3 characters!'),
+  //   email: Yup.string().email('Invalid email').required('Email is required'),
+  //   password: Yup.string().required('Password is required').min(6, 'Password must be at least 6 characters!'),
+  // });
+
+  // const handleRegister = async (values: name) => {
+
+  // };
+
   return (
-    <section className="bg-white h-screen">
-      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-            Sign in to your account
-          </h2>
-        </div>
-
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form action="#" method="POST" className="space-y-6">
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                Email
-              </label>
-              <div className="mt-2">
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  required
-                  autoComplete="email"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-blue-500 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
+    <section className="relative min-h-screen items-center justify-center">
+      <div className="absolute inset-0 bg-gray-900">
+        <img
+          src="./assets/bg-register.jpg"
+          alt="Background"
+          className="object-cover w-full h-full blur-md opacity-80"
+        />
+      </div>
+      <div className="relative z-10">
+        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 drop-shadow-2xl">
+          <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+            <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+              <div className="w-40 h-20 mx-auto">
+                <img src="./assets/logo.png" alt="logo" />
               </div>
-            </div>
-
-            <div>
-              <div className="flex items-center justify-between">
-                <label
-                  htmlFor="password"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Password
-                </label>
-                <div className="text-sm">
-                  <a
-                    href="#"
-                    className="font-semibold text-blue-600 hover:text-indigo-500"
-                  >
-                    Forgot password?
-                  </a>
+              <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white text-center">
+                Login Here
+              </h1>
+              <form action="#" className="space-y-4 md:space-y-6">
+                <div>
+                  <div className="flex gap-2 ">
+                    <IoIosMail className="mt-[3px]" />
+                    <label
+                      htmlFor="email"
+                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >
+                      Email
+                    </label>
+                  </div>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    placeholder="example123@ex.com"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  />
                 </div>
-              </div>
-              <div className="mt-2">
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  required
-                  autoComplete="current-password"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-blue-500 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
 
-            <div>
-              <button
-                type="submit"
-                className="flex w-full justify-center rounded-md bg-blue-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
-                Sign in
-              </button>
+                <div>
+                  <div className="flex gap-2 ">
+                    <GiPadlock className="mt-[3px]" />
+                    <label
+                      htmlFor="password"
+                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >
+                      Password
+                    </label>
+                  </div>
+                  <div className="mb-6 flex justify-between items-center p-2.5 rounded-lg space-x-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <input
+                      id="password"
+                      name="password"
+                      // value={password}
+                      type={visible ? "password" : "text"}
+                      placeholder="**********"
+                      // onChange={(e) => setPassword(e.target.value)}
+                      className="block w-full  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                    ></input>
+                    <div
+                      className="cursor-pointer"
+                      onClick={() => setVisible(!visible)}
+                    >
+                      {visible ? <FaEyeSlash /> : <IoEyeSharp />}
+                    </div>
+                  </div>
+                </div>
+                {/* <div className="flex items-start">
+                  <div className="flex items-center h-5">
+                    <input
+                      id="terms"
+                      aria-describedby="terms"
+                      type="checkbox"
+                      className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
+                    />
+                  </div>
+                  <div className="ml-3 text-sm">
+                    <label
+                      htmlFor="terms"
+                      className="font-light text-gray-500 dark:text-gray-300"
+                    >
+                      I accept the{" "}
+                      <a className="font-medium text-primary-600 hover:underline text-blue-600 ">
+                        Terms and Conditions
+                      </a>
+                    </label>
+                  </div>
+                </div> */}
+                <button
+                  type="submit"
+                  className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 bg-blue-600 hover:bg-blue-800 transition duration-300"
+                >
+                  Login
+                </button>
+                <p>
+                  don't have an account?{" "}
+                  <a
+                    href="/login"
+                    className="text-primary-600 hover:underline text-blue-600"
+                  >
+                    sign up
+                  </a>
+                </p>
+              </form>
             </div>
-          </form>
-
-          <p className="mt-10 text-center text-sm text-gray-500">
-            don't have an account?{" "}
-            <a
-              href="#"
-              className="font-semibold leading-6 text-blue-600 hover:text-indigo-500"
-            >
-              sign up
-            </a>
-          </p>
+          </div>
         </div>
       </div>
     </section>
   );
-}
+};
+
+export default Login;
