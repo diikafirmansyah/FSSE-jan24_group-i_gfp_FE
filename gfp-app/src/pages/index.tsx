@@ -15,13 +15,13 @@ export default function Home() {
 
   return (
     <main className="relative min-h-screen">
-      <div className="absolute inset-0 bg-gray-900">
+      <div className="absolute inset-0 bg-gray-900 bg-scroll">
         <img
           src="./assets/bg-register.jpg"
           alt="Background"
-          className="object-cover w-full h-full blur-md opacity-50"
+          className="object-cover w-full blur-md opacity-50"
         />
-			</div>
+      </div>
       <header className="absolute inset-x-0 top-0 z-50">
         <nav aria-label="Global" className="flex items-center justify-between p-6 lg:px-8">
           <div className="flex lg:flex-1">
@@ -111,7 +111,7 @@ export default function Home() {
               Aquafish
             </h1>
             <p className="mt-6 text-lg leading-8 text-gray-300">
-            Find rare and exotic ornamental fish for your aquarium. Our trusted sellers offer top-quality freshwater and marine species. Join our community and enhance your underwater world today!
+              Find rare and exotic ornamental fish for your aquarium. Our trusted sellers offer top-quality freshwater and marine species. Join our community and enhance your underwater world today!
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <a
@@ -124,6 +124,43 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      <section>
+        <div className='relative px-32'>
+          <img src='https://www.swelluk.com/media/wordpress/b8fda19b5a3e402cdd50c6d6d2559988.png'
+            alt='fishes'
+            className='block ml-auto mr-auto w-6/12' />
+        </div>
+        <div className='relative mb-8 text-center mx-auto max-w-4xl'>
+          <p className="mt-6 text-lg leading-8 text-gray-300">
+            At Aquafish, our mission is to seamlessly connect sellers and consumers of ornamental fish,
+            making it easier to buy, sell, and discover a diverse range of aquatic life.
+            We strive to create a trusted platform where hobbyists and enthusiasts can find healthy, ethically sourced fish with ease. By partnering with reputable breeders and sellers, we aim to simplify the search and purchase process, fostering a vibrant community dedicated to the beauty of fishkeeping.
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <div className='relative px-12 mb-4'>
+          <h2 className="font-bold text-3xl leading-8 text-gray-300 text-center">
+            Join us now! </h2>
+        </div>
+        
+        <div className='relative flex flex-wrap justify-center px-12 gap-8 pb-8'>
+          <div className="relative block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">1. Register</h5>
+            <p className="font-normal text-gray-700 dark:text-gray-400">Register as Seller or Consumer</p>
+          </div>
+          <div className="relative block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">2. List</h5>
+            <p className="font-normal text-gray-700 dark:text-gray-400">Make a list or search fish from the marketplace</p>
+          </div>
+          <div className="relative block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">3. Connect</h5>
+            <p className="font-normal text-gray-700 dark:text-gray-400">Connect to your seller or consumer to make a deal</p>
+          </div>
+        </div>
+      </section>
     </main>
   );
 }
