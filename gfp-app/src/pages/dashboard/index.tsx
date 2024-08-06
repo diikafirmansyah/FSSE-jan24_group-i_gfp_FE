@@ -1,6 +1,9 @@
+import SearchBar from "../../components/SearchBar";
 const Dashboard = () => {
     return (
-        <section>Dashboard</section>
+        <section>Dashboard
+            <SearchBar />
+        </section>
     );
 };
 
