@@ -208,7 +208,7 @@ const Register = () => {
 													value="consumer"
 													name="role"
 													className="w-4 h-4 cursor-pointer text-blue-600  ring-offset-gray-800 focus:ring-2 bg-gray-700 border-gray-600" />
-												<label htmlFor='bordered-1' className='w-full py-4 ms-2 text-sm font-medium text-gray-900'>Consumer</label>
+												<label htmlFor='bordered-1' className='w-full py-4 ms-2 text-sm font-medium text-gray-900'>Buyer</label>
 											</div>
 										</div>
 									</div>
