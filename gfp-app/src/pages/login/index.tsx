@@ -64,7 +64,7 @@ const Login = () => {
       } else {
         console.log("Response success", result);
         alert("Login success!");
-        router.push('/dashboard')
+        router.push('/marketplace')
       }
     } catch (error) {
       console.log(error);
