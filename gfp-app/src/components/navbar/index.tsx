@@ -4,29 +4,42 @@ const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
-    setIsOpen(!isOpen);
+    setIsOpen(prev => !prev);
   };
 
   return (
-    <nav className="bg-gray-800 p-4">
-      <div className="container mx-auto flex justify-between items-center">
-        <div className="text-white text-2xl font-bold">
-          <a href="/">AquaFish</a>
+    <nav className="bg-gray-800 shadow-lg">
+      <div className="container mx-auto flex items-center justify-between p-4 md:p-6">
+        {/* Logo and Brand Name */}
+        <div className="flex items-center space-x-4">
+          <img 
+            src="/assets/logo.png" 
+            alt="AquaFish Logo" 
+            className="h-12 w-auto transition-transform duration-300 hover:scale-110" 
+          />
+          <div className="text-white text-2xl font-bold">
+            <a href="/" className="hover:text-gray-300 transition-colors duration-300">AquaFish</a>
+          </div>
         </div>
-        <div className="hidden md:flex space-x-6">
-          <a href="/products" className="text-white hover:text-gray-300">Products</a>
-          <a href="/features" className="text-white hover:text-gray-300">Features</a>
-          <a href="/marketplace" className="text-white hover:text-gray-300">Marketplace</a>
-          <a href="/company" className="text-white hover:text-gray-300">Company</a>
-          <a href="/login" className="text-white hover:text-gray-300">Login</a>
+        
+        {/* Desktop Navigation */}
+        <div className="hidden md:flex space-x-8">
+          <a href="/products" className="text-white hover:text-gray-300 transition-colors duration-300">Products</a>
+          <a href="/features" className="text-white hover:text-gray-300 transition-colors duration-300">Features</a>
+          <a href="/marketplace" className="text-white hover:text-gray-300 transition-colors duration-300">Marketplace</a>
+          <a href="/company" className="text-white hover:text-gray-300 transition-colors duration-300">Company</a>
+          <a href="/login" className="text-white hover:text-gray-300 transition-colors duration-300">Login</a>
         </div>
+
+        {/* Mobile Menu Button */}
         <div className="md:hidden flex items-center">
-          <button
-            onClick={toggleMenu}
-            className="text-white focus:outline-none"
+          <button 
+            onClick={toggleMenu} 
+            className="text-white focus:outline-none transition-transform duration-300 hover:scale-110" 
+            aria-label={isOpen ? "Close menu" : "Open menu"}
           >
             <svg
-              className="w-6 h-6"
+              className="w-8 h-8"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -42,13 +55,17 @@ const Navbar: React.FC = () => {
           </button>
         </div>
       </div>
-      <div className={`${isOpen ? 'block' : 'hidden'} md:hidden`}>
-        <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-          <a href="/products" className="block text-white hover:text-gray-300">Products</a>
-          <a href="/features" className="block text-white hover:text-gray-300">Features</a>
-          <a href="/marketplace" className="block text-white hover:text-gray-300">Marketplace</a>
-          <a href="/company" className="block text-white hover:text-gray-300">Company</a>
-          <a href="/login" className="block text-white hover:text-gray-300">Login</a>
+
+      {/* Mobile Menu */}
+      <div 
+        className={`md:hidden ${isOpen ? 'block' : 'hidden'} bg-gray-700`}
+      >
+        <div className="px-4 py-3 space-y-1">
+          <a href="/products" className="block text-white hover:text-gray-300 transition-colors duration-300">Products</a>
+          <a href="/features" className="block text-white hover:text-gray-300 transition-colors duration-300">Features</a>
+          <a href="/marketplace" className="block text-white hover:text-gray-300 transition-colors duration-300">Marketplace</a>
+          <a href="/company" className="block text-white hover:text-gray-300 transition-colors duration-300">Company</a>
+          <a href="/login" className="block text-white hover:text-gray-300 transition-colors duration-300">Login</a>
         </div>
       </div>
     </nav>
