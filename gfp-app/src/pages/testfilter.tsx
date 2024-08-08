@@ -1,50 +1,38 @@
-// pages/index.tsx
 import { useState } from 'react';
 import Filter from '../components/filter';
 
-interface Item {
-  id: number;
-  category: string;
-  location: string;
-  name: string;
-}
+const categories = ['Electronics', 'Clothing', 'Books'];
+const locations = ['New York', 'Los Angeles', 'Chicago'];
 
-const allItems: Item[] = [
-  // Daftar item
-  { id: 1, category: 'Electronics', location: 'New York', name: 'Laptop' },
-  { id: 2, category: 'Furniture', location: 'California', name: 'Chair' },
-  // Tambahkan item lainnya
-];
+const Home: React.FC = () => {
+    const [filters, setFilters] = useState<{ category: string; location: string }>({
+        category: '',
+        location: '',
+    });
 
-const categories = ['Electronics', 'Furniture'];
-const locations = ['New York', 'California'];
+    const handleFilterChange = (newFilters: { category: string; location: string }) => {
+        setFilters(newFilters);
+    };
 
-const Home = () => {
-  const [filters, setFilters] = useState<{ category: string; location: string }>({
-    category: '',
-    location: '',
-  });
+    return (
+        <div>
+            <h1>Filter Example</h1>
+            <Filter
+                categories={categories}
+                locations={locations}
+                onFilterChange={handleFilterChange}
+            />
 
-  const filteredItems = allItems.filter(item => 
-    (filters.category === '' || item.category === filters.category) &&
-    (filters.location === '' || item.location === filters.location)
-  );
+            <div>
+                <h2>Applied Filters:</h2>
+                <p>Category: {filters.category || 'None'}</p>
+                <p>Location: {filters.location || 'None'}</p>
+            </div>
 
-  const handleFilterChange = (newFilters: { category: string; location: string }) => {
-    setFilters(newFilters);
-  };
-
-  return (
-    <div>
-      <Filter categories={categories} locations={locations} onFilterChange={handleFilterChange} />
-      
-      <ul>
-        {filteredItems.map(item => (
-          <li key={item.id}>{item.name} - {item.category} - {item.location}</li>
-        ))}
-      </ul>
-    </div>
-  );
+            {/* You can render filtered data here based on filters */}
+            <div><p>Filtered Data</p></div>
+        </div>
+    );
 };
 
 export default Home;
