@@ -15,7 +15,7 @@ const Filter: React.FC<FilterProps> = ({ categories, locations, onFilterChange }
         onFilterChange({ category: event.target.value, location: selectedLocation });
     };
 
-    const handleLocationChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const handleLocationChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSelectedLocation(event.target.value);
         onFilterChange({ category: selectedCategory, location: event.target.value });
     };
@@ -37,14 +37,12 @@ const Filter: React.FC<FilterProps> = ({ categories, locations, onFilterChange }
                 ))}
             </select>
 
-            <select value={selectedLocation} onChange={handleLocationChange}>
-                <option value="">Select Location</option>
-                {locations.map((location) => (
-                    <option key={location} value={location}>
-                        {location}
-                    </option>
-                ))}
-            </select>
+            <input
+                type="text"
+                value={selectedLocation}
+                onChange={handleLocationChange}
+                placeholder="Enter Location"
+            />
 
             <button onClick={handleReset}>Reset Filter</button>
         </div>
