@@ -2,7 +2,7 @@ import { GetServerSideProps } from "next";
 import React, { useState } from "react";
 import SearchBar from "@/components/SearchBar";
 import FishCard from "@/components/FishCard";
-import Filter from "@/components/Filter";
+import Filter from "@/components/filter";
 
 interface Product {
   id: number;
@@ -23,7 +23,6 @@ interface MarketplaceProps {
 }
 
 const categories = ["Local", "Import"];
-const locations = ["New York", "Los Angeles", "Chicago"];
 
 const Marketplace: React.FC<MarketplaceProps> = ({ products }) => {
   const [filters, setFilters] = useState<{
@@ -66,15 +65,10 @@ const Marketplace: React.FC<MarketplaceProps> = ({ products }) => {
       <h1 className="text-4xl font-extrabold text-gray-900 text-center mb-10">
         Marketplace
       </h1>
+      <SearchBar onSearch={handleSearch} />
       <div className="flex justify-center mb-8">
-        {/* Container for SearchBar and Filter */}
         <div className="flex flex-col items-center space-y-4">
-          <SearchBar onSearch={handleSearch} />
-          <Filter
-            categories={categories}
-            locations={locations}
-            onFilterChange={handleFilterChange}
-          />
+          <Filter categories={categories} onFilterChange={handleFilterChange} />
         </div>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
