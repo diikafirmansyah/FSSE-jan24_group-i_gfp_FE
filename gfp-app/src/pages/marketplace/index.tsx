@@ -1,8 +1,8 @@
-import { GetServerSideProps } from "next";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SearchBar from "@/components/SearchBar";
 import FishCard from "@/components/FishCard";
 import Filter from "@/components/filter";
+import useAuth from "@/middleware/auth";
 
 interface Product {
   id: number;
@@ -18,27 +18,46 @@ interface Product {
   size: string; // Added size field
 }
 
-interface MarketplaceProps {
-  products: Product[];
-}
-
 const categories = ["Local", "Import"];
 
-const Marketplace: React.FC<MarketplaceProps> = ({ products }) => {
-  const [filters, setFilters] = useState<{
-    category: string;
-    location: string;
-  }>({
+const Marketplace: React.FC = () => {
+  
+  useAuth();
+  const [filters, setFilters] = useState<{ category: string; location: string }>({
     category: "",
     location: "",
   });
 
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [products, setProducts] = useState<Product[]>([]);
 
-  const handleFilterChange = (newFilters: {
-    category: string;
-    location: string;
-  }) => {
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const token = localStorage.getItem('access_token');
+      try {
+        const response = await fetch("http://127.0.0.1:5000/products", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "Authorization": "Bearer " + token
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        setProducts(result.products || []);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  const handleFilterChange = (newFilters: { category: string; location: string }) => {
     setFilters(newFilters);
   };
 
@@ -46,7 +65,6 @@ const Marketplace: React.FC<MarketplaceProps> = ({ products }) => {
     setSearchQuery(query);
   };
 
-  // Apply filters and search query to products
   const filteredProducts = products.filter((product) => {
     const categoryMatch =
       filters.category === "" || product.category === filters.category;
@@ -94,43 +112,6 @@ const Marketplace: React.FC<MarketplaceProps> = ({ products }) => {
       </div>
     </div>
   );
-};
-
-export const getServerSideProps: GetServerSideProps = async () => {
-  try {
-    const response = await fetch("http://127.0.0.1:5000/products", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-
-    let products: Product[] = [];
-    try {
-      const result = await response.json();
-      products = result.products; // Ensure result is an array
-    } catch (jsonError) {
-      console.error("Error parsing JSON:", jsonError);
-      products = [];
-    }
-
-    return {
-      props: {
-        products: Array.isArray(products) ? products : [],
-      },
-    };
-  } catch (error) {
-    console.error("Error fetching products:", error);
-    return {
-      props: {
-        products: [],
-      },
-    };
-  }
 };
 
 export default Marketplace;

@@ -63,8 +63,9 @@ const Login = () => {
         alert("Login Failed!");
       } else {
         console.log("Response success", result);
+        localStorage.setItem('access_token', result.access_token);
         alert("Login success!");
-        router.push('/marketplace')
+        router.push('/marketplace');
       }
     } catch (error) {
       console.log(error);
