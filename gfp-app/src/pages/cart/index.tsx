@@ -3,7 +3,7 @@ import React from 'react';
 import Button from '../../components/Button';
 import { useRouter } from 'next/router';
 
-const Dashboard: React.FC = () => {
+const Cart: React.FC = () => {
   const router = useRouter();
 
   const handleMarketplaceClick = () => {
@@ -31,4 +31,4 @@ const Dashboard: React.FC = () => {
   );
 };
 
-export default Dashboard;
+export default Cart;

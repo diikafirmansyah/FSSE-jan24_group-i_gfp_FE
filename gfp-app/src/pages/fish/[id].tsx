@@ -1,10 +1,11 @@
 import { GetServerSideProps } from "next";
-import React from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { motion } from "framer-motion";
 import { FaMapMarkerAlt, FaFish } from "react-icons/fa";
 import { AiOutlineTag } from "react-icons/ai";
 import { BiRuler } from "react-icons/bi";
+import Button from "@/components/Button";
 
 const nationalityMap: { [key: string]: string } = {
   usa: "us",
@@ -38,14 +39,27 @@ interface FishDetailProps {
 
 const FishDetail: React.FC<FishDetailProps> = ({ product }) => {
   const router = useRouter();
+  const [quantity, setQuantity] = useState(1);
 
   if (!product) {
     return <p className="text-center text-gray-500">Product not found</p>;
   }
 
-  const nationality = product.nationality ? product.nationality.toLowerCase() : '';
-  const isoCode = nationalityMap[nationality] || '';
+  const nationality = product.nationality
+    ? product.nationality.toLowerCase()
+    : "";
+  const isoCode = nationalityMap[nationality] || "";
   const flagUrl = isoCode ? `https://flagcdn.com/w40/${isoCode}.png` : null;
+
+  const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = Math.max(1, Math.min(Number(e.target.value), product.qty));
+    setQuantity(value);
+  };
+
+  const handleCartClick = () => {
+    // TODO: Implement cart logic with quantity
+    console.log(`Adding ${quantity} of product ${product.id} to the cart`);
+  };
 
   return (
     <motion.div
@@ -195,6 +209,21 @@ const FishDetail: React.FC<FishDetailProps> = ({ product }) => {
           >
             Quantity available: {product.qty}
           </motion.p>
+
+          <div className="flex items-center space-x-4 mb-6">
+            <label htmlFor="quantity" className="text-lg text-gray-600">Quantity:</label>
+            <input
+              id="quantity"
+              type="number"
+              value={quantity}
+              min="1"
+              max={product.qty}
+              onChange={handleQuantityChange}
+              className="text-base text-gray-700 w-20 p-2 border border-gray-300 rounded-lg"
+            />
+          </div>
+
+          <Button label="Add to Cart" onClick={handleCartClick} />
         </div>
       </div>
     </motion.div>
