@@ -10,7 +10,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   };
 
   return (
-    <div className="flex items-center max-w-sm mx-auto">
+    <div className="flex items-center max-w-sm mx-auto mb-8">
       <label htmlFor="simple-search" className="sr-only">
         Search
       </label>
