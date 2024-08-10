@@ -17,7 +17,7 @@ const Dashboard: React.FC = () => {
     };
 
     const handleAddProductClick = () => {
-        router.push('/add-product');
+        router.push('/add_product');
     };
 
     const handleLogoutClick = async () => {
