@@ -1,6 +1,6 @@
-// components/AddProductForm.tsx
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import useAuth from "@/middleware/auth";
 
 interface FormValues {
   image: File | null;
@@ -10,7 +10,7 @@ interface FormValues {
   nationality: string;
   qty: number;
   price: number;
-  category: "Local" | "Import"; // Update category type
+  category: "Local" | "Import";
 }
 
 const validationSchema = Yup.object({
@@ -27,10 +27,51 @@ const validationSchema = Yup.object({
     .positive("Price must be greater than zero"),
   category: Yup.string()
     .oneOf(["Local", "Import"])
-    .required("Category is required"), // Update validation for category
+    .required("Category is required"),
 });
 
 const AddProductForm: React.FC = () => {
+  useAuth();
+
+  const handleSubmit = async (values: FormValues) => {
+    try {
+      const formData = new FormData();
+
+      if (values.image) {
+        formData.append("image", values.image);
+      }
+      formData.append("size", values.size);
+      formData.append("description", values.description);
+      formData.append("location", values.location);
+      formData.append("nationality", values.nationality);
+      formData.append("qty", values.qty.toString());
+      formData.append("price", values.price.toString());
+      formData.append("category", values.category);
+
+      const token = localStorage.getItem('access_token');
+      const response = await fetch("http://127.0.0.1:5000/products", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Authorization": "Bearer " + token
+        },
+        body: formData,
+      });
+
+      if (!response.ok) {
+        alert("Product submission failed!");
+        return;
+      }
+
+      const result = await response.json();
+      console.log("Product added successfully", result);
+      alert("Product added successfully!");
+    } catch (error) {
+      console.error("Error submitting the form", error);
+      alert("An error occurred while adding the product.");
+    }
+  };
+
   const formik = useFormik<FormValues>({
     initialValues: {
       image: null,
@@ -40,12 +81,12 @@ const AddProductForm: React.FC = () => {
       nationality: "",
       qty: 0,
       price: 0,
-      category: "Local", // Set default value for category
+      category: "Local",
     },
     validationSchema,
     onSubmit: (values) => {
       console.log("Form Values:", values);
-      // Handle form submission here
+      handleSubmit(values);
     },
   });
 
