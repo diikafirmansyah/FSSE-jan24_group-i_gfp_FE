@@ -7,6 +7,7 @@ import { BiRuler } from "react-icons/bi";
 import Button from "@/components/Button";
 import Loading from "@/components/Loading";
 import useAuth from "@/middleware/auth";
+import { addToCart } from "../api/carts";
 
 const nationalityMap: { [key: string]: string } = {
   usa: "us",
@@ -22,6 +23,7 @@ const nationalityMap: { [key: string]: string } = {
 
 interface Product {
   id: number;
+  user_id: number;
   image: string | null;
   price: number;
   qty: number;
@@ -96,10 +98,25 @@ const FishDetail: React.FC = () => {
     setQuantity(value);
   };
 
-  const handleCartClick = () => {
-    // TODO: Implement cart logic with quantity
-    console.log(`Adding ${quantity} of product ${product.id} to the cart`);
+  const handleCartClick = async () =>  {
+    if (!product) return;
+
+    try {
+      
+      const result = await addToCart(product.id, quantity);
+      console.log(result)
+      if(!result.ok){
+        throw new Error('fail')
+      }
+      alert("success to add product to cart")
+    } catch (error) {
+      console.error("Error adding product to cart:", error);
+      alert("Failed to add product to cart");
+    }
+    // console.log(`Adding ${quantity} of product ${product.id} to the cart`);
   };
+
+
 
   return (
     <motion.div
