@@ -1,11 +1,12 @@
-import { GetServerSideProps } from "next";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { motion } from "framer-motion";
 import { FaMapMarkerAlt, FaFish } from "react-icons/fa";
 import { AiOutlineTag } from "react-icons/ai";
 import { BiRuler } from "react-icons/bi";
 import Button from "@/components/Button";
+import Loading from "@/components/Loading";
+import useAuth from "@/middleware/auth";
 
 const nationalityMap: { [key: string]: string } = {
   usa: "us",
@@ -33,13 +34,52 @@ interface Product {
   size: string;
 }
 
-interface FishDetailProps {
-  product: Product | null;
-}
-
-const FishDetail: React.FC<FishDetailProps> = ({ product }) => {
+const FishDetail: React.FC = () => {
+  useAuth();
   const router = useRouter();
-  const [quantity, setQuantity] = useState(1);
+  const { id } = router.query;
+
+  const [quantity, setQuantity] = useState<number>(1);
+  const [product, setProduct] = useState<Product | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!id) return; // Wait for id to be defined
+
+    const fetchProduct = async () => {
+      const token = localStorage.getItem('access_token');
+      try {
+        const response = await fetch(`http://127.0.0.1:5000/products/${id}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "Authorization": "Bearer " + token
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        setProduct(result || null);
+      } catch (error) {
+        console.error("Error fetching product:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProduct();
+  }, [id]);
+
+  if (loading) {
+    return (
+      <div className="max-w-5xl mx-auto py-12 px-4 flex justify-center items-center h-[calc(100vh-6rem)]">
+        <Loading />
+      </div>
+    );
+  }
 
   if (!product) {
     return <p className="text-center text-gray-500">Product not found</p>;
@@ -228,31 +268,6 @@ const FishDetail: React.FC<FishDetailProps> = ({ product }) => {
       </div>
     </motion.div>
   );
-};
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { id } = context.params!;
-  try {
-    const response = await fetch(`http://127.0.0.1:5000/products/${id}`);
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-
-    const product = await response.json();
-
-    return {
-      props: {
-        product: product || null,
-      },
-    };
-  } catch (error) {
-    console.error(error);
-    return {
-      props: {
-        product: null,
-      },
-    };
-  }
 };
 
 export default FishDetail;
