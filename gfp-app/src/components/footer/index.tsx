@@ -1,7 +1,13 @@
 import React from 'react';
+import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Footer: React.FC = () => {
+  const [isClient, setIsClient] = useState(false)
+ 
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
   return (
     <footer className="bg-blue-900 text-white py-10">
       <div className="container mx-auto px-4">
@@ -41,17 +47,19 @@ const Footer: React.FC = () => {
             </ul>
             <div className="mt-4">
               <h3 className="text-lg font-semibold mb-2">Follow Us</h3>
+              {isClient ? 
               <div className="flex space-x-4">
-                <a href="https://www.instagram.com/mulaifitness" className="hover:text-gray-400" target="_blank" rel="noopener noreferrer">
-                  <FontAwesomeIcon icon={['fab', 'instagram']} />
-                </a>
-                <a href="https://www.facebook.com" className="hover:text-gray-400" target="_blank" rel="noopener noreferrer">
-                  <FontAwesomeIcon icon={['fab', 'facebook-f']} />
-                </a>
-                <a href="https://www.twitter.com" className="hover:text-gray-400" target="_blank" rel="noopener noreferrer">
-                  <FontAwesomeIcon icon={['fab', 'twitter']} />
-                </a>
-              </div>
+                  <a href="https://www.instagram.com/mulaifitness/">
+                  <FontAwesomeIcon icon={['fab', 'instagram']} className="hover:text-gray-400" />
+                  </a>
+                  <a href="https://www.facebook.com/">
+                  <FontAwesomeIcon icon={['fab', 'facebook-f']} className="hover:text-gray-400" />
+                  </a>
+                  <a href="https://www.twitter.com/">
+                  <FontAwesomeIcon icon={['fab', 'twitter']} className="hover:text-gray-400" />
+                  </a>
+              </div> : <div></div>
+              }
             </div>
           </div>
         </div>
