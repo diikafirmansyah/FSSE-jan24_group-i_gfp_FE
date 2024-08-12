@@ -49,7 +49,7 @@ const Footer: React.FC = () => {
               <h3 className="text-lg font-semibold mb-2">Follow Us</h3>
               {isClient ? 
               <div className="flex space-x-4">
-                  <a href="https://www.instagram.com/mulaifitness/"target="_blank" rel="noopener noreferrer">
+                  <a href="https://www.instagram.com/"target="_blank" rel="noopener noreferrer">
                   <FontAwesomeIcon icon={['fab', 'instagram']} className="hover:text-gray-400" />
                   </a>
                   <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">
