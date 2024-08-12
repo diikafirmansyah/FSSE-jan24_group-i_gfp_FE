@@ -1,6 +1,8 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import useAuth from "@/middleware/auth";
+import imageCompression from "browser-image-compression";
+import axios from "axios";
 
 interface FormValues {
   image: File | null;
@@ -35,40 +37,76 @@ const AddProductForm: React.FC = () => {
 
   const handleSubmit = async (values: FormValues) => {
     try {
-      const formData = new FormData();
-
+      // let FormData = require("form-data");
+      // let fs = require('fs-extra');
+      let fileToUpload = new FormData();
+      // const formImage = new FormData();
       if (values.image) {
-        formData.append("image", values.image);
+        // formImage.append("image", values.image);
+        fileToUpload.append("image", values.image);
       }
-      formData.append("size", values.size);
-      formData.append("description", values.description);
-      formData.append("location", values.location);
-      formData.append("nationality", values.nationality);
-      formData.append("qty", values.qty.toString());
-      formData.append("price", values.price.toString());
-      formData.append("category", values.category);
+      fileToUpload.append("size", values.size);
+      fileToUpload.append("description", values.description);
+      fileToUpload.append("location", values.location);
+      fileToUpload.append("nationality", values.nationality);
+      fileToUpload.append("qty", values.qty.toString());
+      fileToUpload.append("price", values.price.toString());
+      fileToUpload.append("category", values.category);
 
       const token = localStorage.getItem('access_token');
-      const response = await fetch("http://127.0.0.1:5000/products", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          "Authorization": "Bearer " + token
-        },
-        body: formData,
-      });
+      const response = await axios.post("http://127.0.0.1:5000/products", 
+        fileToUpload, {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            Authorization: "Bearer " + token
+          },
+        }
+      )
+      // const response = await fetch("http://127.0.0.1:5000/products", {
+      //   method: "POST",
+      //   headers: {
+      //     ...fileToUpload.getHeaders(),
+      //     // "Content-Type": "application/x-www-form-urlencoded",
+      //     "Authorization": "Bearer " + token
+      //   },
+      //   body: fileToUpload,
+      // });
 
-      if (!response.ok) {
+      if (response.status === 413) {
+        alert("The uploaded file is too large. Please upload a smaller file.");
+        return;
+      }
+
+      if (!response) {
         alert("Product submission failed!");
         return;
       }
 
-      const result = await response.json();
+      const result = await response;
       console.log("Product added successfully", result);
       alert("Product added successfully!");
     } catch (error) {
       console.error("Error submitting the form", error);
       alert("An error occurred while adding the product.");
+    }
+  };
+
+  const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+
+    if (file) {
+      formik.setFieldValue('image', file);
+      // const options = {
+      //   maxSizeMB: 1, // Maximum file size in MB
+      //   maxWidthOrHeight: 1920, // Maximum width or height in pixels
+      // };
+
+      // try {
+      //   const compressedFile = await imageCompression(file, options);
+      //   formik.setFieldValue("image", compressedFile);
+      // } catch (error) {
+      //   console.error("Image compression failed:", error);
+      // }
     }
   };
 
@@ -104,10 +142,7 @@ const AddProductForm: React.FC = () => {
             id="image"
             name="image"
             type="file"
-            onChange={(event) => {
-              const file = event.currentTarget.files?.[0] || null;
-              formik.setFieldValue("image", file);
-            }}
+            onChange={handleImageUpload}
             className="border border-gray-300 rounded-md p-2"
           />
           {formik.errors.image ? (

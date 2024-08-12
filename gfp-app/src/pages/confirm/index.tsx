@@ -5,6 +5,7 @@ import { useState } from 'react';
 
 const ConfirmPage: NextPage = () => {
   // Contoh data yang bisa diambil dari API atau state global
+
   const product = {
     name: 'Sample Product',
     price: 49.99
@@ -13,7 +14,7 @@ const ConfirmPage: NextPage = () => {
   const qty = 2;
 
   const handleConfirm = () => {
-    // Implementasi logika konfirmasi pembelian
+    
     alert('Purchase confirmed!');
   };
 
