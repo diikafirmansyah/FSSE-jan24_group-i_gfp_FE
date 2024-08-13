@@ -1,33 +1,69 @@
 // pages/index.tsx
-import React from 'react';
-import Button from '../../components/Button';
-import { useRouter } from 'next/router';
+import React, { useState, useEffect } from 'react';
+import Loading from '../../components/Loading';
+
+import CartCard from '../../components/CartCard';
+
+interface Cart {
+  id: number;
+  user_id: number;
+  product_id: number;
+  qty: number;
+  price: number;
+  description: string;
+}
 
 const Cart: React.FC = () => {
-  const router = useRouter();
+  const [cartItems, setCartItems] = useState<Cart[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleMarketplaceClick = () => {
-    router.push('/marketplace');
-  };
+  useEffect(() => {
+    const fetchCarts = async () => {
+      const token = localStorage.getItem('access_token');
+      try {
+        const response = await fetch("http://127.0.0.1:5000/carts", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "Authorization": "Bearer " + token
+          },
+        });
 
-  const handleCartClick = () => {
-    router.push('/cart');
-  };
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
 
-  const handleAddProductClick = () => {
-    router.push('/add-product');
-  };
+        const result = await response.json();
+        setCartItems(result.cart_items || []);
+        
+      } catch (error) {
+        console.error("Error fetching carts:", error);
+      }
+    };
+
+    fetchCarts();
+  }, []);
+
+
+if (loading) return <Loading />;
+if (error) return <p>{error}</p>;
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      
-      <h1 className="text-3xl font-bold mb-8 text-gray-800">Welcome to AquaFish !!!</h1>
-      <div className="flex flex-col items-center space-y-4">
-        <Button label="Go to Marketplace" onClick={handleMarketplaceClick} />
-        <Button label="View Cart" onClick={handleCartClick} />
-        <Button label="Add Product" onClick={handleAddProductClick} />
-      </div>
+    <div className='flex flex-col items-center'>
+      <h1>Your Cart</h1>
+      {cartItems.length === 0 ? (
+        <p>Your cart is empty.</p>
+      ): (
+        <ul>
+          {cartItems.map(item => (
+            <CartCard key={item.id} cart_items={item} />
+            
+          ))}
+        </ul>
+      )}
     </div>
+    
   );
 };
 
