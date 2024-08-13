@@ -39,7 +39,8 @@ const Cart: React.FC = () => {
         
       } catch (error) {
         console.error("Error fetching carts:", error);
-      }
+      }finally{
+        setLoading(false);}
     };
 
     fetchCarts();
