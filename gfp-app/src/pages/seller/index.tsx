@@ -20,7 +20,7 @@ interface Product {
 
 const categories = ["Local", "Import"];
 
-const Marketplace: React.FC = () => {
+const Seller: React.FC = () => {
   
   useAuth();
   const [filters, setFilters] = useState<{ category: string; location: string }>({
@@ -114,4 +114,4 @@ const Marketplace: React.FC = () => {
   );
 };
 
-export default Marketplace;
+export default Seller;

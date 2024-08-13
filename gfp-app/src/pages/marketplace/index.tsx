@@ -35,7 +35,7 @@ const Marketplace: React.FC = () => {
     const fetchProducts = async () => {
       const token = localStorage.getItem('access_token');
       try {
-        const response = await fetch("http://127.0.0.1:5000/products/me", {
+        const response = await fetch("http://127.0.0.1:5000/products", {
           method: "GET",
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
