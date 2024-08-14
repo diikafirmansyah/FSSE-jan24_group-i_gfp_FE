@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useRouter } from "next/router";
+import { API_URL } from "@/config";
 
 import { IoEyeSharp } from "react-icons/io5";
 import { FaEyeSlash } from "react-icons/fa";
@@ -37,18 +38,12 @@ const Login = () => {
   });
 
   const handleLogin = async (email: string, password: string) => {
-    // const formData = new FormData();
-    // formData.set('username', username);
-    // formData.set('email', email);
-    // formData.set('password', password);
-    console.log(email);
-    console.log(password);
 
     const formData = new URLSearchParams();
     formData.append("email", email);
     formData.append("password", password);
 
-    const response = await fetch("http://127.0.0.1:5000/users/login", {
+    const response = await fetch(`${API_URL}/users/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -115,7 +110,7 @@ const Login = () => {
                       type="email"
                       placeholder="example123@ex.com"
                       values={onChangeEmail}
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      className="border text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  border-gray-600 placeholder-gray-400 text-black focus:ring-border-500 focus:border-blue-500"
                     />
                     <ErrorMessage name="email" component="div" />
                   </div>
@@ -130,14 +125,13 @@ const Login = () => {
                         Password
                       </label>
                     </div>
-                    <div className="mb-6 flex justify-between items-center p-2.5 rounded-lg space-x-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <div className="mb-6 flex justify-between items-center p-2.5 rounded-lg space-x-1 border border-gray-600 placeholder-gray-400 text-black focus:ring-border-500 focus:border-blue-500">
                       <Field
                         id="password"
                         name="password"
                         values={onChangePassword}
                         type={visible ? "password" : "text"}
                         placeholder="**********"
-                        // onChange={(e) => setPassword(e.target.value)}
                         className="block w-full  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                       />
                       <div
@@ -156,12 +150,12 @@ const Login = () => {
                     Login
                   </button>
                   <p>
-                    don't have an account?{" "}
+                    Don't have an account?{" "}
                     <a
                       href="/register"
                       className="text-primary-600 hover:underline text-blue-600"
                     >
-                      sign up
+                      Sign up
                     </a>
                   </p>
                 </Form>

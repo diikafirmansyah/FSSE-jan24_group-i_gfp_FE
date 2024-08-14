@@ -3,6 +3,7 @@ import * as Yup from "yup";
 import useAuth from "@/middleware/auth";
 import imageCompression from "browser-image-compression";
 import axios from "axios";
+import { API_URL } from "@/config";
 
 interface FormValues {
   image: File | null;
@@ -37,12 +38,8 @@ const AddProductForm: React.FC = () => {
 
   const handleSubmit = async (values: FormValues) => {
     try {
-      // let FormData = require("form-data");
-      // let fs = require('fs-extra');
       let fileToUpload = new FormData();
-      // const formImage = new FormData();
       if (values.image) {
-        // formImage.append("image", values.image);
         fileToUpload.append("image", values.image);
       }
       fileToUpload.append("size", values.size);
@@ -54,7 +51,7 @@ const AddProductForm: React.FC = () => {
       fileToUpload.append("category", values.category);
 
       const token = localStorage.getItem('access_token');
-      const response = await axios.post("http://127.0.0.1:5000/products", 
+      const response = await axios.post(`${API_URL}/products`, 
         fileToUpload, {
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
@@ -62,15 +59,6 @@ const AddProductForm: React.FC = () => {
           },
         }
       )
-      // const response = await fetch("http://127.0.0.1:5000/products", {
-      //   method: "POST",
-      //   headers: {
-      //     ...fileToUpload.getHeaders(),
-      //     // "Content-Type": "application/x-www-form-urlencoded",
-      //     "Authorization": "Bearer " + token
-      //   },
-      //   body: fileToUpload,
-      // });
 
       if (response.status === 413) {
         alert("The uploaded file is too large. Please upload a smaller file.");
@@ -96,6 +84,7 @@ const AddProductForm: React.FC = () => {
 
     if (file) {
       formik.setFieldValue('image', file);
+      // Image compression if needed
       // const options = {
       //   maxSizeMB: 1, // Maximum file size in MB
       //   maxWidthOrHeight: 1920, // Maximum width or height in pixels

@@ -1,0 +1,1 @@
+export const API_URL = "https://team-i-gfp-app-c1cdbf35898f.herokuapp.com";

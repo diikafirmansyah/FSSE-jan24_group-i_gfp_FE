@@ -3,6 +3,7 @@ import React from "react";
 import ModalDialogs from "./ModalDialogs";
 import { useState } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
+import { API_URL } from "@/config";
 
 interface Cart {
   id: number;
@@ -39,7 +40,7 @@ const ConfirmationCard: React.FC<CardProps> = ({ cart_items }) => {
 
       const token = localStorage.getItem("access_token");
 
-      const response = await fetch("http://127.0.0.1:5000/confirmations", {
+      const response = await fetch(`${API_URL}/confirmations`, {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
@@ -68,7 +69,7 @@ const ConfirmationCard: React.FC<CardProps> = ({ cart_items }) => {
       const token = localStorage.getItem("access_token");
 
       const response = await fetch(
-        `http://127.0.0.1:5000/carts/${cart_items.product_id}`,
+        `${API_URL}/carts/${cart_items.product_id}`,
         {
           method: "DELETE",
           headers: {

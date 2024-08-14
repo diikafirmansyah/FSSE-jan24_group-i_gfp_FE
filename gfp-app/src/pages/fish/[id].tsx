@@ -8,6 +8,7 @@ import Button from "@/components/Button";
 import Loading from "@/components/Loading";
 import useAuth from "@/middleware/auth";
 import { addToCart } from "../api/carts";
+import { API_URL } from "@/config";
 
 const nationalityMap: { [key: string]: string } = {
   usa: "us",
@@ -51,7 +52,7 @@ const FishDetail: React.FC = () => {
     const fetchProduct = async () => {
       const token = localStorage.getItem('access_token');
       try {
-        const response = await fetch(`http://127.0.0.1:5000/products/${id}`, {
+        const response = await fetch(`${API_URL}/products/${id}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
