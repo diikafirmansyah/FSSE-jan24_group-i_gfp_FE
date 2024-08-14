@@ -51,21 +51,24 @@ if (loading) return <Loading />;
 if (error) return <p>{error}</p>;
 
   return (
-    <div className='flex flex-col items-center'>
-      <h1>Your Cart</h1>
+    <div className='flex flex-col items-center bg-gray-100 m-10 md:m-20 rounded-lg shadow-lg'>
+      <h1 className='text-3xl font-bold text-gray-800 p-6 border-b border-gray-300 w-full text-center'>Your Cart</h1>
+      
       {cartItems.length === 0 ? (
-        <p>Your cart is empty.</p>
-      ): (
-        <ul>
+        <p className='text-gray-600 py-8'>Your cart is empty.</p>
+      ) : (
+        <ul className='p-6 w-full md:w-4/5 lg:w-3/5'>
           {cartItems.map(item => (
-            <CartCard key={item.id} cart_items={item} />
-            
+            <li key={item.id} className='bg-white border border-gray-300 rounded-lg shadow-md mb-4 p-4 flex items-center gap-4'>
+              <div className='flex-1'>
+                <CartCard cart_items={item} />
+              </div>
+            </li>
           ))}
         </ul>
       )}
     </div>
-    
-  );
-};
+  )
+}
 
 export default Cart;
