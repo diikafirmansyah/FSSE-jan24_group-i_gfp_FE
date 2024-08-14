@@ -56,6 +56,7 @@ const ConfirmationCard: React.FC<CardProps> = ({ cart_items }) => {
       const result = await response;
       console.log("Product added successfully", result);
       alert("Product added successfully!");
+      window.location.reload();
     } catch (error) {
       console.error("Error submitting the form", error);
       alert("An error occurred while adding the product.");
@@ -85,6 +86,7 @@ const ConfirmationCard: React.FC<CardProps> = ({ cart_items }) => {
       const result = await response;
       console.log("Product deleted successfully", result);
       alert("Deleted successfully!");
+      window.location.reload();
     } catch (error) {
       console.error("Error submitting the form", error);
       alert("An error occurred while adding the product.");
