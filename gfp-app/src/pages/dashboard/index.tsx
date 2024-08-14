@@ -3,6 +3,7 @@ import React from 'react';
 import Button from '../../components/Button';
 import { useRouter } from 'next/router';
 import useAuth from '@/middleware/auth';
+import { API_URL } from '@/config';
 
 const Dashboard: React.FC = () => {
     useAuth()
@@ -23,7 +24,7 @@ const Dashboard: React.FC = () => {
     const handleLogoutClick = async () => {
         const token = localStorage.getItem('access_token');
         try {
-            const response = await fetch("http://127.0.0.1:5000/users/logout", {
+            const response = await fetch(`${API_URL}/users/logout`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded",

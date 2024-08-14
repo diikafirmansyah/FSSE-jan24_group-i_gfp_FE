@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import SearchBar from "@/components/SearchBar";
 import FishCard from "@/components/FishCard";
-import Filter from "@/components/filter";
+import Filter from "@/components/Filter";
 import useAuth from "@/middleware/auth";
+import { API_URL } from "@/config";
 
 interface Product {
   id: number;
@@ -35,7 +36,7 @@ const Seller: React.FC = () => {
     const fetchProducts = async () => {
       const token = localStorage.getItem('access_token');
       try {
-        const response = await fetch("http://127.0.0.1:5000/products/me", {
+        const response = await fetch(`${API_URL}/products/me`, {
           method: "GET",
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",

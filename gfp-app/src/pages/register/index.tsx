@@ -9,6 +9,7 @@ import { FaUser } from "react-icons/fa";
 import { IoIosMail } from "react-icons/io";
 import { GiPadlock } from "react-icons/gi";
 import { BsPhone } from "react-icons/bs";
+import { API_URL } from '@/config';
 
 
 const Register = () => {
@@ -64,7 +65,7 @@ const Register = () => {
 		formData.append("phonenumber", phoneNumber);
 		formData.append("role", role)
 
-		const response = await fetch('http://127.0.0.1:5000/users/register', {
+		const response = await fetch(`${API_URL}/users/register`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/x-www-form-urlencoded',

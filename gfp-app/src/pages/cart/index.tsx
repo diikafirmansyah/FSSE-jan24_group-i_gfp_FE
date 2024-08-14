@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Loading from '../../components/Loading';
 
 import CartCard from '../../components/CartCard';
+import { API_URL } from '@/config';
 
 interface Cart {
   id: number;
@@ -22,7 +23,7 @@ const Cart: React.FC = () => {
     const fetchCarts = async () => {
       const token = localStorage.getItem('access_token');
       try {
-        const response = await fetch("http://127.0.0.1:5000/carts", {
+        const response = await fetch(`${API_URL}/carts`, {
           method: "GET",
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
