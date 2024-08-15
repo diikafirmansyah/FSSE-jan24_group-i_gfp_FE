@@ -120,11 +120,11 @@ const Register = () => {
 								}}
 							>
 								<Form action="#" className="space-y-4 md:space-y-6">
-									<div className='flex flex-row justify-between gap-[2.5em]'>
-										<div className="w-1/2">
-											<div className='flex gap-2'>
+									<div className='flex flex-col md:flex-row md:justify-between gap-6 md:gap-10'>
+										<div className="w-full md:w-1/2">
+											<div className='flex items-center gap-2 mb-2'>
 												<FaUser className='mt-[2px] icon-black' />
-												<label htmlFor="name" className="block mb-2 text-sm font-medium  text-gray-900">Username</label>
+												<label htmlFor="username" className="block text-sm font-medium text-gray-900">Username</label>
 											</div>
 											<Field
 												id="username"
@@ -134,12 +134,13 @@ const Register = () => {
 												values={onChangeUserName}
 												className="border text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 border-gray-600 placeholder-gray-400 text-black focus:border-blue-500"
 											/>
-											<ErrorMessage name='username' component='div' className='text-red-600 text-sm' />
+											<ErrorMessage name='username' component='div' className='text-red-600 text-sm mt-1' />
 										</div>
-										<div className="w-1/2">
-											<div className='flex gap-2 '>
+
+										<div className="w-full md:w-1/2">
+											<div className='flex items-center gap-2 mb-2'>
 												<IoIosMail className='mt-[3px] icon-black' />
-												<label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900">Email address</label>
+												<label htmlFor="email" className="block text-sm font-medium text-gray-900">Email address</label>
 											</div>
 											<Field
 												id="email"
@@ -147,17 +148,17 @@ const Register = () => {
 												type="email"
 												placeholder="example123@ex.com"
 												values={onChangeEmail}
-												className="border text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  border-gray-600 placeholder-gray-400 text-black focus:ring-border-500 focus:border-blue-500"
+												className="border text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 border-gray-600 placeholder-gray-400 text-black focus:border-blue-500"
 											/>
-											<ErrorMessage name='email' component='div' className='text-red-600 text-sm' />
+											<ErrorMessage name='email' component='div' className='text-red-600 text-sm mt-1' />
 										</div>
 									</div>
 
-									<div className='flex flex-row justify-between gap-[2.5em]'>
-										<div className="w-1/2">
-											<div className='flex gap-2'>
+									<div className='flex flex-col md:flex-row md:justify-between gap-6 md:gap-10 mt-6'>
+										<div className="w-full md:w-1/2">
+											<div className='flex items-center gap-2 mb-2'>
 												<BsPhone className='mt-[2px] icon-black' />
-												<label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900">Phone</label>
+												<label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-900">Phone</label>
 											</div>
 											<Field
 												id="phoneNumber"
@@ -165,29 +166,34 @@ const Register = () => {
 												type="number"
 												placeholder="your phone number"
 												values={onChangePhoneNumber}
-												className="border text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  border-gray-600 placeholder-gray-400 text-gray-900 focus:border-blue-500"
+												className="border text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 border-gray-600 placeholder-gray-400 text-gray-900 focus:border-blue-500"
 											/>
-											<ErrorMessage name='phoneNumber' component='div' className='text-red-600 text-sm' />
+											<ErrorMessage name='phoneNumber' component='div' className='text-red-600 text-sm mt-1' />
 										</div>
-										<div className="w-1/2">
-											<div className='flex gap-2 '>
+
+										<div className="w-full md:w-1/2">
+											<div className='flex items-center gap-2 mb-2'>
 												<GiPadlock className='mt-[3px] icon-black' />
-												<label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900">Password</label>
+												<label htmlFor="password" className="block text-sm font-medium text-gray-900">Password</label>
 											</div>
-											<div className="flex justify-between items-center p-2.5 rounded-lg space-x-1 border border-gray-600 placeholder-gray-400 text-black focus:ring-border-500 focus:border-blue-500">
+											<div className="relative w-full">
 												<Field
 													id="password"
 													name="password"
-													values={onChangePassword}
 													type={visible ? 'password' : 'text'}
 													placeholder="**********"
-													className="block w-full  placeholder-gray-400 text-gray-900"
+													values={onChangePassword}
+													className="block w-full p-2.5 rounded-lg border border-gray-600 placeholder-gray-400 text-gray-900 focus:ring-primary-600 focus:border-primary-600"
 												/>
-												<div className='cursor-pointer' onClick={() => setVisible(!visible)}>
-													{visible ? <FaEyeSlash className='icon-black' /> : <IoEyeSharp className='icon-black' />}
+												<div
+												
+													className="absolute inset-y-0 right-0 flex items-center px-3 cursor-pointer"
+													onClick={() => setVisible(!visible)}
+												>
+													{visible ? <FaEyeSlash className='text-gray-600' /> : <IoEyeSharp className='text-gray-600' />}
 												</div>
 											</div>
-											<ErrorMessage name='password' component='div' className='text-red-600 text-sm' />
+											<ErrorMessage name='password' component='div' className='text-red-600 text-sm mt-1' />
 										</div>
 									</div>
 									<div className='flex gap-10 justify-center'>
@@ -235,6 +241,8 @@ const Register = () => {
 				</div>
 			</div>
 		</section>
+	
+
 	);
 };
 
