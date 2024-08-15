@@ -28,8 +28,6 @@ const ConfirmationCard: React.FC<Confirmation> = ({
   is_confirm
 }) => {
 
-  const [isConfirmed, setIsConfirmed] = useState<number>(is_confirm);
-
   const onConfirm = async () => {
     try {
       const token = localStorage.getItem("access_token");
@@ -41,7 +39,7 @@ const ConfirmationCard: React.FC<Confirmation> = ({
         }
       });
 
-      if (!response) {
+      if (!response.ok) {
         alert("Confirmation failed!");
         return;
       }
@@ -61,6 +59,7 @@ const ConfirmationCard: React.FC<Confirmation> = ({
       <h2 className="text-2xl font-bold mb-4">Confirmation</h2>
       <p className="mb-2"><strong className="font-medium">Product:</strong> {description} </p>
       <p className="mb-2"><strong className="font-medium">Quantity:</strong> {qty} </p>
+      <p className="mb-2"><strong className="font-medium">Date:</strong> {created_at} </p>
       <p className="mb-4"><strong className="font-medium">Total Price: </strong> 
          {new Intl.NumberFormat("id-ID", {
           style: "currency",
@@ -69,14 +68,14 @@ const ConfirmationCard: React.FC<Confirmation> = ({
       <p className="mb-4"><strong className="font-medium">Buyer:</strong> {buyer}</p>
       <button
         onClick={onConfirm}
-        disabled={isConfirmed ? true : false}
+        disabled={is_confirm ? true : false}
         className={`px-4 py-2 text-white font-semibold rounded-lg focus:outline-none focus:ring-2 ${
-          isConfirmed ? 
+          is_confirm ? 
           `bg-gray-400 cursor-not-allowed`
           : `bg-green-600 hover:bg-green-700 focus:ring-green-500`
         }`}
       >
-        {isConfirmed ? 'Confirmed' : 'Confirm Purchase'}
+        {is_confirm ? 'Confirmed' : 'Confirm Purchase'}
       </button>
     </div>
   );
