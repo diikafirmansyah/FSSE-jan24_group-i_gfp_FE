@@ -31,10 +31,10 @@ const Login = () => {
   };
 
   const loginSchema = Yup.object().shape({
-    email: Yup.string().email("Invalid email").required("Email is required"),
+    email: Yup.string().email("*Invalid email").required("*Email is required"),
     password: Yup.string()
-      .required("Password is required")
-      .min(6, "Password must be at least 6 characters!"),
+      .required("*Password is required")
+      .min(6, "*Password must be at least 6 characters!"),
   });
 
   const handleLogin = async (email: string, password: string) => {
@@ -69,7 +69,7 @@ const Login = () => {
 
   return (
     <section className="relative min-h-screen items-center justify-center">
-      <div className="absolute inset-0 bg-gray-900">
+      <div className="absolute inset-0">
         <img
           src="./assets/bg-register.jpg"
           alt="Background"
@@ -78,12 +78,12 @@ const Login = () => {
       </div>
       <div className="relative z-10">
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 drop-shadow-2xl">
-          <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+          <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 border-white">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
               <div className="w-40 h-20 mx-auto">
                 <img src="./assets/logo.png" alt="logo" />
               </div>
-              <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white text-center">
+              <h1 className="text-xl font-bold leading-tight tracking-tight  md:text-2xl text-gray-700 text-center">
                 Login Here
               </h1>
               <Formik
@@ -96,10 +96,10 @@ const Login = () => {
                 <Form className="space-y-4 md:space-y-6">
                   <div>
                     <div className="flex gap-2 ">
-                      <IoIosMail className="mt-[3px]" />
+                      <IoIosMail className="mt-[3px] icon-black" />
                       <label
                         htmlFor="email"
-                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                        className="block mb-2 text-sm font-medium text-gray-900"
                       >
                         Email
                       </label>
@@ -112,36 +112,37 @@ const Login = () => {
                       values={onChangeEmail}
                       className="border text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  border-gray-600 placeholder-gray-400 text-black focus:ring-border-500 focus:border-blue-500"
                     />
-                    <ErrorMessage name="email" component="div" />
+                    <ErrorMessage name='email' component='div' className='text-red-600 text-sm' />
                   </div>
 
                   <div>
                     <div className="flex gap-2 ">
-                      <GiPadlock className="mt-[3px]" />
+                      <GiPadlock className="mt-[3px] icon-black" />
                       <label
                         htmlFor="password"
-                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                        className="block mb-2 text-sm font-medium text-gray-900"
                       >
                         Password
                       </label>
                     </div>
-                    <div className="mb-6 flex justify-between items-center p-2.5 rounded-lg space-x-1 border border-gray-600 placeholder-gray-400 text-black focus:ring-border-500 focus:border-blue-500">
-                      <Field
-                        id="password"
-                        name="password"
-                        values={onChangePassword}
-                        type={visible ? "password" : "text"}
-                        placeholder="**********"
-                        className="block w-full  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                      />
-                      <div
-                        className="cursor-pointer"
-                        onClick={() => setVisible(!visible)}
-                      >
-                        {visible ? <FaEyeSlash /> : <IoEyeSharp />}
-                      </div>
-                    </div>
-                    <ErrorMessage name="password" component="div" />
+                    <div className="relative w-full">
+												<Field
+													id="password"
+													name="password"
+													type={visible ? 'password' : 'text'}
+													placeholder="**********"
+													values={onChangePassword}
+													className="block w-full p-2.5 rounded-lg border border-gray-600 placeholder-gray-400 text-gray-900 focus:ring-primary-600 focus:border-primary-600"
+												/>
+												<div
+												
+													className="absolute inset-y-0 right-0 flex items-center px-3 cursor-pointer"
+													onClick={() => setVisible(!visible)}
+												>
+													{visible ? <FaEyeSlash className='text-gray-600' /> : <IoEyeSharp className='text-gray-600' />}
+												</div>
+											</div>
+                    <ErrorMessage name='password' component='div' className='text-red-600 text-sm' />
                   </div>
                   <button
                     type="submit"
