@@ -49,7 +49,7 @@ const ConfirmationCard: React.FC<CardProps> = ({ cart_items }) => {
         body: fileToUpload,
       });
 
-      if (!response) {
+      if (!response.ok) {
         alert("Product submission failed!");
         return;
       }
