@@ -28,7 +28,7 @@ const Navbar: React.FC = () => {
         <div className="hidden md:flex space-x-8">
           <a href="/dashboard" className="text-white hover:text-gray-300 transition-colors duration-300">Dashboard</a>
           <a href="/marketplace" className="text-white hover:text-gray-300 transition-colors duration-300">Marketplace</a>
-          <a href="/company" className="text-white hover:text-gray-300 transition-colors duration-300">Company</a>
+          <a href="/about" className="text-white hover:text-gray-300 transition-colors duration-300">About</a>
           <a href="/login" className="text-white hover:text-gray-300 transition-colors duration-300">Login</a>
           <a href="/cart" className="text-white hover:text-gray-300 transition-colors duration-300 mt-1"><TiShoppingCart size={22} /></a>
         </div>
