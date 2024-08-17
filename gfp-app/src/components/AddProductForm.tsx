@@ -4,6 +4,7 @@ import useAuth from "@/middleware/auth";
 import imageCompression from "browser-image-compression";
 import axios from "axios";
 import { API_URL } from "@/config";
+import { useRouter } from "next/router";
 
 interface FormValues {
   image: File | null;
@@ -35,6 +36,7 @@ const validationSchema = Yup.object({
 
 const AddProductForm: React.FC = () => {
   useAuth();
+  const router = useRouter();
 
   const handleSubmit = async (values: FormValues) => {
     try {
@@ -50,15 +52,13 @@ const AddProductForm: React.FC = () => {
       fileToUpload.append("price", values.price.toString());
       fileToUpload.append("category", values.category);
 
-      const token = localStorage.getItem('access_token');
-      const response = await axios.post(`${API_URL}/products`, 
-        fileToUpload, {
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-            Authorization: "Bearer " + token
-          },
-        }
-      )
+      const token = localStorage.getItem("access_token");
+      const response = await axios.post(`${API_URL}/products`, fileToUpload, {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          Authorization: "Bearer " + token,
+        },
+      });
 
       if (response.status === 413) {
         alert("The uploaded file is too large. Please upload a smaller file.");
@@ -73,17 +73,20 @@ const AddProductForm: React.FC = () => {
       const result = await response;
       console.log("Product added successfully", result);
       alert("Product added successfully!");
+      router.push("/seller");
     } catch (error) {
       console.error("Error submitting the form", error);
       alert("An error occurred while adding the product.");
     }
   };
 
-  const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const file = event.target.files?.[0];
 
     if (file) {
-      formik.setFieldValue('image', file);
+      formik.setFieldValue("image", file);
       // Image compression if needed
       // const options = {
       //   maxSizeMB: 1, // Maximum file size in MB

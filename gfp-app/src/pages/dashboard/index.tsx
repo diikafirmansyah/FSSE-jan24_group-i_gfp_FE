@@ -6,7 +6,7 @@ import useAuth from '@/middleware/auth';
 import { API_URL } from '@/config';
 
 const Dashboard: React.FC = () => {
-    useAuth()
+    useAuth();
     const router = useRouter();
 
     const handleMarketplaceClick = () => {
@@ -19,6 +19,14 @@ const Dashboard: React.FC = () => {
 
     const handleAddProductClick = () => {
         router.push('/add_product');
+    };
+
+    const handleSellerClick = () => {
+        router.push('/seller');
+    };
+
+    const handleConfirmationClick = () => {
+        router.push('/confirm');
     };
 
     const handleLogoutClick = async () => {
@@ -44,18 +52,19 @@ const Dashboard: React.FC = () => {
         } catch (error) {
             console.error("Error fetching products:", error);
             localStorage.removeItem('access_token');
-            router.push('/')
+            router.push('/');
         }
-    }
+    };
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-
             <h1 className="text-3xl font-bold mb-8 text-gray-800">Welcome to AquaFish !!!</h1>
             <div className="flex flex-col items-center space-y-4">
                 <Button label="Go to Marketplace" onClick={handleMarketplaceClick} />
                 <Button label="View Cart" onClick={handleCartClick} />
                 <Button label="Add Product" onClick={handleAddProductClick} />
+                <Button label="Seller" onClick={handleSellerClick} />
+                <Button label="Confirmation" onClick={handleConfirmationClick} />
                 <Button label="Logout" onClick={handleLogoutClick} />
             </div>
         </div>

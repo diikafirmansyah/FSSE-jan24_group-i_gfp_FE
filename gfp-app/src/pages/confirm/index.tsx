@@ -1,10 +1,10 @@
 // pages/confirm.tsx
-import { NextPage } from 'next';
-import ConfirmationCard from '@/components/ConfirmationCard';
-import { useEffect, useState } from 'react';
-import { API_URL } from '@/config';
-import useAuth from '@/middleware/auth';
-import Loading from '@/components/Loading';
+import { NextPage } from "next";
+import ConfirmationCard from "@/components/ConfirmationCard";
+import { useEffect, useState } from "react";
+import { API_URL } from "@/config";
+import useAuth from "@/middleware/auth";
+import Loading from "@/components/Loading";
 
 interface Confirmation {
   id: number;
@@ -28,13 +28,13 @@ const ConfirmPage: NextPage = () => {
 
   useEffect(() => {
     const fetchConfirmations = async () => {
-      const token = localStorage.getItem('access_token');
+      const token = localStorage.getItem("access_token");
       try {
         const response = await fetch(`${API_URL}/confirmations/me`, {
           method: "GET",
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
-            "Authorization": "Bearer " + token
+            Authorization: "Bearer " + token,
           },
         });
 
@@ -47,7 +47,7 @@ const ConfirmPage: NextPage = () => {
         // console.log(result.confirmations);
       } catch (error) {
         console.error("Error fetching confirmations:", error);
-        setError(error)
+        setError(error);
       } finally {
         setLoading(false);
       }
@@ -63,12 +63,6 @@ const ConfirmPage: NextPage = () => {
       </div>
     );
   }
-
-  if (error) return (
-    <div className="max-w-5xl mx-auto py-12 px-4 flex justify-center items-center h-[calc(100vh-6rem)]">
-      {error}
-    </div>
-  );
 
   return (
     <div className="flex justify-center items-center h-screen flex-wrap gap-2">

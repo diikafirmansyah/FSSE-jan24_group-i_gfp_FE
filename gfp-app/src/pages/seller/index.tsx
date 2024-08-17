@@ -22,9 +22,11 @@ interface Product {
 const categories = ["Local", "Import"];
 
 const Seller: React.FC = () => {
-  
   useAuth();
-  const [filters, setFilters] = useState<{ category: string; location: string }>({
+  const [filters, setFilters] = useState<{
+    category: string;
+    location: string;
+  }>({
     category: "",
     location: "",
   });
@@ -34,13 +36,13 @@ const Seller: React.FC = () => {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const token = localStorage.getItem('access_token');
+      const token = localStorage.getItem("access_token");
       try {
         const response = await fetch(`${API_URL}/products/me`, {
           method: "GET",
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
-            "Authorization": "Bearer " + token
+            Authorization: "Bearer " + token,
           },
         });
 
@@ -55,10 +57,15 @@ const Seller: React.FC = () => {
       }
     };
 
-    fetchProducts();
+    setTimeout(() => {
+      fetchProducts();
+    }, 1000);
   }, []);
 
-  const handleFilterChange = (newFilters: { category: string; location: string }) => {
+  const handleFilterChange = (newFilters: {
+    category: string;
+    location: string;
+  }) => {
     setFilters(newFilters);
   };
 
