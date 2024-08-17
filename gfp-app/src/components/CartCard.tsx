@@ -19,7 +19,7 @@ interface CardProps {
   //   onConfirm: () => void;
 }
 
-const ConfirmationCard: React.FC<CardProps> = ({ cart_items }) => {
+const CartCard: React.FC<CardProps> = ({ cart_items }) => {
   const [referralCode, setReferralCode] = useState<string>("");
 
   const onChangeReferralCode = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -145,4 +145,4 @@ const ConfirmationCard: React.FC<CardProps> = ({ cart_items }) => {
   );
 };
 
-export default ConfirmationCard;
+export default CartCard;
