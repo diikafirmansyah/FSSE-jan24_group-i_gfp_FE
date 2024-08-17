@@ -110,7 +110,7 @@ const Login = () => {
                       type="email"
                       placeholder="example123@ex.com"
                       values={onChangeEmail}
-                      className="border text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  border-gray-600 placeholder-gray-400 text-black focus:ring-border-500 focus:border-blue-500"
+                      className="border text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  border-gray-600 placeholder-gray-400 text-black focus:ring-border-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                     <ErrorMessage name='email' component='div' className='text-red-600 text-sm' />
                   </div>
@@ -132,7 +132,7 @@ const Login = () => {
 													type={visible ? 'password' : 'text'}
 													placeholder="**********"
 													values={onChangePassword}
-													className="block w-full p-2.5 rounded-lg border border-gray-600 placeholder-gray-400 text-gray-900 focus:ring-primary-600 focus:border-primary-600"
+													className="block w-full p-2.5 rounded-lg border border-gray-600 placeholder-gray-400 text-gray-900 focus:ring-primary-600 focus:border-primary-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
 												/>
 												<div
 												

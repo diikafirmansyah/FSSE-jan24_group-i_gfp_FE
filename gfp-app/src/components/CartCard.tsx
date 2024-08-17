@@ -95,26 +95,32 @@ const ConfirmationCard: React.FC<CardProps> = ({ cart_items }) => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row justify-between bg-white p-4 max-w-4xl mx-auto gap-7">
-      <div className="flex flex-col  md:flex-row md:items-center md:gap-6 mb-4 md:mb-0">
+    <div className="flex flex-col 2xl:flex-row justify-between bg-white p-4 max-w-4xl mx-auto gap-7">
+      <div className="flex flex-col  2xl:flex-row 2xl:items-center 2xl:gap-6 mb-4 2xl:mb-0">
         <div className="flex flex-col flex-grow">
           <h2 className="text-2xl font-bold text-gray-800 mb-2">
             {cart_items.description}
           </h2>
           <p className="text-gray-700 mb-1">
-            <strong className="font-medium">Quantity:</strong> {cart_items.qty}
+            <strong className="font-medium">Quantity:</strong> 
+            {cart_items.qty}
           </p>
           <p className="text-gray-700 mb-2">
-            <strong className="font-medium">Total Price:</strong>{" "}
-            {cart_items.price}
+            <strong className="font-medium">Total Price:</strong>
+            {" "}
+            {/* {cart_items.price} */}
+            {new Intl.NumberFormat("id-ID", {
+              style: "currency",
+              currency: "IDR",
+            }).format(cart_items.price)}
           </p>
         </div>
       </div>
-      <div className="flex flex-col md:flex-row md:items-center gap-2">
-        <div className="flex flex-col md:flex-row md:items-center md:gap-2 mb-4 md:mb-0 w-full">
+      <div className="flex flex-col 2xl:flex-row 2xl:items-center gap-2">
+        <div className="flex flex-col 2xl:flex-row 2xl:items-center 2xl:gap-2 mb-4 2xl:mb-0 w-full">
           <label
             htmlFor="referral_code"
-            className="text-gray-700 font-medium mb-1 md:mb-0"
+            className="text-gray-700 font-medium mb-1 2xl:mb-0"
           >
             Referral Code
           </label>
@@ -125,7 +131,7 @@ const ConfirmationCard: React.FC<CardProps> = ({ cart_items }) => {
             value={referralCode}
             placeholder="Input for 20% discount"
             onChange={onChangeReferralCode}
-            className="bg-gray-200 border-2 border-gray-300 rounded-lg w-full md:w-64 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="bg-gray-200 border-2 border-gray-300 rounded-lg w-full 2xl:w-64 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
         <button
@@ -136,9 +142,9 @@ const ConfirmationCard: React.FC<CardProps> = ({ cart_items }) => {
         </button>
         <button
           onClick={handleDelete}
-          className="flex items-center justify-center px-4 py-4 md:px-6 md:py-6 bg-red-600 rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500"
+          className="flex items-center justify-center px-4 py-3 2xl:px-6 2xl:py-6 bg-red-600 rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500"
         >
-          <FaRegTrashAlt className="text-white text-lg md:text-xl" />
+          <FaRegTrashAlt className="text-white text-lg 2xl:text-xl" />
         </button>
       </div>
     </div>
