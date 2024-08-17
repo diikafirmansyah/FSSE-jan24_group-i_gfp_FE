@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import { TiShoppingCart } from "react-icons/ti";
+
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -25,10 +27,10 @@ const Navbar: React.FC = () => {
         {/* Desktop Navigation */}
         <div className="hidden md:flex space-x-8">
           <a href="/dashboard" className="text-white hover:text-gray-300 transition-colors duration-300">Dashboard</a>
-          <a href="/cart" className="text-white hover:text-gray-300 transition-colors duration-300">Cart</a>
           <a href="/marketplace" className="text-white hover:text-gray-300 transition-colors duration-300">Marketplace</a>
           <a href="/company" className="text-white hover:text-gray-300 transition-colors duration-300">Company</a>
           <a href="/login" className="text-white hover:text-gray-300 transition-colors duration-300">Login</a>
+          <a href="/cart" className="text-white hover:text-gray-300 transition-colors duration-300 mt-1"><TiShoppingCart size={22} /></a>
         </div>
 
         {/* Mobile Menu Button */}
@@ -61,10 +63,10 @@ const Navbar: React.FC = () => {
         className={`md:hidden ${isOpen ? 'block' : 'hidden'} bg-gray-700`}
       >
         <div className="px-4 py-3 space-y-1">
+        <a href="/company" className="block text-white hover:text-gray-300 transition-colors duration-300">Company</a>
+        <a href="/marketplace" className="block text-white hover:text-gray-300 transition-colors duration-300">Marketplace</a>
           <a href="/products" className="block text-white hover:text-gray-300 transition-colors duration-300">Products</a>
-          <a href="/features" className="block text-white hover:text-gray-300 transition-colors duration-300">Features</a>
-          <a href="/marketplace" className="block text-white hover:text-gray-300 transition-colors duration-300">Marketplace</a>
-          <a href="/company" className="block text-white hover:text-gray-300 transition-colors duration-300">Company</a>
+          <a href="/cart" className="block text-white hover:text-gray-300 transition-colors duration-300">Cart</a>
           <a href="/login" className="block text-white hover:text-gray-300 transition-colors duration-300">Login</a>
         </div>
       </div>
