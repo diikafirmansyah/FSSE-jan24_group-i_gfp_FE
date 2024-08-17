@@ -127,9 +127,11 @@ export default function Home() {
 
       <section>
         <div className='relative px-32'>
-          <img src='https://www.swelluk.com/media/wordpress/b8fda19b5a3e402cdd50c6d6d2559988.png'
+          <h2 className='font-bold text-3xl leading-8 text-gray-300 text-center'>ON SALE NOW</h2>
+          <img src= './assets/koi2.jpg'
             alt='fishes'
             className='block ml-auto mr-auto w-6/12' />
+          <a href='/fish/51' className='block ml-auto mr-auto text-xl font-bold w-6/12 text-center text-gray-300'>Koi Sanke - Buy Now</a>
         </div>
         <div className='relative mb-8 text-center mx-auto max-w-4xl'>
           <p className="mt-6 text-lg leading-8 text-gray-300">
