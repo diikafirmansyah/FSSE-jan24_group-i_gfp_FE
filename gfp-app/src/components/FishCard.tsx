@@ -4,7 +4,6 @@ import { FaMapMarkerAlt, FaFish } from "react-icons/fa";
 import { AiOutlineTag } from "react-icons/ai";
 import { BiRuler } from "react-icons/bi";
 
-// Mapping country names or other identifiers to ISO Alpha-2 codes
 const nationalityMap: { [key: string]: string } = {
   usa: "us",
   unitedstates: "us",
@@ -28,6 +27,7 @@ interface Product {
   location: string;
   nationality: string;
   size: string;
+  isSellerPage?: boolean;
 }
 
 const FishCard: React.FC<Product> = ({
@@ -39,11 +39,9 @@ const FishCard: React.FC<Product> = ({
   location,
   nationality,
   size,
+  isSellerPage = false,
 }) => {
-  // Convert the nationality to the corresponding ISO Alpha-2 code
   const isoCode = nationalityMap[nationality.toLowerCase()] || nationality.toLowerCase();
-
-  // Construct the flag URL
   const flagUrl = `https://flagcdn.com/w40/${isoCode}.png`;
 
   return (
@@ -110,12 +108,21 @@ const FishCard: React.FC<Product> = ({
             <BiRuler className="mr-2 text-gray-500 transition-transform duration-300 ease-in-out transform hover:scale-110" />
             {size} cm
           </p>
-          <Link
-            href={`/fish/${id}`}
-            className="inline-block px-4 py-2 w-full text-center bg-gradient-to-r from-blue-500 to-teal-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 transition-transform transform hover:-translate-y-1 hover:shadow-lg"
-          >
-            View Details
-          </Link>
+          {isSellerPage ? (
+            <Link
+              href={`/fish/edit/${id}`}
+              className="inline-block px-4 py-2 w-full text-center bg-gradient-to-r from-green-500 to-yellow-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-600 transition-transform transform hover:-translate-y-1 hover:shadow-lg"
+            >
+              Edit Details
+            </Link>
+          ) : (
+            <Link
+              href={`/fish/${id}`}
+              className="inline-block px-4 py-2 w-full text-center bg-gradient-to-r from-blue-500 to-teal-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 transition-transform transform hover:-translate-y-1 hover:shadow-lg"
+            >
+              View Details
+            </Link>
+          )}
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import SearchBar from "@/components/SearchBar";
 import FishCard from "@/components/FishCard";
-import Filter from "@/components/filter";
+import Filter from "@/components/Filter";
 import useAuth from "@/middleware/auth";
 import { API_URL } from "@/config";
 
@@ -108,8 +108,9 @@ const Seller: React.FC = () => {
               description={product.description}
               category={product.category}
               location={product.location}
-              nationality={product.nationality} // Pass nationality to FishCard
-              size={product.size} // Pass size to FishCard
+              nationality={product.nationality}
+              size={product.size} 
+              isSellerPage={true}
             />
           ))
         ) : (
