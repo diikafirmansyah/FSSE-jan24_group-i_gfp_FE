@@ -60,7 +60,7 @@ const Login = () => {
         console.log("Response success", result);
         localStorage.setItem('access_token', result.access_token);
         alert("Login success!");
-        router.push('/marketplace');
+        router.push('/dashboard');
       }
     } catch (error) {
       console.log(error);
