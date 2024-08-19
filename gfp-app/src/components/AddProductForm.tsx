@@ -15,6 +15,7 @@ interface FormValues {
   qty: number;
   price: number;
   category: "Local" | "Import";
+  referral_code: string;
 }
 
 const validationSchema = Yup.object({
@@ -32,6 +33,9 @@ const validationSchema = Yup.object({
   category: Yup.string()
     .oneOf(["Local", "Import"])
     .required("Category is required"),
+  referral_code: Yup.string()
+    .matches(/^[a-zA-Z0-9]{5}$/, "Referral code must be exactly 5 characters")
+    .notRequired(),
 });
 
 const AddProductForm: React.FC = () => {
@@ -51,6 +55,9 @@ const AddProductForm: React.FC = () => {
       fileToUpload.append("qty", values.qty.toString());
       fileToUpload.append("price", values.price.toString());
       fileToUpload.append("category", values.category);
+      if (values.referral_code) {
+        fileToUpload.append("referral_code", values.referral_code);
+      }
 
       const token = localStorage.getItem("access_token");
       const response = await axios.post(`${API_URL}/products`, fileToUpload, {
@@ -112,6 +119,7 @@ const AddProductForm: React.FC = () => {
       qty: 0,
       price: 0,
       category: "Local",
+      referral_code: "",
     },
     validationSchema,
     onSubmit: (values) => {
@@ -281,6 +289,29 @@ const AddProductForm: React.FC = () => {
           </div>
           {formik.errors.category ? (
             <div className="text-red-500 mt-1">{formik.errors.category}</div>
+          ) : null}
+        </div>
+
+        <div className="flex flex-col">
+          <label
+            htmlFor="referral_code"
+            className="mb-2 font-medium text-gray-700"
+          >
+            Referral code (Optional)
+          </label>
+          <input
+            id="referral_code"
+            name="referral_code"
+            type="text"
+            maxLength={5}
+            onChange={formik.handleChange}
+            value={formik.values.referral_code}
+            className="border border-gray-300 rounded-md p-2 text-black"
+          />
+          {formik.errors.referral_code ? (
+            <div className="text-red-500 mt-1">
+              {formik.errors.referral_code}
+            </div>
           ) : null}
         </div>
 
