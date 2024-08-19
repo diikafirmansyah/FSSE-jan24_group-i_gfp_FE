@@ -10,6 +10,7 @@ import useAuth from "@/middleware/auth";
 import { API_URL } from "@/config";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import axios from "axios";
 
 const nationalityMap: { [key: string]: string } = {
   usa: "us",
@@ -95,19 +96,63 @@ const FishEditDetail: React.FC = () => {
   const flagUrl = isoCode ? `https://flagcdn.com/w40/${isoCode}.png` : null;
 
   const validationSchema = Yup.object().shape({
-    price: Yup.number().required("Price is required"),
+    description: Yup.string().required("Description is required"),
+    price: Yup.number()
+      .required("Price is required")
+      .positive("Price must be greater than zero"),
     qty: Yup.number()
       .required("Quantity is required")
-      .min(1, "Quantity must be at least 1")
-      .max(product.qty, `Cannot exceed available quantity (${product.qty})`),
-    category: Yup.string().required("Category is required"),
+      .min(1, "Quantity must be at least 1"),
+    category: Yup.string()
+      .oneOf(["Local", "Import"])
+      .required("Category is required"),
+    nationality: Yup.string().required("Nationality is required"),
     location: Yup.string().required("Location is required"),
     size: Yup.string().required("Size is required"),
   });
 
   const handleEditClick = async (values: any) => {
-    // Implement the update logic here
     console.log("Form values:", values);
+    try {
+      let fileToUpload = new FormData();
+      // if (values.image) {
+      //   fileToUpload.append("image", values.image);
+      // }
+      fileToUpload.append("size", values.size);
+      fileToUpload.append("description", values.description);
+      fileToUpload.append("location", values.location);
+      fileToUpload.append("nationality", values.nationality);
+      fileToUpload.append("qty", values.qty.toString());
+      fileToUpload.append("price", values.price.toString());
+      fileToUpload.append("category", values.category);
+
+      const token = localStorage.getItem('access_token');
+      const response = await axios.put(`${API_URL}/products/${id}`, 
+        fileToUpload, {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            Authorization: "Bearer " + token
+          },
+        }
+      )
+
+      if (response.status === 413) {
+        alert("The uploaded file is too large. Please upload a smaller file.");
+        return;
+      }
+
+      if (!response) {
+        alert("Product submission failed!");
+        return;
+      }
+
+      const result = await response;
+      console.log("Product added successfully", result);
+      alert("Product added successfully!");
+    } catch (error) {
+      console.error("Error submitting the form", error);
+      alert("An error occurred while adding the product.");
+    }
   };
 
   return (
@@ -169,16 +214,35 @@ const FishEditDetail: React.FC = () => {
       <Formik
         initialValues={{
           price: product.price,
-          qty: 1,
+          qty: product.qty,
           category: product.category,
           location: product.location,
+          nationality: product.nationality,
           size: product.size,
+          description: product.description
         }}
         validationSchema={validationSchema}
         onSubmit={handleEditClick}
       >
         {({ values }) => (
           <Form className="lg:w-1/2 space-y-6 bg-white p-6 rounded-lg shadow-lg border-t-4 border-b-4 border-gradient-to-r from-blue-500 to-teal-500">
+            <div>
+              <label htmlFor="description" className="text-lg text-gray-600">
+                Description:
+              </label>
+              <Field
+                id="description"
+                name="description"
+                type="text"
+                className="text-base text-gray-700 w-full p-2 border border-gray-300 rounded-lg"
+              />
+              <ErrorMessage
+                name="category"
+                component="div"
+                className="text-red-600"
+              />
+            </div>
+            
             <div>
               <label htmlFor="price" className="text-lg text-gray-600">
                 Price:
@@ -206,7 +270,6 @@ const FishEditDetail: React.FC = () => {
                 type="number"
                 className="text-base text-gray-700 w-full p-2 border border-gray-300 rounded-lg"
                 min="1"
-                max={product.qty}
               />
               <ErrorMessage
                 name="qty"
@@ -244,6 +307,23 @@ const FishEditDetail: React.FC = () => {
               />
               <ErrorMessage
                 name="location"
+                component="div"
+                className="text-red-600"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="nationality" className="text-lg text-gray-600">
+                Nationality:
+              </label>
+              <Field
+                id="nationality"
+                name="nationality"
+                type="text"
+                className="text-base text-gray-700 w-full p-2 border border-gray-300 rounded-lg"
+              />
+              <ErrorMessage
+                name="nationality"
                 component="div"
                 className="text-red-600"
               />
