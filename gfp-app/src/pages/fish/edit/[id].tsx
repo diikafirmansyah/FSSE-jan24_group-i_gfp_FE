@@ -354,7 +354,9 @@ const FishEditDetail: React.FC = () => {
               />
             </div>
 
-            <button type="submit">Save Edit</button>
+            <button className="min-w-7 px-4 py-2 bg-blue-500 text-white rounded transform transition-transform duration-300 hover:bg-blue-700 hover:scale-105" type="submit">
+              Save Edit
+            </button>
           </Form>
         )}
       </Formik>
