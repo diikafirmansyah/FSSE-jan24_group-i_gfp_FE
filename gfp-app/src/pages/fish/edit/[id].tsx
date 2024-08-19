@@ -49,7 +49,15 @@ const FishEditDetail: React.FC = () => {
 
   useEffect(() => {
     if (!id) return; // Wait for id to be defined
-
+    
+    if(!localStorage.getItem("role")) {
+      window.location.href = "/login";
+    }else{
+      if(localStorage.getItem("role") !== "seller") {
+        window.location.href = "/dashboard";
+      }
+    }
+    
     const fetchProduct = async () => {
       const token = localStorage.getItem("access_token");
       try {

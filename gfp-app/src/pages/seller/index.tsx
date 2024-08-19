@@ -5,6 +5,8 @@ import Filter from "@/components/Filter";
 import useAuth from "@/middleware/auth";
 import { API_URL } from "@/config";
 
+
+
 interface Product {
   id: number;
   image: string | null;
@@ -23,6 +25,7 @@ const categories = ["Local", "Import"];
 
 const Seller: React.FC = () => {
   useAuth();
+
   const [filters, setFilters] = useState<{
     category: string;
     location: string;
@@ -35,6 +38,13 @@ const Seller: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
+    if(!localStorage.getItem("role")) {
+      window.location.href = "/login";
+    }else{
+      if(localStorage.getItem("role") !== "seller") {
+        window.location.href = "/dashboard";
+      }
+    }
     const fetchProducts = async () => {
       const token = localStorage.getItem("access_token");
       try {

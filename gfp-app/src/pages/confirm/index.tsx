@@ -27,6 +27,13 @@ const ConfirmPage: NextPage = () => {
   const [error, setError] = useState<any>(null);
 
   useEffect(() => {
+    if(!localStorage.getItem("role")) {
+      window.location.href = "/login";
+    }else{
+      if(localStorage.getItem("role") !== "seller") {
+        window.location.href = "/dashboard";
+      }
+    }
     const fetchConfirmations = async () => {
       const token = localStorage.getItem("access_token");
       try {
