@@ -489,8 +489,9 @@ const FishEditDetail: React.FC = () => {
           </Formik>
         </div>
       </div>
+
     </motion.div>
   );
 };
-
+        
 export default FishEditDetail;
