@@ -49,15 +49,15 @@ const FishEditDetail: React.FC = () => {
 
   useEffect(() => {
     if (!id) return; // Wait for id to be defined
-    
-    if(!localStorage.getItem("role")) {
+
+    if (!localStorage.getItem("role")) {
       window.location.href = "/login";
-    }else{
-      if(localStorage.getItem("role") !== "seller") {
+    } else {
+      if (localStorage.getItem("role") !== "seller") {
         window.location.href = "/dashboard";
       }
     }
-    
+
     const fetchProduct = async () => {
       const token = localStorage.getItem("access_token");
       try {
@@ -135,13 +135,13 @@ const FishEditDetail: React.FC = () => {
       fileToUpload.append("category", values.category);
 
       const token = localStorage.getItem('access_token');
-      const response = await axios.put(`${API_URL}/products/${id}`, 
+      const response = await axios.put(`${API_URL}/products/${id}`,
         fileToUpload, {
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-            Authorization: "Bearer " + token
-          },
-        }
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          Authorization: "Bearer " + token
+        },
+      }
       )
 
       if (response.status === 413) {
@@ -192,172 +192,206 @@ const FishEditDetail: React.FC = () => {
         </motion.div>
       </button>
 
-      <motion.h1
-        className="text-5xl font-extrabold text-gray-900 mb-8 flex items-center space-x-4"
-        initial={{ y: -20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6 }}
-        style={{
-          background: "linear-gradient(to right, #ff7e5f, #feb47b)",
-          WebkitBackgroundClip: "text",
-          WebkitTextFillColor: "transparent",
-        }}
-      >
-        <span>{product.description}</span>
-        {flagUrl ? (
-          <motion.img
-            src={flagUrl}
-            alt={product.nationality}
-            className="w-10 h-10 rounded-full shadow-md"
-            title={product.nationality}
-            initial={{ scale: 0.8 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 0.3 }}
-          />
+      <div className="flex flex-col lg:flex-row items-center gap-12">
+        {product.image ? (
+          <motion.div
+            className="w-full lg:w-1/2 h-96 relative"
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            style={{
+              borderRadius: "12px",
+              overflow: "hidden",
+            }}
+          >
+            <motion.img
+              src={product.image}
+              alt={product.description}
+              className="w-full h-full object-cover"
+              style={{ filter: "brightness(80%)" }}
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.5 }}
+            />
+            <div
+              className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent"
+              style={{ mixBlendMode: "multiply" }}
+            />
+          </motion.div>
         ) : (
-          <span className="text-sm text-gray-500">(No flag available)</span>
+          <div className="w-full lg:w-1/2 h-96 bg-gray-200 flex items-center justify-center text-gray-500 rounded-lg shadow-xl">
+            No Image Available
+          </div>
         )}
-      </motion.h1>
 
-      <Formik
-        initialValues={{
-          price: product.price,
-          qty: product.qty,
-          category: product.category,
-          location: product.location,
-          nationality: product.nationality,
-          size: product.size,
-          description: product.description
-        }}
-        validationSchema={validationSchema}
-        onSubmit={handleEditClick}
-      >
-        {({ values }) => (
-          <Form className="lg:w-1/2 space-y-6 bg-white p-6 rounded-lg shadow-lg border-t-4 border-b-4 border-gradient-to-r from-blue-500 to-teal-500">
-            <div>
-              <label htmlFor="description" className="text-lg text-gray-600">
-                Description:
-              </label>
-              <Field
-                id="description"
-                name="description"
-                type="text"
-                className="text-base text-gray-700 w-full p-2 border border-gray-300 rounded-lg"
+        <div className="lg:w-1/2 space-y-6 bg-white p-6 rounded-lg shadow-lg border-t-4 border-b-4 border-gradient-to-r from-blue-500 to-teal-500">
+          <motion.h1
+            className="text-5xl font-extrabold text-gray-900 mb-8 flex items-center space-x-4"
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.6 }}
+            style={{
+              background: "linear-gradient(to right, #ff7e5f, #feb47b)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+            }}
+          >
+            <span>{product.description}</span>
+            {flagUrl ? (
+              <motion.img
+                src={flagUrl}
+                alt={product.nationality}
+                className="w-10 h-10 rounded-full shadow-md"
+                title={product.nationality}
+                initial={{ scale: 0.8 }}
+                animate={{ scale: 1 }}
+                transition={{ duration: 0.3 }}
               />
-              <ErrorMessage
-                name="category"
-                component="div"
-                className="text-red-600"
-              />
-            </div>
-            
-            <div>
-              <label htmlFor="price" className="text-lg text-gray-600">
-                Price:
-              </label>
-              <Field
-                id="price"
-                name="price"
-                type="number"
-                className="text-base text-gray-700 w-full p-2 border border-gray-300 rounded-lg"
-              />
-              <ErrorMessage
-                name="price"
-                component="div"
-                className="text-red-600"
-              />
-            </div>
+            ) : (
+              <span className="text-sm text-gray-500">(No flag available)</span>
+            )}
+          </motion.h1>
 
-            <div>
-              <label htmlFor="qty" className="text-lg text-gray-600">
-                Quantity:
-              </label>
-              <Field
-                id="qty"
-                name="qty"
-                type="number"
-                className="text-base text-gray-700 w-full p-2 border border-gray-300 rounded-lg"
-                min="1"
-              />
-              <ErrorMessage
-                name="qty"
-                component="div"
-                className="text-red-600"
-              />
-            </div>
+          <Formik
+            initialValues={{
+              price: product.price,
+              qty: product.qty,
+              category: product.category,
+              location: product.location,
+              nationality: product.nationality,
+              size: product.size,
+              description: product.description
+            }}
+            validationSchema={validationSchema}
+            onSubmit={handleEditClick}
+          >
+            {({ values }) => (
+              <Form className="lg:w-1/2 space-y-6 bg-white p-6 rounded-lg shadow-lg border-t-4 border-b-4 border-gradient-to-r from-blue-500 to-teal-500">
+                <div>
+                  <label htmlFor="description" className="text-lg text-gray-600">
+                    Description:
+                  </label>
+                  <Field
+                    id="description"
+                    name="description"
+                    type="text"
+                    className="text-base text-gray-700 w-full p-2 border border-gray-300 rounded-lg"
+                  />
+                  <ErrorMessage
+                    name="category"
+                    component="div"
+                    className="text-red-600"
+                  />
+                </div>
 
-            <div>
-              <label htmlFor="category" className="text-lg text-gray-600">
-                Category:
-              </label>
-              <Field
-                id="category"
-                name="category"
-                type="text"
-                className="text-base text-gray-700 w-full p-2 border border-gray-300 rounded-lg"
-              />
-              <ErrorMessage
-                name="category"
-                component="div"
-                className="text-red-600"
-              />
-            </div>
+                <div>
+                  <label htmlFor="price" className="text-lg text-gray-600">
+                    Price:
+                  </label>
+                  <Field
+                    id="price"
+                    name="price"
+                    type="number"
+                    className="text-base text-gray-700 w-full p-2 border border-gray-300 rounded-lg"
+                  />
+                  <ErrorMessage
+                    name="price"
+                    component="div"
+                    className="text-red-600"
+                  />
+                </div>
 
-            <div>
-              <label htmlFor="location" className="text-lg text-gray-600">
-                Location:
-              </label>
-              <Field
-                id="location"
-                name="location"
-                type="text"
-                className="text-base text-gray-700 w-full p-2 border border-gray-300 rounded-lg"
-              />
-              <ErrorMessage
-                name="location"
-                component="div"
-                className="text-red-600"
-              />
-            </div>
+                <div>
+                  <label htmlFor="qty" className="text-lg text-gray-600">
+                    Quantity:
+                  </label>
+                  <Field
+                    id="qty"
+                    name="qty"
+                    type="number"
+                    className="text-base text-gray-700 w-full p-2 border border-gray-300 rounded-lg"
+                    min="1"
+                  />
+                  <ErrorMessage
+                    name="qty"
+                    component="div"
+                    className="text-red-600"
+                  />
+                </div>
 
-            <div>
-              <label htmlFor="nationality" className="text-lg text-gray-600">
-                Nationality:
-              </label>
-              <Field
-                id="nationality"
-                name="nationality"
-                type="text"
-                className="text-base text-gray-700 w-full p-2 border border-gray-300 rounded-lg"
-              />
-              <ErrorMessage
-                name="nationality"
-                component="div"
-                className="text-red-600"
-              />
-            </div>
+                <div>
+                  <label htmlFor="category" className="text-lg text-gray-600">
+                    Category:
+                  </label>
+                  <Field
+                    id="category"
+                    name="category"
+                    type="text"
+                    className="text-base text-gray-700 w-full p-2 border border-gray-300 rounded-lg"
+                  />
+                  <ErrorMessage
+                    name="category"
+                    component="div"
+                    className="text-red-600"
+                  />
+                </div>
 
-            <div>
-              <label htmlFor="size" className="text-lg text-gray-600">
-                Size:
-              </label>
-              <Field
-                id="size"
-                name="size"
-                type="text"
-                className="text-base text-gray-700 w-full p-2 border border-gray-300 rounded-lg"
-              />
-              <ErrorMessage
-                name="size"
-                component="div"
-                className="text-red-600"
-              />
-            </div>
+                <div>
+                  <label htmlFor="location" className="text-lg text-gray-600">
+                    Location:
+                  </label>
+                  <Field
+                    id="location"
+                    name="location"
+                    type="text"
+                    className="text-base text-gray-700 w-full p-2 border border-gray-300 rounded-lg"
+                  />
+                  <ErrorMessage
+                    name="location"
+                    component="div"
+                    className="text-red-600"
+                  />
+                </div>
 
-            <button type="submit">Save Edit</button>
-          </Form>
-        )}
-      </Formik>
+                <div>
+                  <label htmlFor="nationality" className="text-lg text-gray-600">
+                    Nationality:
+                  </label>
+                  <Field
+                    id="nationality"
+                    name="nationality"
+                    type="text"
+                    className="text-base text-gray-700 w-full p-2 border border-gray-300 rounded-lg"
+                  />
+                  <ErrorMessage
+                    name="nationality"
+                    component="div"
+                    className="text-red-600"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="size" className="text-lg text-gray-600">
+                    Size:
+                  </label>
+                  <Field
+                    id="size"
+                    name="size"
+                    type="text"
+                    className="text-base text-gray-700 w-full p-2 border border-gray-300 rounded-lg"
+                  />
+                  <ErrorMessage
+                    name="size"
+                    component="div"
+                    className="text-red-600"
+                  />
+                </div>
+
+                <button type="submit">Save Edit</button>
+              </Form>
+            )}
+          </Formik>
+        </div>
+      </div>
     </motion.div>
   );
 };
