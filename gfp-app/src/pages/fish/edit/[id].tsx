@@ -117,9 +117,32 @@ const FishEditDetail: React.FC = () => {
     location: Yup.string().required("Location is required"),
     size: Yup.string().required("Size is required"),
     referral_code: Yup.string()
-    .matches(/^[a-zA-Z0-9]{5}$/, "Referral code must be exactly 5 characters")
-    .notRequired(),
+      .matches(/^[a-zA-Z0-9]{5}$/, "Referral code must be exactly 5 characters")
+      .notRequired(),
   });
+
+  const handleDelete = async () => {
+    const token = localStorage.getItem('access_token');
+    try {
+      const response = await fetch(`${API_URL}/products/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Authorization": "Bearer " + token
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      alert("Delete Success!");
+      router.push('/seller');
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
+  };
 
   const handleEditClick = async (values: any) => {
     console.log("Form values:", values);
@@ -212,33 +235,39 @@ const FishEditDetail: React.FC = () => {
           Back
         </motion.div>
       </button>
+      <div className="flex flex-row flex-wrap items-center justify-between mb-1">
+        <motion.h1
+          className="text-5xl font-extrabold text-gray-900 mb-8 flex items-center space-x-4"
+          initial={{ y: -20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.6 }}
+          style={{
+            background: "linear-gradient(to right, #ff7e5f, #feb47b)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+          }}
+        >
+          <span>{product.description}</span>
+          {flagUrl ? (
+            <motion.img
+              src={flagUrl}
+              alt={product.nationality}
+              className="w-10 h-10 rounded-full shadow-md"
+              title={product.nationality}
+              initial={{ scale: 0.8 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 0.3 }}
+            />
+          ) : (
+            <span className="text-sm text-gray-500">(No flag available)</span>
+          )}
+        </motion.h1>
+        <button onClick={handleDelete}
+          className="mt-2 px-4 py-2 bg-red-500 text-white rounded transform transition-transform duration-300 hover:bg-red-700 hover:scale-105">
+          Delete item
+        </button>
+      </div>
 
-      <motion.h1
-        className="text-5xl font-extrabold text-gray-900 mb-8 flex items-center space-x-4"
-        initial={{ y: -20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6 }}
-        style={{
-          background: "linear-gradient(to right, #ff7e5f, #feb47b)",
-          WebkitBackgroundClip: "text",
-          WebkitTextFillColor: "transparent",
-        }}
-      >
-        <span>{product.description}</span>
-        {flagUrl ? (
-          <motion.img
-            src={flagUrl}
-            alt={product.nationality}
-            className="w-10 h-10 rounded-full shadow-md"
-            title={product.nationality}
-            initial={{ scale: 0.8 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 0.3 }}
-          />
-        ) : (
-          <span className="text-sm text-gray-500">(No flag available)</span>
-        )}
-      </motion.h1>
       <div className="flex flex-col lg:flex-row items-center gap-12">
         {product.image ? (
           <motion.div
