@@ -49,10 +49,10 @@ const FishEditDetail: React.FC = () => {
     if (!id) return; // Wait for id to be defined
 
     if (!localStorage.getItem("role")) {
-      window.location.href = "/login";
+      router.push("/login");
     } else {
       if (localStorage.getItem("role") !== "seller") {
-        window.location.href = "/dashboard";
+        router.push("/dashboard");
       }
     }
 
@@ -116,6 +116,9 @@ const FishEditDetail: React.FC = () => {
     nationality: Yup.string().required("Nationality is required"),
     location: Yup.string().required("Location is required"),
     size: Yup.string().required("Size is required"),
+    referral_code: Yup.string()
+    .matches(/^[a-zA-Z0-9]{5}$/, "Referral code must be exactly 5 characters")
+    .notRequired(),
   });
 
   const handleEditClick = async (values: any) => {
@@ -132,6 +135,9 @@ const FishEditDetail: React.FC = () => {
       fileToUpload.append("qty", values.qty.toString());
       fileToUpload.append("price", values.price.toString());
       fileToUpload.append("category", values.category);
+      if (values.referral_code) {
+        fileToUpload.append("referral_code", values.referral_code);
+      }
 
       const token = localStorage.getItem('access_token');
       const response = await axios.put(`${API_URL}/products/${id}`,
@@ -156,6 +162,7 @@ const FishEditDetail: React.FC = () => {
       const result = await response;
       console.log("Product added successfully", result);
       alert("Product added successfully!");
+      router.push("/seller");
     } catch (error) {
       console.error("Error submitting the form", error);
       alert("An error occurred while adding the product.");
@@ -274,7 +281,8 @@ const FishEditDetail: React.FC = () => {
               location: product.location,
               nationality: product.nationality,
               size: product.size,
-              description: product.description
+              description: product.description,
+              referral_code: product.referral_code
             }}
             validationSchema={validationSchema}
             onSubmit={handleEditClick}
@@ -317,7 +325,7 @@ const FishEditDetail: React.FC = () => {
                     className="text-base text-gray-700 w-full p-2 border border-gray-300 rounded-lg"
                   />
                   <ErrorMessage
-                    name="category"
+                    name="description"
                     component="div"
                     className="text-red-600"
                   />
@@ -421,6 +429,24 @@ const FishEditDetail: React.FC = () => {
                   />
                   <ErrorMessage
                     name="size"
+                    component="div"
+                    className="text-red-600"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="size" className="mb-2 font-medium text-gray-700">
+                    Referral code (Optional)
+                  </label>
+                  <Field
+                    id="referral_code"
+                    name="referral_code"
+                    type="text"
+                    maxLength={5}
+                    className="text-base text-gray-700 w-full p-2 border border-gray-300 rounded-lg"
+                  />
+                  <ErrorMessage
+                    name="referral_code"
                     component="div"
                     className="text-red-600"
                   />
