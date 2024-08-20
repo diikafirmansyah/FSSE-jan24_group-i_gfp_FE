@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { motion } from "framer-motion";
-import { FaMapMarkerAlt, FaFish } from "react-icons/fa";
-import { AiOutlineTag } from "react-icons/ai";
-import { BiRuler } from "react-icons/bi";
-import Button from "@/components/Button";
 import Loading from "@/components/Loading";
 import useAuth from "@/middleware/auth";
 import { API_URL } from "@/config";
@@ -37,6 +33,7 @@ interface Product {
   updated_at: string | null;
   nationality: string;
   size: string;
+  referral_code: string;
 }
 
 const FishEditDetail: React.FC = () => {
@@ -46,6 +43,7 @@ const FishEditDetail: React.FC = () => {
 
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
+  const [fileName, setFileName] = useState('');
 
   useEffect(() => {
     if (!id) return; // Wait for id to be defined
@@ -104,6 +102,7 @@ const FishEditDetail: React.FC = () => {
   const flagUrl = isoCode ? `https://flagcdn.com/w40/${isoCode}.png` : null;
 
   const validationSchema = Yup.object().shape({
+    image: Yup.mixed().notRequired(),
     description: Yup.string().required("Description is required"),
     price: Yup.number()
       .required("Price is required")
@@ -123,9 +122,9 @@ const FishEditDetail: React.FC = () => {
     console.log("Form values:", values);
     try {
       let fileToUpload = new FormData();
-      // if (values.image) {
-      //   fileToUpload.append("image", values.image);
-      // }
+      if (values.image) {
+        fileToUpload.append("image", values.image);
+      }
       fileToUpload.append("size", values.size);
       fileToUpload.append("description", values.description);
       fileToUpload.append("location", values.location);
@@ -163,6 +162,21 @@ const FishEditDetail: React.FC = () => {
     }
   };
 
+  const handleImageUpload = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+    setFieldValue: (field: string, value: any) => void,
+    setFileName: (name: string) => void
+  ) => {
+    const file = event.target.files?.[0];
+
+    if (file) {
+      setFieldValue("image", file);
+      setFileName(file.name);
+    } else {
+      setFileName('');
+    }
+  };
+
   return (
     <motion.div
       className="container max-w-5xl mx-auto py-12 px-4"
@@ -192,6 +206,32 @@ const FishEditDetail: React.FC = () => {
         </motion.div>
       </button>
 
+      <motion.h1
+        className="text-5xl font-extrabold text-gray-900 mb-8 flex items-center space-x-4"
+        initial={{ y: -20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6 }}
+        style={{
+          background: "linear-gradient(to right, #ff7e5f, #feb47b)",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+        }}
+      >
+        <span>{product.description}</span>
+        {flagUrl ? (
+          <motion.img
+            src={flagUrl}
+            alt={product.nationality}
+            className="w-10 h-10 rounded-full shadow-md"
+            title={product.nationality}
+            initial={{ scale: 0.8 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 0.3 }}
+          />
+        ) : (
+          <span className="text-sm text-gray-500">(No flag available)</span>
+        )}
+      </motion.h1>
       <div className="flex flex-col lg:flex-row items-center gap-12">
         {product.image ? (
           <motion.div
@@ -224,35 +264,10 @@ const FishEditDetail: React.FC = () => {
         )}
 
         <div className="lg:w-1/2 space-y-6 bg-white p-6 rounded-lg shadow-lg border-t-4 border-b-4 border-gradient-to-r from-blue-500 to-teal-500">
-          <motion.h1
-            className="text-5xl font-extrabold text-gray-900 mb-8 flex items-center space-x-4"
-            initial={{ y: -20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.6 }}
-            style={{
-              background: "linear-gradient(to right, #ff7e5f, #feb47b)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-            }}
-          >
-            <span>{product.description}</span>
-            {flagUrl ? (
-              <motion.img
-                src={flagUrl}
-                alt={product.nationality}
-                className="w-10 h-10 rounded-full shadow-md"
-                title={product.nationality}
-                initial={{ scale: 0.8 }}
-                animate={{ scale: 1 }}
-                transition={{ duration: 0.3 }}
-              />
-            ) : (
-              <span className="text-sm text-gray-500">(No flag available)</span>
-            )}
-          </motion.h1>
 
           <Formik
             initialValues={{
+              image: null,
               price: product.price,
               qty: product.qty,
               category: product.category,
@@ -265,10 +280,35 @@ const FishEditDetail: React.FC = () => {
             onSubmit={handleEditClick}
           >
             {({ values }) => (
-              <Form className="lg:w-1/2 space-y-6 bg-white p-6 rounded-lg shadow-lg border-t-4 border-b-4 border-gradient-to-r from-blue-500 to-teal-500">
+              <Form>
+                <div className="flex flex-col">
+                  <label htmlFor="image" className="mb-2 font-medium text-gray-700">
+                    Image
+                  </label>
+                  <Field
+                    id="image"
+                    name="image"
+                    type="file"
+                    component={({ field, form }: any) => (
+                      <input
+                        id={field.id}
+                        name={field.name}
+                        type="file"
+                        onChange={(event) => handleImageUpload(event, form.setFieldValue, setFileName)}
+                        className="border border-gray-300 rounded-md p-2"
+                      />
+                    )}
+                  />
+                  {fileName && (
+                    <div className="mt-2 text-gray-700">
+                      Selected file: <strong>{fileName}</strong>
+                    </div>
+                  )}
+                  <ErrorMessage name="image" component="div" className="text-red-600" />
+                </div>
                 <div>
-                  <label htmlFor="description" className="text-lg text-gray-600">
-                    Description:
+                  <label htmlFor="description" className="mb-2 font-medium text-gray-700">
+                    Description
                   </label>
                   <Field
                     id="description"
@@ -284,8 +324,8 @@ const FishEditDetail: React.FC = () => {
                 </div>
 
                 <div>
-                  <label htmlFor="price" className="text-lg text-gray-600">
-                    Price:
+                  <label htmlFor="price" className="mb-2 font-medium text-gray-700">
+                    Price
                   </label>
                   <Field
                     id="price"
@@ -301,8 +341,8 @@ const FishEditDetail: React.FC = () => {
                 </div>
 
                 <div>
-                  <label htmlFor="qty" className="text-lg text-gray-600">
-                    Quantity:
+                  <label htmlFor="qty" className="mb-2 font-medium text-gray-700">
+                    Quantity
                   </label>
                   <Field
                     id="qty"
@@ -319,8 +359,8 @@ const FishEditDetail: React.FC = () => {
                 </div>
 
                 <div>
-                  <label htmlFor="category" className="text-lg text-gray-600">
-                    Category:
+                  <label htmlFor="category" className="mb-2 font-medium text-gray-700">
+                    Category
                   </label>
                   <Field
                     id="category"
@@ -336,8 +376,8 @@ const FishEditDetail: React.FC = () => {
                 </div>
 
                 <div>
-                  <label htmlFor="location" className="text-lg text-gray-600">
-                    Location:
+                  <label htmlFor="location" className="mb-2 font-medium text-gray-700">
+                    Location
                   </label>
                   <Field
                     id="location"
@@ -353,8 +393,8 @@ const FishEditDetail: React.FC = () => {
                 </div>
 
                 <div>
-                  <label htmlFor="nationality" className="text-lg text-gray-600">
-                    Nationality:
+                  <label htmlFor="nationality" className="mb-2 font-medium text-gray-700">
+                    Nationality
                   </label>
                   <Field
                     id="nationality"
@@ -370,8 +410,8 @@ const FishEditDetail: React.FC = () => {
                 </div>
 
                 <div>
-                  <label htmlFor="size" className="text-lg text-gray-600">
-                    Size:
+                  <label htmlFor="size" className="mb-2 font-medium text-gray-700">
+                    Size
                   </label>
                   <Field
                     id="size"
@@ -386,7 +426,9 @@ const FishEditDetail: React.FC = () => {
                   />
                 </div>
 
-                <button type="submit">Save Edit</button>
+                <button type="submit" className="mt-2 px-4 py-2 bg-blue-500 text-white rounded transform transition-transform duration-300 hover:bg-blue-700 hover:scale-105">
+                  Save Edit
+                </button>
               </Form>
             )}
           </Formik>
