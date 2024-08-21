@@ -1,37 +1,64 @@
-import React from "react";
-import { useEffect, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React from 'react';
+import { useEffect, useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { API_URL } from '@/config';
 
 const Footer: React.FC = () => {
   const [isClient, setIsClient] = useState(false);
-
+  const [email, setEmail] = useState<string>("");
+ 
   useEffect(() => {
-    setIsClient(true);
-  }, []);
+    setIsClient(true)
+  }, [])
+
+  const onChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(event.target.value);
+  };
+
+  const handleSubmit = async () => {
+    const formData = new URLSearchParams();
+    formData.append("email", email);
+
+    const response = await fetch(`${API_URL}/subscribe`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: formData.toString(),
+    });
+    
+    try {
+      if (!response.ok) {
+        alert("Subscribe Failed!");
+      } else {
+        alert("Thank you for subscribing!");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <footer className="bg-blue-900 text-white py-10">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
-            <h2 className="text-2xl font-bold mb-4">Aquafish</h2>
+            <h2 className="text-2xl font-bold mb-4">AquaFish</h2>
             <p className="mb-4">High-quality fish and aquatic supplies</p>
-            <form className="flex flex-col">
-              <label htmlFor="email" className="mb-2">
-                Subscribe to our newsletter
-              </label>
+            <div className="flex flex-col">
+              <label htmlFor="email" className="mb-2">Subscribe to our newsletter</label>
               <input
                 type="email"
                 id="email"
                 placeholder="Enter your email"
+                value={email}
+                onChange={onChangeEmail}
                 className="p-2 mb-4 rounded text-black"
               />
-              <button
-                type="submit"
-                className="bg-blue-700 hover:bg-blue-600 py-2 rounded"
-              >
+              <button onClick={handleSubmit} className="bg-blue-700 hover:bg-blue-600 py-2 rounded">
                 Subscribe
               </button>
-            </form>
+            </div>
           </div>
           <div>
             <h3 className="text-lg font-semibold mb-4">Quick Links</h3>

@@ -1,16 +1,56 @@
-import React, { useState } from "react";
-
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { API_URL } from '@/config';
 import { TiShoppingCart } from "react-icons/ti";
-
+        
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    const token = localStorage.getItem('access_token');
+    setIsLoggedIn(!!token); // Check if token exists, indicating user is logged in
+  }, []);
 
   const toggleMenu = () => {
     setIsOpen((prev) => !prev);
   };
 
+  const handleLogout = async () => {
+    const token = localStorage.getItem('access_token');
+    try {
+      const response = await fetch(`${API_URL}/users/logout`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Authorization": "Bearer " + token
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      console.log(result);
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('role');
+      alert("Logout success!");
+      router.push('/');
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('role');
+      router.push('/');
+    }
+    localStorage.removeItem('access_token');
+    setIsLoggedIn(false);
+    router.push('/');
+  };
+
   return (
-    <nav className="bg-gray-800 shadow-lg sticky top-0 z-50">
+    <nav className="bg-blue-900 shadow-lg sticky top-0 z-50">
       <div className="container mx-auto flex items-center justify-between p-4 md:p-6">
         <div className="flex items-center space-x-4">
           <img
@@ -19,41 +59,24 @@ const Navbar: React.FC = () => {
             className="h-12 w-auto transition-transform duration-300 hover:scale-110"
           />
           <div className="text-white text-2xl font-bold">
-            <a
-              href="/"
-              className="hover:text-gray-300 transition-colors duration-300"
-            >
-              AquaFish
-            </a>
+            <a href="/" className="hover:text-gray-300 transition-colors duration-300">LautLestari</a>
           </div>
         </div>
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex space-x-8">
-          <a
-            href="/dashboard"
-            className="text-white hover:text-gray-300 transition-colors duration-300"
-          >
-            Dashboard
-          </a>
-          <a
-            href="/marketplace"
-            className="text-white hover:text-gray-300 transition-colors duration-300"
-          >
-            Marketplace
-          </a>
-          <a
-            href="/about"
-            className="text-white hover:text-gray-300 transition-colors duration-300"
-          >
-            About
-          </a>
-          <a
-            href="/login"
-            className="text-white hover:text-gray-300 transition-colors duration-300"
-          >
-            Login
-          </a>
+          <a href="/dashboard" className="text-white hover:text-gray-300 transition-colors duration-300">Dashboard</a>
+          <a href="/marketplace" className="text-white hover:text-gray-300 transition-colors duration-300">Marketplace</a>
+          <a href="/company" className="text-white hover:text-gray-300 transition-colors duration-300">Company</a>
+          {isLoggedIn ? (
+            <button
+              onClick={handleLogout}
+              className="text-white hover:text-red-400 transition-colors duration-300">
+              Logout
+            </button>
+          ) : (
+            <a href="/login" className="text-white hover:text-gray-300 transition-colors duration-300">Login</a>
+          )}
           <a
             href="/cart"
             className="text-white hover:text-gray-300 transition-colors duration-300 mt-1"
@@ -88,38 +111,23 @@ const Navbar: React.FC = () => {
       </div>
 
       {/* Mobile Menu */}
-      <div className={`md:hidden ${isOpen ? "block" : "hidden"} bg-gray-700`}>
+      <div
+        className={`md:hidden ${isOpen ? 'block' : 'hidden'} bg-gray-700`}
+      >
         <div className="px-4 py-3 space-y-1">
-          <a
-            href="/company"
-            className="block text-white hover:text-gray-300 transition-colors duration-300"
-          >
-            Company
-          </a>
-          <a
-            href="/marketplace"
-            className="block text-white hover:text-gray-300 transition-colors duration-300"
-          >
-            Marketplace
-          </a>
-          <a
-            href="/products"
-            className="block text-white hover:text-gray-300 transition-colors duration-300"
-          >
-            Products
-          </a>
-          <a
-            href="/cart"
-            className="block text-white hover:text-gray-300 transition-colors duration-300"
-          >
-            Cart
-          </a>
-          <a
-            href="/login"
-            className="block text-white hover:text-gray-300 transition-colors duration-300"
-          >
-            Login
-          </a>
+          <a href="/dashboard" className="block text-white hover:text-gray-300 transition-colors duration-300">Dashboard</a>
+          <a href="/cart" className="block text-white hover:text-gray-300 transition-colors duration-300">Cart</a>
+          <a href="/marketplace" className="block text-white hover:text-gray-300 transition-colors duration-300">Marketplace</a>
+          <a href="/company" className="block text-white hover:text-gray-300 transition-colors duration-300">Company</a>
+          {isLoggedIn ? (
+            <button
+              onClick={handleLogout}
+              className="w-full text-left block text-white hover:text-red-400 transition-colors duration-300">
+              Logout
+            </button>
+          ) : (
+            <a href="/login" className="block text-white hover:text-gray-300 transition-colors duration-300">Login</a>
+          )}
         </div>
       </div>
     </nav>

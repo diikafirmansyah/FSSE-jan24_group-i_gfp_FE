@@ -2,29 +2,32 @@
 import React from "react";
 
 interface ButtonProps {
-  label: string;
-  onClick: () => void;
+    label: string;
+    onClick: () => void;
+    disabled?: boolean;
+    className?: string;
 }
 
-const Button: React.FC<ButtonProps> = ({ label, onClick }) => {
-  if (label == "Logout") {
+const Button: React.FC<ButtonProps> = ({ label, onClick, disabled, className }) => {
+    if (label == "Logout") {
+      return (
+        <button
+          onClick={onClick}
+          className="min-w-[300px] px-4 py-2 bg-red-500 text-white rounded transform transition-transform duration-300 hover:bg-red-700 hover:scale-105"
+        >
+          {label}
+        </button>
+      );
+    }
     return (
-      <button
-        onClick={onClick}
-        className="min-w-[300px] px-4 py-2 bg-red-500 text-white rounded transform transition-transform duration-300 hover:bg-red-700 hover:scale-105"
-      >
-        {label}
-      </button>
+        <button
+            onClick={onClick}
+            disabled={disabled}
+            className={`min-w-[300px] px-4 py-2 bg-blue-500 text-white rounded transform transition-transform duration-300 hover:bg-blue-700 hover:scale-105 ${className} ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+        >
+            {label}
+        </button>
     );
-  }
-  return (
-    <button
-      onClick={onClick}
-      className="min-w-[300px] px-4 py-2 bg-blue-500 text-white rounded transform transition-transform duration-300 hover:bg-blue-700 hover:scale-105"
-    >
-      {label}
-    </button>
-  );
 };
 
 export default Button;

@@ -16,7 +16,7 @@ const Register = () => {
 	const [email, setEmail] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
 	const [phoneNumber, setPhoneNumber] = useState<string>('');
-
+	
 	const [visible, setVisible] = useState<boolean>(true);
 
 	const initialValues = {
