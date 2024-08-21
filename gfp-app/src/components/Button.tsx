@@ -1,5 +1,5 @@
 // components/Button.tsx
-import React from 'react';
+import React from "react";
 
 interface ButtonProps {
   label: string;
@@ -7,15 +7,15 @@ interface ButtonProps {
 }
 
 const Button: React.FC<ButtonProps> = ({ label, onClick }) => {
-  if (label == 'Logout') {
+  if (label == "Logout") {
     return (
-    <button
-      onClick={onClick}
-      className="min-w-[300px] px-4 py-2 bg-red-500 text-white rounded transform transition-transform duration-300 hover:bg-red-700 hover:scale-105"
-    >
-      {label}
-    </button>
-    )
+      <button
+        onClick={onClick}
+        className="min-w-[300px] px-4 py-2 bg-red-500 text-white rounded transform transition-transform duration-300 hover:bg-red-700 hover:scale-105"
+      >
+        {label}
+      </button>
+    );
   }
   return (
     <button
