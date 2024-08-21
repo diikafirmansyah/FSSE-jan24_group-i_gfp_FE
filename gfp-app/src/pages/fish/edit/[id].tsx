@@ -5,6 +5,7 @@ import Loading from "@/components/Loading";
 import useAuth from "@/middleware/auth";
 import { API_URL } from "@/config";
 import { Formik, Field, Form, ErrorMessage } from "formik";
+import imageCompression from "browser-image-compression";
 import * as Yup from "yup";
 import axios from "axios";
 
@@ -200,8 +201,18 @@ const FishEditDetail: React.FC = () => {
     const file = event.target.files?.[0];
 
     if (file) {
-      setFieldValue("image", file);
-      setFileName(file.name);
+      const options = {
+        maxSizeMB: 1,
+        maxWidthOrHeight: 1920,
+      };
+
+      try {
+        const compressedFile = await imageCompression(file, options);
+        setFieldValue("image", compressedFile);
+        setFileName(file.name);
+      } catch (error) {
+        console.error("Image compression failed:", error);
+      }
     } else {
       setFileName('');
     }

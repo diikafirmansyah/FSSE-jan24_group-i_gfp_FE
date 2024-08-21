@@ -93,19 +93,17 @@ const AddProductForm: React.FC = () => {
     const file = event.target.files?.[0];
 
     if (file) {
-      formik.setFieldValue("image", file);
-      // Image compression if needed
-      // const options = {
-      //   maxSizeMB: 1, // Maximum file size in MB
-      //   maxWidthOrHeight: 1920, // Maximum width or height in pixels
-      // };
+      const options = {
+        maxSizeMB: 1,
+        maxWidthOrHeight: 1920,
+      };
 
-      // try {
-      //   const compressedFile = await imageCompression(file, options);
-      //   formik.setFieldValue("image", compressedFile);
-      // } catch (error) {
-      //   console.error("Image compression failed:", error);
-      // }
+      try {
+        const compressedFile = await imageCompression(file, options);
+        formik.setFieldValue("image", compressedFile);
+      } catch (error) {
+        console.error("Image compression failed:", error);
+      }
     }
   };
 
