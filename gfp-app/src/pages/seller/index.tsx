@@ -5,8 +5,6 @@ import Filter from "@/components/FilterComponent";
 import useAuth from "@/middleware/auth";
 import { API_URL } from "@/config";
 
-
-
 interface Product {
   id: number;
   image: string | null;
@@ -22,7 +20,6 @@ interface Product {
 }
 
 const categories = ["Local", "Import"];
-
 const Seller: React.FC = () => {
   useAuth();
 

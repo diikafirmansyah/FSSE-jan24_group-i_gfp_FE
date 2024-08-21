@@ -4,7 +4,7 @@ import type { AppProps } from 'next/app';
 import Footer from '@/components/footer';
 import { config } from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
-import '@/lib/fontawesome'; // Adjust the path as needed
+import '@/lib/fontawesome'; 
 import Navbar from '@/components/navbar'
 config.autoAddCss = false;
 

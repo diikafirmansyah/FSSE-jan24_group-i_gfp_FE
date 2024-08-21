@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useRouter } from 'next/router';
-
 import { IoEyeSharp } from "react-icons/io5";
 import { FaEyeSlash } from "react-icons/fa";
 import { FaUser } from "react-icons/fa";
@@ -10,7 +9,6 @@ import { IoIosMail } from "react-icons/io";
 import { GiPadlock } from "react-icons/gi";
 import { BsPhone } from "react-icons/bs";
 import { API_URL } from '@/config';
-
 
 const Register = () => {
 
@@ -56,8 +54,6 @@ const Register = () => {
 
 	const handleRegister = async (username: string, email: string, password: string, phoneNumber: string, role: string) => {
 
-		console.log('Register', username, email, password, phoneNumber, role);
-
 		const formData = new URLSearchParams();
 		formData.append("email", email);
 		formData.append("password", password);
@@ -72,20 +68,18 @@ const Register = () => {
 			},
 			body: formData.toString(),
 		})
-		console.log('Response register', response);
 		const result = await response.json()
 
 		try {
 			if (!response.ok) {
 				alert('Registration Failed!')
 			} else {
-				console.log('Response success', result);
 				alert('Registration success!')
 				router.push('/login')
 			}
-		} catch (error) {
-			console.log(error);
-		}
+		} catch (error){
+			console.error(error)
+		} 
 	};
 
 
@@ -241,8 +235,6 @@ const Register = () => {
 				</div>
 			</div>
 		</section>
-	
-
 	);
 };
 

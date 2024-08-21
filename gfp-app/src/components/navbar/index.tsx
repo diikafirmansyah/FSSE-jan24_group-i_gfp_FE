@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { API_URL } from '@/config';
-
+import { TiShoppingCart } from "react-icons/ti";
+        
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -13,7 +14,7 @@ const Navbar: React.FC = () => {
   }, []);
 
   const toggleMenu = () => {
-    setIsOpen(prev => !prev);
+    setIsOpen((prev) => !prev);
   };
 
   const handleLogout = async () => {
@@ -51,7 +52,6 @@ const Navbar: React.FC = () => {
   return (
     <nav className="bg-blue-900 shadow-lg sticky top-0 z-50">
       <div className="container mx-auto flex items-center justify-between p-4 md:p-6">
-        {/* Logo and Brand Name */}
         <div className="flex items-center space-x-4">
           <img
             src="/assets/logo.png"
@@ -77,6 +77,12 @@ const Navbar: React.FC = () => {
           ) : (
             <a href="/login" className="text-white hover:text-gray-300 transition-colors duration-300">Login</a>
           )}
+          <a
+            href="/cart"
+            className="text-white hover:text-gray-300 transition-colors duration-300 mt-1"
+          >
+            <TiShoppingCart size={22} />
+          </a>
         </div>
 
         {/* Mobile Menu Button */}
@@ -97,7 +103,7 @@ const Navbar: React.FC = () => {
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth="2"
-                d={isOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16m-7 6h7'}
+                d={isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16m-7 6h7"}
               ></path>
             </svg>
           </button>

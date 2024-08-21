@@ -8,7 +8,7 @@ export default function Home() {
           className="object-cover w-full blur-md opacity-50"
         />
       </div>
-   
+      
       <div className="relative isolate px-6 pt-14 lg:px-8">
         <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
           <div className="text-center">
@@ -35,7 +35,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-
       <section className="px-4 sm:px-8 lg:px-32">
         <div className="relative text-center">
           <h2 id="on-sale" className="font-bold text-2xl sm:text-3xl leading-8 text-gray-300">
@@ -59,7 +58,7 @@ export default function Home() {
           </p>
         </div>
       </section>
-
+      
       <section className="relative bg-gray-800 py-16">
         <div className="text-center">
           <h2 className="text-3xl font-bold text-white">Learn How to Care for Your Fish</h2>
@@ -76,14 +75,13 @@ export default function Home() {
           </div>
         </div>
       </section>
-
+      
       <section>
         <div className="relative px-12 mb-4">
           <h2 className="font-bold text-3xl leading-8 text-gray-300 text-center">
             Join us now!
           </h2>
         </div>
-
         <div className="relative flex flex-wrap justify-center px-12 gap-8 pb-8">
           <div className="relative block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
