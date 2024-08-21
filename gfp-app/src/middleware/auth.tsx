@@ -1,18 +1,43 @@
-import { useEffect } from "react";
-import { useRouter } from "next/router";
+// src/middleware/auth.ts
 
-const useAuth = (): null => {
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+
+const useAuth = () => {
+    const [user, setUser] = useState<{ username: string } | null>(null);
     const router = useRouter();
-    
+
     useEffect(() => {
-        const token = localStorage.getItem('access_token');
+        const fetchUser = async () => {
+            const token = localStorage.getItem('access_token');
+            if (token) {
+                try {
+                    const response = await fetch("http://127.0.0.1:5000/users/me", {
+                        method: "GET",
+                        headers: {
+                            "Authorization": `Bearer ${token}`,
+                        },
+                    });
 
-        if (!token) {
-            router.push('/login');
-        }
-    }, []);
+                    if (response.ok) {
+                        const userData = await response.json();
+                        setUser(userData);
+                    } else {
+                        router.push('/login');
+                    }
+                } catch (error) {
+                    console.error("Error fetching user data:", error);
+                    router.push('/login');
+                }
+            } else {
+                router.push('/login');
+            }
+        };
 
-    return null;
+        fetchUser();
+    }, [router]);
+
+    return user;
 };
 
 export default useAuth;
