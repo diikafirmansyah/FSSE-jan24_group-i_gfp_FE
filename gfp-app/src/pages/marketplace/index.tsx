@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import SearchBar from "@/components/SearchBar";
 import FishCard from "@/components/FishCard";
-import Filter from "@/components/Filter";
+import Filter from "@/components/FilterComponent";
 import useAuth from "@/middleware/auth";
 import { API_URL } from "@/config";
 
