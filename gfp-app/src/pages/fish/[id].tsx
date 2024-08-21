@@ -19,7 +19,6 @@ const nationalityMap: { [key: string]: string } = {
   japan: "jp",
   indonesia: "id",
   india: "in",
-  // Add more mappings as needed
 };
 
 interface Product {
@@ -47,7 +46,7 @@ const FishDetail: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!id) return; // Wait for id to be defined
+    if (!id) return; 
 
     const fetchProduct = async () => {
       const token = localStorage.getItem('access_token');
@@ -114,10 +113,7 @@ const FishDetail: React.FC = () => {
       console.error("Error adding product to cart:", error);
       alert("Failed to add product to cart");
     }
-    // console.log(`Adding ${quantity} of product ${product.id} to the cart`);
   };
-
-
 
   return (
     <motion.div

@@ -1,4 +1,3 @@
-// pages/add-product.tsx
 import { NextPage } from 'next';
 import AddProductForm from '@/components/AddProductForm';
 import {useEffect} from 'react';

@@ -3,10 +3,8 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useRouter } from "next/router";
 import { API_URL } from "@/config";
-
 import { IoEyeSharp } from "react-icons/io5";
 import { FaEyeSlash } from "react-icons/fa";
-import { FaUser } from "react-icons/fa";
 import { IoIosMail } from "react-icons/io";
 import { GiPadlock } from "react-icons/gi";
 
@@ -50,20 +48,18 @@ const Login = () => {
       },
       body: formData.toString(),
     });
-    console.log("Response login", response);
-    const result = await response.json();
 
+    const result = await response.json();
     try {
       if (!response.ok) {
         alert("Login Failed!");
       } else {
-        console.log("Response success", result);
         localStorage.setItem('access_token', result.access_token);
         alert("Login success!");
         router.push('/dashboard');
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 

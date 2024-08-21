@@ -15,8 +15,8 @@ interface Product {
   location: string;
   created_at: string;
   updated_at: string | null;
-  nationality: string; // Added nationality field
-  size: string; // Added size field
+  nationality: string; 
+  size: string; 
 }
 
 const categories = ["Local", "Import"];
@@ -101,8 +101,8 @@ const Marketplace: React.FC = () => {
               description={product.description}
               category={product.category}
               location={product.location}
-              nationality={product.nationality} // Pass nationality to FishCard
-              size={product.size} // Pass size to FishCard
+              nationality={product.nationality} 
+              size={product.size} 
             />
           ))
         ) : (
