@@ -1,17 +1,4 @@
-import { useState } from "react";
-import { Dialog, DialogPanel } from "@headlessui/react";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-
 export default function Home() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
-
-  const navigation = [
-    { name: "Product", href: "#" },
-    { name: "Features", href: "#" },
-    { name: "Marketplace", href: "#" },
-    { name: "Company", href: "#" },
-  ];
-
   return (
     <main className="relative min-h-screen">
       <div className="absolute inset-0 bg-gray-900 bg-scroll">
@@ -33,7 +20,7 @@ export default function Home() {
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <a
-                href="#"
+                href="#on-sale"
                 className="rounded-md bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Get started
@@ -51,7 +38,7 @@ export default function Home() {
 
       <section className="px-4 sm:px-8 lg:px-32">
         <div className="relative text-center">
-          <h2 className="font-bold text-2xl sm:text-3xl leading-8 text-gray-300">
+          <h2 id="on-sale" className="font-bold text-2xl sm:text-3xl leading-8 text-gray-300">
             ON SALE NOW
           </h2>
           <img

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { API_URL } from '@/config';
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,7 +16,33 @@ const Navbar: React.FC = () => {
     setIsOpen(prev => !prev);
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    const token = localStorage.getItem('access_token');
+    try {
+      const response = await fetch(`${API_URL}/users/logout`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Authorization": "Bearer " + token
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      console.log(result);
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('role');
+      alert("Logout success!");
+      router.push('/');
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('role');
+      router.push('/');
+    }
     localStorage.removeItem('access_token');
     setIsLoggedIn(false);
     router.push('/');
@@ -26,24 +53,24 @@ const Navbar: React.FC = () => {
       <div className="container mx-auto flex items-center justify-between p-4 md:p-6">
         {/* Logo and Brand Name */}
         <div className="flex items-center space-x-4">
-          <img 
-            src="/assets/logo.png" 
-            alt="AquaFish Logo" 
-            className="h-12 w-auto transition-transform duration-300 hover:scale-110" 
+          <img
+            src="/assets/logo.png"
+            alt="AquaFish Logo"
+            className="h-12 w-auto transition-transform duration-300 hover:scale-110"
           />
           <div className="text-white text-2xl font-bold">
             <a href="/" className="hover:text-gray-300 transition-colors duration-300">LautLestari</a>
           </div>
         </div>
-        
+
         {/* Desktop Navigation */}
         <div className="hidden md:flex space-x-8">
           <a href="/dashboard" className="text-white hover:text-gray-300 transition-colors duration-300">Dashboard</a>
           <a href="/marketplace" className="text-white hover:text-gray-300 transition-colors duration-300">Marketplace</a>
           <a href="/company" className="text-white hover:text-gray-300 transition-colors duration-300">Company</a>
           {isLoggedIn ? (
-            <button 
-              onClick={handleLogout} 
+            <button
+              onClick={handleLogout}
               className="text-white hover:text-red-400 transition-colors duration-300">
               Logout
             </button>
@@ -54,9 +81,9 @@ const Navbar: React.FC = () => {
 
         {/* Mobile Menu Button */}
         <div className="md:hidden flex items-center">
-          <button 
-            onClick={toggleMenu} 
-            className="text-white focus:outline-none transition-transform duration-300 hover:scale-110" 
+          <button
+            onClick={toggleMenu}
+            className="text-white focus:outline-none transition-transform duration-300 hover:scale-110"
             aria-label={isOpen ? "Close menu" : "Open menu"}
           >
             <svg
@@ -78,7 +105,7 @@ const Navbar: React.FC = () => {
       </div>
 
       {/* Mobile Menu */}
-      <div 
+      <div
         className={`md:hidden ${isOpen ? 'block' : 'hidden'} bg-gray-700`}
       >
         <div className="px-4 py-3 space-y-1">
@@ -87,8 +114,8 @@ const Navbar: React.FC = () => {
           <a href="/marketplace" className="block text-white hover:text-gray-300 transition-colors duration-300">Marketplace</a>
           <a href="/company" className="block text-white hover:text-gray-300 transition-colors duration-300">Company</a>
           {isLoggedIn ? (
-            <button 
-              onClick={handleLogout} 
+            <button
+              onClick={handleLogout}
               className="w-full text-left block text-white hover:text-red-400 transition-colors duration-300">
               Logout
             </button>
