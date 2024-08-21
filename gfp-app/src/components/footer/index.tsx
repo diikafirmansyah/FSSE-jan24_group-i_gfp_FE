@@ -13,7 +13,7 @@ const Footer: React.FC = () => {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
-            <h2 className="text-2xl font-bold mb-4">Aquafish</h2>
+            <h2 className="text-2xl font-bold mb-4">AquaFish</h2>
             <p className="mb-4">High-quality fish and aquatic supplies</p>
             <form className="flex flex-col">
               <label htmlFor="email" className="mb-2">Subscribe to our newsletter</label>
