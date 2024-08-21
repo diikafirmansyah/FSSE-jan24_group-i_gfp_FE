@@ -15,7 +15,6 @@ const nationalityMap: { [key: string]: string } = {
   india: "in",
   thailand: "th",
   china: "cn",
-  // Add more mappings as needed
 };
 
 interface Product {
@@ -41,7 +40,8 @@ const FishCard: React.FC<Product> = ({
   size,
   isSellerPage = false,
 }) => {
-  const isoCode = nationalityMap[nationality.toLowerCase()] || nationality.toLowerCase();
+  const isoCode =
+    nationalityMap[nationality.toLowerCase()] || nationality.toLowerCase();
   const flagUrl = `https://flagcdn.com/w40/${isoCode}.png`;
 
   return (

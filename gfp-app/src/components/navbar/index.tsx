@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 import { TiShoppingCart } from "react-icons/ti";
 
@@ -6,38 +6,67 @@ const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
-    setIsOpen(prev => !prev);
+    setIsOpen((prev) => !prev);
   };
 
   return (
     <nav className="bg-gray-800 shadow-lg sticky top-0 z-50">
       <div className="container mx-auto flex items-center justify-between p-4 md:p-6">
-        {/* Logo and Brand Name */}
         <div className="flex items-center space-x-4">
-          <img 
-            src="/assets/logo.png" 
-            alt="AquaFish Logo" 
-            className="h-12 w-auto transition-transform duration-300 hover:scale-110" 
+          <img
+            src="/assets/logo.png"
+            alt="AquaFish Logo"
+            className="h-12 w-auto transition-transform duration-300 hover:scale-110"
           />
           <div className="text-white text-2xl font-bold">
-            <a href="/" className="hover:text-gray-300 transition-colors duration-300">AquaFish</a>
+            <a
+              href="/"
+              className="hover:text-gray-300 transition-colors duration-300"
+            >
+              AquaFish
+            </a>
           </div>
         </div>
-        
+
         {/* Desktop Navigation */}
         <div className="hidden md:flex space-x-8">
-          <a href="/dashboard" className="text-white hover:text-gray-300 transition-colors duration-300">Dashboard</a>
-          <a href="/marketplace" className="text-white hover:text-gray-300 transition-colors duration-300">Marketplace</a>
-          <a href="/about" className="text-white hover:text-gray-300 transition-colors duration-300">About</a>
-          <a href="/login" className="text-white hover:text-gray-300 transition-colors duration-300">Login</a>
-          <a href="/cart" className="text-white hover:text-gray-300 transition-colors duration-300 mt-1"><TiShoppingCart size={22} /></a>
+          <a
+            href="/dashboard"
+            className="text-white hover:text-gray-300 transition-colors duration-300"
+          >
+            Dashboard
+          </a>
+          <a
+            href="/marketplace"
+            className="text-white hover:text-gray-300 transition-colors duration-300"
+          >
+            Marketplace
+          </a>
+          <a
+            href="/about"
+            className="text-white hover:text-gray-300 transition-colors duration-300"
+          >
+            About
+          </a>
+          <a
+            href="/login"
+            className="text-white hover:text-gray-300 transition-colors duration-300"
+          >
+            Login
+          </a>
+          <a
+            href="/cart"
+            className="text-white hover:text-gray-300 transition-colors duration-300 mt-1"
+          >
+            <TiShoppingCart size={22} />
+          </a>
         </div>
 
         {/* Mobile Menu Button */}
         <div className="md:hidden flex items-center">
-          <button 
-            onClick={toggleMenu} 
-            className="text-white focus:outline-none transition-transform duration-300 hover:scale-110" 
+          <button
+            onClick={toggleMenu}
+            className="text-white focus:outline-none transition-transform duration-300 hover:scale-110"
             aria-label={isOpen ? "Close menu" : "Open menu"}
           >
             <svg
@@ -51,7 +80,7 @@ const Navbar: React.FC = () => {
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth="2"
-                d={isOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16m-7 6h7'}
+                d={isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16m-7 6h7"}
               ></path>
             </svg>
           </button>
@@ -59,15 +88,38 @@ const Navbar: React.FC = () => {
       </div>
 
       {/* Mobile Menu */}
-      <div 
-        className={`md:hidden ${isOpen ? 'block' : 'hidden'} bg-gray-700`}
-      >
+      <div className={`md:hidden ${isOpen ? "block" : "hidden"} bg-gray-700`}>
         <div className="px-4 py-3 space-y-1">
-        <a href="/company" className="block text-white hover:text-gray-300 transition-colors duration-300">Company</a>
-        <a href="/marketplace" className="block text-white hover:text-gray-300 transition-colors duration-300">Marketplace</a>
-          <a href="/products" className="block text-white hover:text-gray-300 transition-colors duration-300">Products</a>
-          <a href="/cart" className="block text-white hover:text-gray-300 transition-colors duration-300">Cart</a>
-          <a href="/login" className="block text-white hover:text-gray-300 transition-colors duration-300">Login</a>
+          <a
+            href="/company"
+            className="block text-white hover:text-gray-300 transition-colors duration-300"
+          >
+            Company
+          </a>
+          <a
+            href="/marketplace"
+            className="block text-white hover:text-gray-300 transition-colors duration-300"
+          >
+            Marketplace
+          </a>
+          <a
+            href="/products"
+            className="block text-white hover:text-gray-300 transition-colors duration-300"
+          >
+            Products
+          </a>
+          <a
+            href="/cart"
+            className="block text-white hover:text-gray-300 transition-colors duration-300"
+          >
+            Cart
+          </a>
+          <a
+            href="/login"
+            className="block text-white hover:text-gray-300 transition-colors duration-300"
+          >
+            Login
+          </a>
         </div>
       </div>
     </nav>
