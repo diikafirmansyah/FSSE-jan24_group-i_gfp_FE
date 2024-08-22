@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
 import Slider from "react-slick";
 import FishCard from "../components/FishCard";
+import { API_URL } from "@/config";
 
 export default function Home() {
   const [fishData, setFishData] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    fetch('http://localhost:5000/products')
+    fetch(`${API_URL}/products`)
       .then((response) => response.json())
       .then((data) => {
         setFishData(data.products);
@@ -82,7 +83,7 @@ export default function Home() {
       {/* On Sale Section */}
       <section className="px-4 sm:px-8 lg:px-32">
         <div className="relative text-center">
-          <h2 id="on-sale" className="font-bold text-2xl sm:text-3xl leading-8 text-gray-300">
+          <h2 id="on-sale" className="font-bold text-2xl sm:text-3xl leading-8 text-gray-300 animate-bounce">
             ON SALE NOW
           </h2>
           {loading ? (
@@ -152,7 +153,7 @@ export default function Home() {
               1. Register
             </h5>
             <p className="font-normal text-gray-700">
-              Sign up now and become a part of the Aquafish community, where you can explore and purchase a wide variety of ornamental fish.
+              Sign up now and become a part of the LautLestari community, where you can explore and purchase a wide variety of ornamental fish.
             </p>
           </div>
 

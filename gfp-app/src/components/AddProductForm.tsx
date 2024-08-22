@@ -130,7 +130,7 @@ const AddProductForm: React.FC = () => {
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <form
         onSubmit={formik.handleSubmit}
-        className="space-y-4 p-6 bg-white shadow-md rounded-md w-full max-w-md"
+        className="space-y-4 p-6 bg-white shadow-md rounded-md w-full max-w-[19rem] sm:max-w-md"
       >
         <div className="flex flex-col">
           <label htmlFor="image" className="mb-2 font-medium text-gray-700">
@@ -141,7 +141,7 @@ const AddProductForm: React.FC = () => {
             name="image"
             type="file"
             onChange={handleImageUpload}
-            className="border border-gray-300 rounded-md p-2"
+            className="border border-gray-300 rounded-md p-2 sm:width-6"
           />
           {formik.errors.image ? (
             <div className="text-red-500 mt-1">{formik.errors.image}</div>
