@@ -2,17 +2,17 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 
 const useAuth = (): null => {
-    const router = useRouter();
+  const router = useRouter();
 
-    useEffect(() => {
-        const token = localStorage.getItem('access_token');
+  useEffect(() => {
+    const token = localStorage.getItem('access_token');
 
-        if (!token) {
-            router.push('/login');
-        }
-    }, []);
+    if (!token) {
+      router.push('/login');
+    }
+  }, []);
 
-    return null;
+  return null;
 };
 
 export default useAuth;
