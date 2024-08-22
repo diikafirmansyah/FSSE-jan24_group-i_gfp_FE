@@ -1,7 +1,5 @@
-// pages/index.tsx
 import React, { useState, useEffect } from "react";
 import Loading from "../../components/Loading";
-
 import CartCard from "../../components/CartCard";
 import { API_URL } from "@/config";
 import useAuth from "@/middleware/auth";
@@ -39,7 +37,6 @@ const Cart: React.FC = () => {
 
         const result = await response.json();
         setCartItems(result.cart_items || []);
-        console.log(result.cart_items);
       } catch (error) {
         console.error("Error fetching carts:", error);
         setError(error);

@@ -1,4 +1,3 @@
-// pages/index.tsx
 import { useState, useEffect } from "react";
 import Slider from "react-slick";
 import FishCard from "../components/FishCard";
@@ -48,13 +47,11 @@ export default function Home() {
       },
     ],
   };
-
   return (
     <main className="relative min-h-screen bg-background text-textPrimary">
       <div className="absolute inset-0 bg-gray-900 bg-fixed bg-cover bg-center" style={{ backgroundImage: "url('./assets/bg-register.jpg')" }}>
         <div className="absolute inset-0 bg-black opacity-50"></div>
       </div>
-
       <div className="relative px-6 pt-14 lg:px-8">
         <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
           <div className="text-center">
@@ -66,7 +63,7 @@ export default function Home() {
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <a
-                href="#"
+                href="#on-sale"
                 className="rounded-md bg-primary px-3.5 py-2.5 text-sm font-semibold text-white shadow-md transition-transform duration-300 transform hover:scale-105 hover:bg-blue-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Get started
@@ -85,7 +82,7 @@ export default function Home() {
       {/* On Sale Section */}
       <section className="px-4 sm:px-8 lg:px-32">
         <div className="relative text-center">
-          <h2 className="font-bold text-2xl sm:text-3xl leading-8 text-gray-300">
+          <h2 id="on-sale" className="font-bold text-2xl sm:text-3xl leading-8 text-gray-300">
             ON SALE NOW
           </h2>
           {loading ? (
@@ -149,7 +146,6 @@ export default function Home() {
             Join us now!
           </h2>
         </div>
-
         <div className="relative flex flex-wrap justify-center px-12 gap-8 pb-8">
           <div className="relative block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-md transition-transform duration-300 transform hover:scale-105 hover:shadow-xl">
             <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">

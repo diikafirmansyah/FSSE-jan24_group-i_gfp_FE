@@ -18,36 +18,34 @@ const Dashboard: React.FC = () => {
     const router = useRouter();
     const [role, setRole] = useState<string | null>(null);
     const [userData, setUserData] = useState<{ username: string } | null>(null);
-
+    
     useEffect(() => {
-        const fetchUserRole = async () => {
-            const token = localStorage.getItem('access_token');
-            if (token) {
-                try {
-                    const response = await fetch(`${API_URL}/users/me`, {
-                        method: 'GET',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': 'Bearer ' + token,
-                        },
-                    });
+		const fetchUserRole = async () => {
+			const token = localStorage.getItem('access_token');
+			if(token){
+				try{
+					const response = await fetch(`${API_URL}/users/me`,{
+						method: 'GET',
+						headers: {
+							"Content-Type": "application/x-www-form-urlencoded",
+							"Authorization": "Bearer " + token
+						},
+				});
 
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! Status: ${response.status}`);
-                    }
+				if(!response.ok){
+					throw new Error(`HTTP error! Status: ${response.status}`);
+				}
 
-                    const userData = await response.json();
-                    setRole(userData.role);
-                    localStorage.setItem('role', userData.role);
-                    setUserData({ username: userData.username });
-                } catch (error) {
-                    console.error('Error fetching user role:', error);
-                }
-            }
-        };
-
-        fetchUserRole();
-    }, []);
+				const userData = await response.json();
+					setRole(userData.role);
+					localStorage.setItem('role', userData.role);
+				}catch(error){
+				console.error("Error fetching user role:", error);
+				}
+			}
+		}
+		fetchUserRole();
+	}, [])
 
     const handleNavigation = (path: string) => {
         router.push(path);
@@ -59,7 +57,7 @@ const Dashboard: React.FC = () => {
             const response = await fetch(`${API_URL}/users/logout`, {
                 method: 'GET',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/x-www-form-urlencoded',
                     'Authorization': 'Bearer ' + token,
                 },
             });

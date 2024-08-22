@@ -1,4 +1,3 @@
-// pages/confirm.tsx
 import { NextPage } from "next";
 import ConfirmationCard from "@/components/ConfirmationCard";
 import { useEffect, useState } from "react";

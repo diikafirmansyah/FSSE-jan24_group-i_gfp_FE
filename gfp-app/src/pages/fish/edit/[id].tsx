@@ -18,7 +18,6 @@ const nationalityMap: { [key: string]: string } = {
   japan: "jp",
   indonesia: "id",
   india: "in",
-  // Add more mappings as needed
 };
 
 interface Product {
@@ -41,13 +40,12 @@ const FishEditDetail: React.FC = () => {
   useAuth();
   const router = useRouter();
   const { id } = router.query;
-
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
   const [fileName, setFileName] = useState('');
 
   useEffect(() => {
-    if (!id) return; // Wait for id to be defined
+    if (!id) return; 
 
     if (!localStorage.getItem("role")) {
       router.push("/login");
@@ -146,7 +144,6 @@ const FishEditDetail: React.FC = () => {
   };
 
   const handleEditClick = async (values: any) => {
-    console.log("Form values:", values);
     try {
       let fileToUpload = new FormData();
       if (values.image) {
@@ -184,7 +181,6 @@ const FishEditDetail: React.FC = () => {
       }
 
       const result = await response;
-      console.log("Product added successfully", result);
       alert("Product added successfully!");
       router.push("/seller");
     } catch (error) {

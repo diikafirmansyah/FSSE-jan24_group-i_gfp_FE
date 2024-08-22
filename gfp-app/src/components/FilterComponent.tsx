@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
 interface FilterProps {
-    categories: string[];
-    onFilterChange: (filters: { category: string; location: string }) => void;
+  categories: string[];
+  onFilterChange: (filters: { category: string; location: string }) => void;
 }
 
 const Filter: React.FC<FilterProps> = ({ categories, onFilterChange }) => {

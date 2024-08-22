@@ -1,5 +1,3 @@
-// src/middleware/auth.ts
-
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { API_URL } from '@/config';

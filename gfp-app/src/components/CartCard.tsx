@@ -1,6 +1,5 @@
 // components/ConfirmationCard.tsx
 import React from "react";
-import ModalDialogs from "./ModalDialogs";
 import { useState } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { API_URL } from "@/config";
@@ -16,7 +15,6 @@ interface Cart {
 
 interface CardProps {
   cart_items: Cart;
-  //   onConfirm: () => void;
 }
 
 const CartCard: React.FC<CardProps> = ({ cart_items }) => {
@@ -102,13 +100,11 @@ const CartCard: React.FC<CardProps> = ({ cart_items }) => {
             {cart_items.description}
           </h2>
           <p className="text-gray-700 mb-1">
-            <strong className="font-medium">Quantity:</strong> 
+            <strong className="font-medium">Quantity:</strong>
             {cart_items.qty}
           </p>
           <p className="text-gray-700 mb-2">
-            <strong className="font-medium">Total Price:</strong>
-            {" "}
-            {/* {cart_items.price} */}
+            <strong className="font-medium">Total Price:</strong>{" "}
             {new Intl.NumberFormat("id-ID", {
               style: "currency",
               currency: "IDR",
