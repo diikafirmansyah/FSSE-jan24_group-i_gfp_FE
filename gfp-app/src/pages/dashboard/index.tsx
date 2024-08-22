@@ -17,33 +17,34 @@ const Dashboard: React.FC = () => {
     useAuth();
     const router = useRouter();
     const [role, setRole] = useState<string | null>(null);
-    const [userData, setUserData] = useState<{ username: string } | null>(null);
+    const [userData, setUserData] = useState<string | null>(null);
     
     useEffect(() => {
-		const fetchUserRole = async () => {
-			const token = localStorage.getItem('access_token');
-			if(token){
-				try{
-					const response = await fetch(`${API_URL}/users/me`,{
-						method: 'GET',
-						headers: {
-							"Content-Type": "application/x-www-form-urlencoded",
-							"Authorization": "Bearer " + token
-						},
-				});
-
-				if(!response.ok){
-					throw new Error(`HTTP error! Status: ${response.status}`);
-				}
-
-				const userData = await response.json();
-					setRole(userData.role);
-					localStorage.setItem('role', userData.role);
-				}catch(error){
-				console.error("Error fetching user role:", error);
-				}
-			}
-		}
+        const fetchUserRole = async () => {
+            const token = localStorage.getItem('access_token');
+            if(token){
+                try{
+                    const response = await fetch(`${API_URL}/users/me`,{
+                        method: 'GET',
+                        headers: {
+                            "Content-Type": "application/x-www-form-urlencoded",
+                            "Authorization": "Bearer " + token
+                        },
+                });
+    
+                if(!response.ok){
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+    
+                const userData = await response.json();
+                    setRole(userData.role);
+                    setUserData(userData.username);
+                    localStorage.setItem('role', userData.role);
+                }catch(error){
+                console.error("Error fetching user role:", error);
+                }
+            }
+        }
 		fetchUserRole();
 	}, [])
 
@@ -92,7 +93,7 @@ const Dashboard: React.FC = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
                 >
-                    Welcome to LautLestari, {userData?.username || 'Guest'}!
+                    Welcome to LautLestari, {userData || 'Guest'}!
                 </motion.h1>
                 <p className="text-lg text-gray-200">
                     Explore and manage your aquarium experience with ease. Navigate through our marketplace, manage your cart, and more.
@@ -107,7 +108,7 @@ const Dashboard: React.FC = () => {
                     <div>
                         {userData ? (
                             <>
-                                <h2 className="text-2xl font-semibold text-gray-800">Hello, {userData.username}!</h2>
+                                <h2 className="text-2xl font-semibold text-gray-800">Hello, {userData}!</h2>
                                 <p className="text-gray-600">User Role: {role}</p>
                             </>
                         ) : (
@@ -167,7 +168,7 @@ const Dashboard: React.FC = () => {
             </div>
 
             <footer className="relative z-10 w-full max-w-lg mx-auto text-center text-gray-400 mt-10">
-                <p className="text-sm">&copy; 2024 AquaFish. All rights reserved.</p>
+                <p className="text-sm">&copy; 2024 LautLestari. All rights reserved.</p>
                 <p className="text-sm">
                     <a href="/terms" className="text-blue-300 hover:underline">
                         Terms of Service
