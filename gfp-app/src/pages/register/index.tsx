@@ -99,7 +99,7 @@ const Register = () => {
 							<div className="w-40 h-20 mx-auto">
 								<img src="./assets/logo.png" alt="logo" />
 							</div>
-							<h1 className="text-xl font-bold leading-tight tracking-tight  md:text-2xl text-gray-700 text-center">Register Here</h1>
+							<h1 className="text-xl font-bold leading-tight tracking-tight  md:text-2xl text-gray-700 text-center py-5">Register Here</h1>
 							<Formik
 								initialValues={initialValues}
 								validationSchema={registerSchema}

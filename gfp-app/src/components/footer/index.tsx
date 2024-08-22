@@ -43,7 +43,7 @@ const Footer: React.FC = () => {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
-            <h2 className="text-2xl font-bold mb-4">AquaFish</h2>
+            <h2 className="text-2xl font-bold mb-4">LautLestari</h2>
             <p className="mb-4">High-quality fish and aquatic supplies</p>
             <div className="flex flex-col">
               <label htmlFor="email" className="mb-2">Subscribe to our newsletter</label>
@@ -63,31 +63,11 @@ const Footer: React.FC = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
             <ul>
-              <li className="mb-2">
-                <a href="/shop" className="hover:text-gray-300">
-                  Shop
-                </a>
-              </li>
-              <li className="mb-2">
-                <a href="/about" className="hover:text-gray-300">
-                  About Us
-                </a>
-              </li>
-              <li className="mb-2">
-                <a href="/contact" className="hover:text-gray-300">
-                  Contact
-                </a>
-              </li>
-              <li className="mb-2">
-                <a href="/faq" className="hover:text-gray-300">
-                  FAQ
-                </a>
-              </li>
-              <li>
-                <a href="/blog" className="hover:text-gray-300">
-                  Blog
-                </a>
-              </li>
+              <li className="mb-2"><a href="/marketplace" className="hover:text-gray-300">MarketPlace</a></li>
+              <li className="mb-2"><a href="/about" className="hover:text-gray-300">About Us</a></li>
+              <li className="mb-2"><a href="/ourteam" className="hover:text-gray-300">Meet Our Team</a></li>
+              <li className="mb-2"><a href="/faq" className="hover:text-gray-300">FAQ</a></li>
+              <li><a href="/blog" className="hover:text-gray-300">Blog</a></li>
             </ul>
           </div>
           <div>

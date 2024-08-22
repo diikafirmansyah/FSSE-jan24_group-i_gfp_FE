@@ -81,7 +81,7 @@ const Marketplace: React.FC = () => {
 
   return (
     <div className="container mx-auto py-12 px-4">
-      <h1 className="text-4xl font-extrabold text-white text-center mb-10">
+      <h1 className="text-4xl font-extrabold text-black text-center mb-10">
         Marketplace
       </h1>
       <SearchBar onSearch={handleSearch} />

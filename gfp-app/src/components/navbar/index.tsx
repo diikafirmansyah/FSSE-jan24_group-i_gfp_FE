@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { API_URL } from '@/config';
 import { TiShoppingCart } from "react-icons/ti";
-        
+
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -10,7 +10,7 @@ const Navbar: React.FC = () => {
 
   useEffect(() => {
     const token = localStorage.getItem('access_token');
-    setIsLoggedIn(!!token); // Check if token exists, indicating user is logged in
+    setIsLoggedIn(!!token);
   }, []);
 
   const toggleMenu = () => {
@@ -53,11 +53,13 @@ const Navbar: React.FC = () => {
     <nav className="bg-blue-900 shadow-lg sticky top-0 z-50">
       <div className="container mx-auto flex items-center justify-between p-4 md:p-6">
         <div className="flex items-center space-x-4">
-          <img
-            src="/assets/logo.png"
-            alt="AquaFish Logo"
-            className="h-12 w-auto transition-transform duration-300 hover:scale-110"
+          <div className="bg-white rounded-full bg-opacity-40 ">
+          <img 
+            src="/assets/logo.png" 
+            alt="AquaFish Logo" 
+            className="h-12 w-auto transition-transform duration-300 hover:scale-110" 
           />
+          </div>
           <div className="text-white text-2xl font-bold">
             <a href="/" className="hover:text-gray-300 transition-colors duration-300">LautLestari</a>
           </div>
@@ -67,7 +69,7 @@ const Navbar: React.FC = () => {
         <div className="hidden md:flex space-x-8">
           <a href="/dashboard" className="text-white hover:text-gray-300 transition-colors duration-300">Dashboard</a>
           <a href="/marketplace" className="text-white hover:text-gray-300 transition-colors duration-300">Marketplace</a>
-          <a href="/company" className="text-white hover:text-gray-300 transition-colors duration-300">Company</a>
+          <a href="/about" className="text-white hover:text-gray-300 transition-colors duration-300">About</a>
           {isLoggedIn ? (
             <button
               onClick={handleLogout}
@@ -77,12 +79,7 @@ const Navbar: React.FC = () => {
           ) : (
             <a href="/login" className="text-white hover:text-gray-300 transition-colors duration-300">Login</a>
           )}
-          <a
-            href="/cart"
-            className="text-white hover:text-gray-300 transition-colors duration-300 mt-1"
-          >
-            <TiShoppingCart size={22} />
-          </a>
+          <a href="/cart" className="text-white hover:text-gray-300 transition-colors duration-300 mt-1"><TiShoppingCart size={22} /></a>
         </div>
 
         {/* Mobile Menu Button */}
@@ -118,7 +115,7 @@ const Navbar: React.FC = () => {
           <a href="/dashboard" className="block text-white hover:text-gray-300 transition-colors duration-300">Dashboard</a>
           <a href="/cart" className="block text-white hover:text-gray-300 transition-colors duration-300">Cart</a>
           <a href="/marketplace" className="block text-white hover:text-gray-300 transition-colors duration-300">Marketplace</a>
-          <a href="/company" className="block text-white hover:text-gray-300 transition-colors duration-300">Company</a>
+          <a href="/about" className="block text-white hover:text-gray-300 transition-colors duration-300">About</a>
           {isLoggedIn ? (
             <button
               onClick={handleLogout}

@@ -79,7 +79,7 @@ const Login = () => {
               <div className="w-40 h-20 mx-auto">
                 <img src="./assets/logo.png" alt="logo" />
               </div>
-              <h1 className="text-xl font-bold leading-tight tracking-tight  md:text-2xl text-gray-700 text-center">
+              <h1 className="text-xl font-bold leading-tight tracking-tight  md:text-2xl text-gray-700 text-center py-5">
                 Login Here
               </h1>
               <Formik

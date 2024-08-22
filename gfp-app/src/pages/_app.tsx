@@ -6,6 +6,8 @@ import { config } from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import '@/lib/fontawesome'; 
 import Navbar from '@/components/navbar'
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 config.autoAddCss = false;
 
 export default function App({ Component, pageProps }: AppProps) {
