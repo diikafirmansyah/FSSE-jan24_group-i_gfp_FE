@@ -73,7 +73,7 @@ const Footer: React.FC = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
             <ul>
-              <li className="mb-2">Email: info@aquafish.com</li>
+              <li className="mb-2">Email: info@lautlestari.com</li>
               <li className="mb-2">Phone: +123-456-7890</li>
               <li className="mb-2">Address: 123 Aquatic Ave, Water City</li>
             </ul>
@@ -120,7 +120,7 @@ const Footer: React.FC = () => {
         </div>
         <div className="mt-8 border-t border-gray-700 pt-4 text-center md:text-left">
           <p>
-            &copy; {new Date().getFullYear()} Aquafish. All rights reserved.
+            &copy; {new Date().getFullYear()} LautLestari. All rights reserved.
           </p>
         </div>
       </div>
