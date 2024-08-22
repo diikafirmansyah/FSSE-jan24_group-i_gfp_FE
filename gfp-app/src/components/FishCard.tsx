@@ -3,6 +3,9 @@ import Link from "next/link";
 import { FaMapMarkerAlt, FaFish } from "react-icons/fa";
 import { AiOutlineTag } from "react-icons/ai";
 import { BiRuler } from "react-icons/bi";
+import { addToCart } from "@/pages/api/carts";
+import { CiCirclePlus } from "react-icons/ci";
+
 
 const nationalityMap: { [key: string]: string } = {
   usa: "us",
@@ -43,6 +46,20 @@ const FishCard: React.FC<Product> = ({
   const isoCode =
     nationalityMap[nationality.toLowerCase()] || nationality.toLowerCase();
   const flagUrl = `https://flagcdn.com/w40/${isoCode}.png`;
+
+  const handleCartClick = async () =>  {
+    try {
+      const result = await addToCart(id, 1);
+      console.log(result);
+      if(!result.ok){
+        throw new Error('fail');
+      }
+      alert("success to add product to cart");
+    } catch (error) {
+      console.error("Error adding product to cart:", error);
+      alert("Failed to add product to cart");
+    }
+  };
 
   return (
     <div
@@ -110,18 +127,21 @@ const FishCard: React.FC<Product> = ({
           </p>
           {isSellerPage ? (
             <Link
-              href={`/fish/edit/${id}`}
-              className="inline-block px-4 py-2 w-full text-center bg-gradient-to-r from-green-500 to-yellow-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-600 transition-transform transform hover:-translate-y-1 hover:shadow-lg"
+            href={`/fish/edit/${id}`}
+            className="inline-block px-4 py-2 w-full text-center bg-gradient-to-r from-green-500 to-yellow-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-600 transition-transform transform hover:-translate-y-1 hover:shadow-lg"
             >
               Edit Details
             </Link>
           ) : (
+            <div className="flex flex-row gap-3">
             <Link
-              href={`/fish/${id}`}
-              className="inline-block px-4 py-2 w-full text-center bg-gradient-to-r from-blue-500 to-teal-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 transition-transform transform hover:-translate-y-1 hover:shadow-lg"
+            href={`/fish/${id}`}
+            className="inline-block px-4 py-2 w-full text-center bg-gradient-to-r from-blue-500 to-teal-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 transition-transform transform hover:-translate-y-1 hover:shadow-lg"
             >
               View Details
             </Link>
+            <CiCirclePlus size={36} onClick={handleCartClick} className="icon-black hover:cursor-pointer transition-transform transform hover:-translate-y-1"/>
+            </div>
           )}
         </div>
       </div>
