@@ -1,42 +1,18 @@
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-import { API_URL } from '@/config';
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 
-const useAuth = () => {
-    const [user, setUser] = useState<{ username: string } | null>(null);
+const useAuth = (): null => {
     const router = useRouter();
 
     useEffect(() => {
-        const fetchUser = async () => {
-            const token = localStorage.getItem('access_token');
-            if (token) {
-                try {
-                    const response = await fetch(`${API_URL}/users/me`, {
-                        method: "GET",
-                        headers: {
-                            "Authorization": `Bearer ${token}`,
-                        },
-                    });
+        const token = localStorage.getItem('access_token');
 
-                    if (response.ok) {
-                        const userData = await response.json();
-                        setUser(userData);
-                    } else {
-                        router.push('/login');
-                    }
-                } catch (error) {
-                    console.error("Error fetching user data:", error);
-                    router.push('/login');
-                }
-            } else {
-                router.push('/login');
-            }
-        };
+        if (!token) {
+            router.push('/login');
+        }
+    }, []);
 
-        fetchUser();
-    }, [router]);
-
-    return user;
+    return null;
 };
 
 export default useAuth;
