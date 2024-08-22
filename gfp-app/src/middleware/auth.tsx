@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import { API_URL } from '@/config';
 
 const useAuth = () => {
     const [user, setUser] = useState<{ username: string } | null>(null);
@@ -12,7 +13,7 @@ const useAuth = () => {
             const token = localStorage.getItem('access_token');
             if (token) {
                 try {
-                    const response = await fetch("http://127.0.0.1:5000/users/me", {
+                    const response = await fetch(`${API_URL}/users/me`, {
                         method: "GET",
                         headers: {
                             "Authorization": `Bearer ${token}`,

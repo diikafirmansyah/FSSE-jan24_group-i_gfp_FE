@@ -27,11 +27,13 @@ const Navbar: React.FC = () => {
       <div className="container mx-auto flex items-center justify-between p-4 md:p-6">
         {/* Logo and Brand Name */}
         <div className="flex items-center space-x-4">
+          <div className="bg-white rounded-full bg-opacity-40 ">
           <img 
             src="/assets/logo.png" 
             alt="AquaFish Logo" 
             className="h-12 w-auto transition-transform duration-300 hover:scale-110" 
           />
+          </div>
           <div className="text-white text-2xl font-bold">
             <a href="/" className="hover:text-gray-300 transition-colors duration-300">LautLestari</a>
           </div>
@@ -87,7 +89,7 @@ const Navbar: React.FC = () => {
           <a href="/dashboard" className="block text-white hover:text-gray-300 transition-colors duration-300">Dashboard</a>
           <a href="/cart" className="block text-white hover:text-gray-300 transition-colors duration-300">Cart</a>
           <a href="/marketplace" className="block text-white hover:text-gray-300 transition-colors duration-300">Marketplace</a>
-          <a href="/company" className="block text-white hover:text-gray-300 transition-colors duration-300">Company</a>
+          <a href="/about" className="block text-white hover:text-gray-300 transition-colors duration-300">About</a>
           {isLoggedIn ? (
             <button 
               onClick={handleLogout} 

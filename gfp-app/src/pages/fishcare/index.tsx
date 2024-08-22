@@ -1,114 +1,160 @@
 import React from 'react';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 
-const fishcare: React.FC = () => {
+const FishCare: React.FC = () => {
     return (
-        <div className="min-h-screen bg-gray-100 py-10">
+        <div className="min-h-screen bg-gray-50">
             {/* Header */}
-            <header className="bg-blue-900 text-white text-center py-6">
-                <h1 className="text-4xl font-bold">How to Care for Decorative Fish</h1>
-                <p className="text-lg mt-2">Science-Based Guidelines for Healthy and Happy Fish</p>
+            <header className="bg-gradient-to-r from-blue-800 to-blue-600 text-white text-center py-8">
+                <motion.h1
+                    className="text-4xl font-bold mb-2"
+                    initial={{ opacity: 0, y: -50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8 }}
+                >
+                    How to Care for Decorative Fish
+                </motion.h1>
+                <motion.p
+                    className="text-lg"
+                    initial={{ opacity: 0, y: -30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.2 }}
+                >
+                    Science-Based Guidelines for Healthy and Happy Fish
+                </motion.p>
             </header>
 
             {/* Main Content */}
-            <main className="container mx-auto px-4 lg:px-8 py-10">
+            <main className="container mx-auto px-4 lg:px-8 py-12">
                 {/* Introduction */}
-                <section className="mb-10">
-                    <h2 className="text-3xl font-semibold text-blue-800 mb-4">Introduction</h2>
-                    <p className="text-gray-700 text-lg leading-relaxed">
-                        Decorative fish can bring color, beauty, and a sense of calm to any space. However, they require specific care to thrive.
-                        Understanding the science behind their needs will help you provide the best environment for your fish, ensuring they live long, healthy lives.
+                <motion.section
+                    className="mb-12"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.8 }}
+                >
+                    <h2 className="text-3xl font-semibold text-blue-700 mb-4">Introduction</h2>
+                    <p className="text-gray-800 text-lg leading-relaxed">
+                        Decorative fish bring color and tranquility to any space, but they require proper care to thrive. Understanding their needs and maintaining their environment is key to their health and longevity.
                     </p>
-                </section>
+                </motion.section>
 
                 {/* Tank Setup */}
-                <section className="mb-10">
-                    <h2 className="text-3xl font-semibold text-blue-800 mb-4">1. Proper Tank Setup</h2>
+                <motion.section
+                    className="mb-12"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8 }}
+                >
+                    <h2 className="text-3xl font-semibold text-blue-700 mb-4">1. Proper Tank Setup</h2>
                     <div className="flex flex-col lg:flex-row lg:space-x-8">
-                        <div className="lg:w-1/2">
-                            <Image
-                                src="/path/to/tank-setup.jpg"
-                                alt="Tank Setup"
-                                width={500}
-                                height={300}
-                                className="rounded-lg shadow-lg"
-                            />
+                        <div className="lg:w-1/2 mb-6 lg:mb-0">
+                            <motion.div
+                                className="relative rounded-lg overflow-hidden shadow-lg"
+                                whileHover={{ scale: 1.05, transition: { duration: 0.3 } }}
+                            >
+                                <Image
+                                    src="/assets/tanksetup.jpg"
+                                    alt="Tank Setup"
+                                    width={500}
+                                    height={300}
+                                    className="object-cover"
+                                />
+                            </motion.div>
                         </div>
-                        <div className="lg:w-1/2 mt-6 lg:mt-0">
-                            <p className="text-gray-700 text-lg leading-relaxed">
-                                The foundation of fish care starts with the right tank setup. Ensure you have a tank that suits the size and number of fish you plan to keep.
-                                A general rule is to have at least one gallon of water per inch of fish. Use a water filter to maintain clean water, and include plants and hiding spots
-                                to mimic the fish's natural habitat.
+                        <div className="lg:w-1/2">
+                            <p className="text-gray-800 text-lg leading-relaxed">
+                                Start with a tank that matches the size and number of fish you plan to keep. A general guideline is one gallon of water per inch of fish. Use a quality water filter and include plants and hiding spots to replicate their natural habitat.
                             </p>
                         </div>
                     </div>
-                </section>
+                </motion.section>
 
                 {/* Water Quality */}
-                <section className="mb-10">
-                    <h2 className="text-3xl font-semibold text-blue-800 mb-4">2. Maintaining Water Quality</h2>
-                    <p className="text-gray-700 text-lg leading-relaxed">
-                        Water quality is crucial for the health of your fish. Regularly test the water's pH, ammonia, nitrate, and nitrite levels using a water testing kit.
-                        The ideal pH level for most decorative fish is between 6.5 and 7.5. Perform partial water changes (about 25%) every two weeks to maintain cleanliness.
+                <motion.section
+                    className="mb-12"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8 }}
+                >
+                    <h2 className="text-3xl font-semibold text-blue-700 mb-4">2. Maintaining Water Quality</h2>
+                    <p className="text-gray-800 text-lg leading-relaxed">
+                        Regularly test water parameters such as pH, ammonia, nitrate, and nitrite. Maintain a pH level between 6.5 and 7.5, and perform partial water changes (around 25%) every two weeks to keep the environment clean and stable.
                     </p>
-                </section>
+                </motion.section>
 
                 {/* Feeding */}
-                <section className="mb-10">
-                    <h2 className="text-3xl font-semibold text-blue-800 mb-4">3. Proper Feeding</h2>
-                    <p className="text-gray-700 text-lg leading-relaxed">
-                        Overfeeding is a common mistake among fish keepers. Feed your fish once or twice a day, providing only as much food as they can consume in a few minutes.
-                        Use high-quality fish food, and supplement their diet with fresh or frozen foods such as brine shrimp or bloodworms for variety.
+                <motion.section
+                    className="mb-12"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8 }}
+                >
+                    <h2 className="text-3xl font-semibold text-blue-700 mb-4">3. Proper Feeding</h2>
+                    <p className="text-gray-800 text-lg leading-relaxed">
+                        Avoid overfeeding by providing only as much food as your fish can consume in a few minutes, once or twice a day. Use high-quality fish food and offer occasional fresh or frozen treats like brine shrimp or bloodworms.
                     </p>
-                </section>
+                </motion.section>
 
                 {/* Tank Mates */}
-                <section className="mb-10">
-                    <h2 className="text-3xl font-semibold text-blue-800 mb-4">4. Choosing Compatible Tank Mates</h2>
+                <motion.section
+                    className="mb-12"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8 }}
+                >
+                    <h2 className="text-3xl font-semibold text-blue-700 mb-4">4. Choosing Compatible Tank Mates</h2>
                     <div className="flex flex-col lg:flex-row lg:space-x-8">
+                        <div className="lg:w-1/2 mb-6 lg:mb-0">
+                            <motion.div
+                                className="relative rounded-lg overflow-hidden shadow-lg"
+                                whileHover={{ scale: 1.05, transition: { duration: 0.3 } }}
+                            >
+                                <Image
+                                    src="/assets/tankmates.jpg"
+                                    alt="Compatible Tank Mates"
+                                    width={500}
+                                    height={300}
+                                    className="object-cover"
+                                />
+                            </motion.div>
+                        </div>
                         <div className="lg:w-1/2">
-                            <p className="text-gray-700 text-lg leading-relaxed">
-                                When selecting tank mates, it's important to consider the temperament and size of the fish. Aggressive species should not be mixed with peaceful ones,
-                                and large fish may prey on smaller fish. Research the species you plan to keep together to ensure compatibility and a stress-free environment.
+                            <p className="text-gray-800 text-lg leading-relaxed">
+                                Consider the temperament and size of the fish when choosing tank mates. Avoid mixing aggressive species with peaceful ones, and be mindful of size differences to prevent predation. Research species compatibility to ensure a harmonious tank environment.
                             </p>
                         </div>
-                        <div className="lg:w-1/2 mt-6 lg:mt-0">
-                            <Image
-                                src="/path/to/tank-mates.jpg"
-                                alt="Compatible Tank Mates"
-                                width={500}
-                                height={300}
-                                className="rounded-lg shadow-lg"
-                            />
-                        </div>
                     </div>
-                </section>
+                </motion.section>
 
                 {/* Regular Maintenance */}
-                <section className="mb-10">
-                    <h2 className="text-3xl font-semibold text-blue-800 mb-4">5. Regular Tank Maintenance</h2>
-                    <p className="text-gray-700 text-lg leading-relaxed">
-                        Regular maintenance is key to keeping your fish healthy. Clean the tank walls with an algae scraper, vacuum the substrate to remove debris,
-                        and check the filter to ensure it's functioning properly. Regularly inspect your fish for signs of illness, such as changes in behavior, color, or appetite.
+                <motion.section
+                    className="mb-12"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8 }}
+                >
+                    <h2 className="text-3xl font-semibold text-blue-700 mb-4">5. Regular Tank Maintenance</h2>
+                    <p className="text-gray-800 text-lg leading-relaxed">
+                        Maintain tank health by cleaning algae, vacuuming the substrate, and checking the filter regularly. Monitor fish for signs of illness, such as changes in behavior or appearance, and address issues promptly to keep your fish in optimal condition.
                     </p>
-                </section>
+                </motion.section>
 
                 {/* Conclusion */}
-                <section className="mb-10">
-                    <h2 className="text-3xl font-semibold text-blue-800 mb-4">Conclusion</h2>
-                    <p className="text-gray-700 text-lg leading-relaxed">
-                        Caring for decorative fish requires attention to detail and a commitment to maintaining a healthy environment. By following these science-based guidelines,
-                        you'll ensure your fish live a long, vibrant life, bringing beauty and tranquility to your space.
+                <motion.section
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8 }}
+                >
+                    <h2 className="text-3xl font-semibold text-blue-700 mb-4">Conclusion</h2>
+                    <p className="text-gray-800 text-lg leading-relaxed">
+                        Effective fish care involves understanding their needs and maintaining their environment. By following these guidelines, you'll ensure your decorative fish thrive and add beauty to your space.
                     </p>
-                </section>
+                </motion.section>
             </main>
-
-            {/* Footer */}
-            <footer className="bg-blue-900 text-white text-center py-4">
-                <p className="text-sm">© 2024 AquaFish. All rights reserved.</p>
-            </footer>
         </div>
     );
 };
 
-export default fishcare;
+export default FishCare;

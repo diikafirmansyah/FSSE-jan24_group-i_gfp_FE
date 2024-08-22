@@ -34,8 +34,12 @@ const Filter: React.FC<FilterProps> = ({ categories, onFilterChange }) => {
     };
 
     return (
-        <div className="flex gap-4">
-            <select className=" border border-gray-300 rounded" value={selectedCategory} onChange={handleCategoryChange}>
+        <div className="flex flex-col sm:flex-row gap-4 p-4">
+            <select
+                className="border border-gray-300 rounded px-3 py-2 w-full sm:w-auto"
+                value={selectedCategory}
+                onChange={handleCategoryChange}
+            >
                 <option value="">Select Category</option>
                 {categories.map((category) => (
                     <option key={category} value={category}>
@@ -44,14 +48,20 @@ const Filter: React.FC<FilterProps> = ({ categories, onFilterChange }) => {
                 ))}
             </select>
 
-            <input className=" border border-gray-300 rounded px-2 py-1"
+            <input
+                className="border border-gray-300 rounded px-3 py-2 w-full sm:w-auto"
                 type="text"
                 value={selectedLocation}
                 onChange={handleLocationChange}
                 placeholder="Enter Location"
             />
 
-            <button className="bg-blue-500 text-white px-4 py-1 rounded" onClick={handleReset}>Reset Filter</button>
+            <button
+                className="bg-blue-500 text-white px-4 py-2 rounded mt-4 sm:mt-0 w-full sm:w-auto"
+                onClick={handleReset}
+            >
+                Reset Filter
+            </button>
         </div>
     );
 };
