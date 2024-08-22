@@ -102,7 +102,6 @@ const FishDetail: React.FC = () => {
     if (!product) return;
 
     try {
-      
       const result = await addToCart(product.id, quantity);
       console.log(result)
       if(!result.ok){

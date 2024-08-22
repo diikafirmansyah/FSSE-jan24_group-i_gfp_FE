@@ -17,7 +17,6 @@ const Cart: React.FC = () => {
   useAuth();
   const [cartItems, setCartItems] = useState<Cart[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<any>(null);
 
   useEffect(() => {
     const fetchCarts = async () => {
@@ -39,7 +38,6 @@ const Cart: React.FC = () => {
         setCartItems(result.cart_items || []);
       } catch (error) {
         console.error("Error fetching carts:", error);
-        setError(error);
       } finally {
         setLoading(false);
       }
