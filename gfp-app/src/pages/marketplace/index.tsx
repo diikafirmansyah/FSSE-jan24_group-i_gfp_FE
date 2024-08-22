@@ -4,6 +4,7 @@ import FishCard from "@/components/FishCard";
 import Filter from "@/components/FilterComponent";
 import useAuth from "@/middleware/auth";
 import { API_URL } from "@/config";
+import Loading from "@/components/Loading";
 
 interface Product {
   id: number;
@@ -31,6 +32,7 @@ const Marketplace: React.FC = () => {
 
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -52,6 +54,8 @@ const Marketplace: React.FC = () => {
         setProducts(result.products || []);
       } catch (error) {
         console.error("Error fetching products:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -78,6 +82,14 @@ const Marketplace: React.FC = () => {
 
     return categoryMatch && locationMatch && searchMatch;
   });
+
+  if (loading) {
+    return (
+      <div className="max-w-5xl mx-auto py-12 px-4 flex justify-center items-center h-[calc(100vh-6rem)]">
+        <Loading />
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto py-12 px-4">
