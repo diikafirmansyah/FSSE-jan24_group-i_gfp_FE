@@ -1,24 +1,51 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Slider from "react-slick";
 import FishCard from "../components/FishCard";
+import { GetStaticProps } from 'next';
 import { API_URL } from "@/config";
 
-export default function Home() {
-  const [fishData, setFishData] = useState<any[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+interface Product {
+  id: number;
+  user_id: number;
+  image: string | null;
+  price: number;
+  qty: number;
+  description: string;
+  category: string;
+  location: string;
+  created_at: string;
+  updated_at: string | null;
+  nationality: string;
+  size: string;
+}
 
-  useEffect(() => {
-    fetch(`${API_URL}/products`)
-      .then((response) => response.json())
-      .then((data) => {
-        setFishData(data.products);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching fish data:", error);
-        setLoading(false);
-      });
-  }, []);
+interface HomeProps {
+  fishData: Product[];
+}
+
+export const getStaticProps: GetStaticProps<{ fishData: Product[] }> = async () => {
+  try {
+    const res = await fetch(`${API_URL}/products`);
+    const data = await res.json();
+
+    return {
+      props: {
+        fishData: data.products || [],
+      },
+      revalidate: 10,
+    };
+  } catch (error) {
+    console.error("Error fetching fish data:", error);
+    return {
+      props: {
+        fishData: [],
+      },
+    };
+  }
+}
+
+export default function Home({ fishData }: HomeProps) {
+  const [loading, setLoading] = useState<boolean>(fishData.length === 0);
 
   const settings = {
     dots: true,
