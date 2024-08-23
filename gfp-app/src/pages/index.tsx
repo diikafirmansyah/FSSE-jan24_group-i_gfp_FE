@@ -89,26 +89,22 @@ export default function Home() {
           {loading ? (
             <p className="text-gray-300">Loading...</p>
           ) : (
-            fishData.length !== 0 ? (
-              <Slider {...settings} className="my-8">
-                {fishData.map((fish) => (
-                  <div key={fish.id} className="px-4">
-                    <FishCard
-                      id={fish.id}
-                      image={fish.image}
-                      price={fish.price}
-                      description={fish.description}
-                      category={fish.category}
-                      location={fish.location}
-                      nationality={fish.nationality}
-                      size={fish.size}
-                    />
-                  </div>
-                ))}
-              </Slider>
-            ) : (
-              <p className="text-grap-400">Fetching Product Data error...</p>
-            )
+            <Slider {...settings} className="my-8">
+              {fishData.map((fish) => (
+                <div key={fish.id} className="px-4">
+                  <FishCard
+                    id={fish.id}
+                    image={fish.image}
+                    price={fish.price}
+                    description={fish.description}
+                    category={fish.category}
+                    location={fish.location}
+                    nationality={fish.nationality}
+                    size={fish.size}
+                  />
+                </div>
+              ))}
+            </Slider>
           )}
         </div>
         <div className="relative mb-8 text-center mx-auto max-w-full sm:max-w-4xl px-4">
