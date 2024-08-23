@@ -129,7 +129,7 @@ export default function Home() {
           </p>
           <div className="mt-8">
             <a
-              href="/fishcarepage"
+              href="/fishcare"
               className="inline-block rounded-md bg-secondary px-6 py-3 text-sm font-semibold text-white shadow-md transition-transform duration-300 transform hover:scale-110 hover:bg-green-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
             >
               Visit Fishcare Page
