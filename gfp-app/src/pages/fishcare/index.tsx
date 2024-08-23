@@ -57,7 +57,7 @@ const FishCare: React.FC = () => {
                 <Image
                   src="/assets/tanksetup.jpg"
                   alt="Tank Setup"
-                  width={500}
+                  width={750}
                   height={300}
                   className="object-cover"
                 />
@@ -114,7 +114,7 @@ const FishCare: React.FC = () => {
                 <Image
                   src="/assets/tankmates.jpg"
                   alt="Compatible Tank Mates"
-                  width={500}
+                  width={750}
                   height={300}
                   className="object-cover"
                 />
