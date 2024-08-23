@@ -89,29 +89,27 @@ export default function Home() {
           {loading ? (
             <p className="text-gray-300">Loading...</p>
           ) : (
-            <Slider {...settings} className="my-8">
-              {fishData.map((fish) => (
-                <div key={fish.id} className="px-4">
-                  <FishCard
-                    id={fish.id}
-                    image={fish.image}
-                    price={fish.price}
-                    description={fish.description}
-                    category={fish.category}
-                    location={fish.location}
-                    nationality={fish.nationality}
-                    size={fish.size}
-                  />
-                </div>
-              ))}
-            </Slider>
+            fishData.length !== 0 ? (
+              <Slider {...settings} className="my-8">
+                {fishData.map((fish) => (
+                  <div key={fish.id} className="px-4">
+                    <FishCard
+                      id={fish.id}
+                      image={fish.image}
+                      price={fish.price}
+                      description={fish.description}
+                      category={fish.category}
+                      location={fish.location}
+                      nationality={fish.nationality}
+                      size={fish.size}
+                    />
+                  </div>
+                ))}
+              </Slider>
+            ) : (
+              <p className="text-grap-400">Fetching Product Data error...</p>
+            )
           )}
-          {/* <a
-            href="/fish/51"
-            className="block mx-auto text-lg sm:text-xl font-bold w-8/12 sm:w-6/12 lg:w-4/12 text-center text-gray-300 transition-transform duration-300 transform hover:scale-105"
-          >
-            Koi Sanke - Buy Now
-          </a> */}
         </div>
         <div className="relative mb-8 text-center mx-auto max-w-full sm:max-w-4xl px-4">
           <p className="mt-4 sm:mt-6 text-base sm:text-lg leading-7 sm:leading-8 text-gray-300">
