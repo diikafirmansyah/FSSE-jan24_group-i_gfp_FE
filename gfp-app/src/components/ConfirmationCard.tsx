@@ -1,4 +1,5 @@
-import { API_URL } from "@/config";
+import { API_URL } from "@/utils/config";
+import { toastAlert } from "@/utils/toastAlert";
 
 interface Confirmation {
   id: number;
@@ -37,17 +38,17 @@ const ConfirmationCard: React.FC<Confirmation> = ({
       });
 
       if (!response.ok) {
-        alert("Confirmation failed!");
+        toastAlert("error", "Confirmation failed!");
         return;
       }
 
       const result = await response;
       console.log("Transaction confirmed!", result);
-      alert("Transaction confirmed!");
+      toastAlert("success", "Transaction confirmed!");
       window.location.reload();
     } catch (error) {
       console.error("Error submitting the form", error);
-      alert("An error occurred while confirming the transaction");
+      toastAlert("error", "An error occurred while confirming the transaction");
     }
   };
 

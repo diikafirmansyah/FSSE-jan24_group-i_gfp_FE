@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Loading from "../../components/Loading";
 import CartCard from "../../components/CartCard";
-import { API_URL } from "@/config";
+import { API_URL } from "@/utils/config";
 import useAuth from "@/middleware/auth";
 
 interface Cart {

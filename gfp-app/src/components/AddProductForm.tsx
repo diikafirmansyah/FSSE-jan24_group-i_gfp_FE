@@ -3,8 +3,9 @@ import * as Yup from "yup";
 import useAuth from "@/middleware/auth";
 import imageCompression from "browser-image-compression";
 import axios from "axios";
-import { API_URL } from "@/config";
+import { API_URL } from "@/utils/config";
 import { useRouter } from "next/router";
+import { toastAlert } from "@/utils/toastAlert";
 
 interface FormValues {
   image: File | null;
@@ -68,22 +69,22 @@ const AddProductForm: React.FC = () => {
       });
 
       if (response.status === 413) {
-        alert("The uploaded file is too large. Please upload a smaller file.");
+        toastAlert("error", "The uploaded file is too large. Please upload a smaller file.");
         return;
       }
 
       if (!response) {
-        alert("Product submission failed!");
+        toastAlert("error", "Product submission failed!");
         return;
       }
 
       const result = await response;
       console.log("Product added successfully", result);
-      alert("Product added successfully!");
+      toastAlert("success", "Product added successfully!");
       router.push("/seller");
     } catch (error) {
       console.error("Error submitting the form", error);
-      alert("An error occurred while adding the product.");
+      toastAlert("error", "An error occurred while adding the product.");
     }
   };
 

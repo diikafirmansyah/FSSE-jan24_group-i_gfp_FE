@@ -7,8 +7,9 @@ import { BiRuler } from "react-icons/bi";
 import Button from "@/components/Button";
 import Loading from "@/components/Loading";
 import useAuth from "@/middleware/auth";
-import { addToCart } from "../api/carts";
-import { API_URL } from "@/config";
+import { addToCart } from "../../utils/api/carts";
+import { API_URL } from "@/utils/config";
+import { toastAlert } from "@/utils/toastAlert";
 
 const nationalityMap: { [key: string]: string } = {
   usa: "us",
@@ -107,10 +108,10 @@ const FishDetail: React.FC = () => {
       if(!result.ok){
         throw new Error('fail')
       }
-      alert("success to add product to cart")
+      toastAlert("success", "success to add product to cart")
     } catch (error) {
       console.error("Error adding product to cart:", error);
-      alert("Failed to add product to cart");
+      toastAlert("error", "Failed to add product to cart");
     }
   };
 

@@ -1,7 +1,8 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { API_URL } from '@/config';
+import { API_URL } from '@/utils/config';
+import { toastAlert } from '@/utils/toastAlert';
 
 const Footer: React.FC = () => {
   const [isClient, setIsClient] = useState(false);
@@ -29,9 +30,9 @@ const Footer: React.FC = () => {
     
     try {
       if (!response.ok) {
-        alert("Subscribe Failed!");
+        toastAlert("error", "Subscribe Failed!");
       } else {
-        alert("Thank you for subscribing!");
+        toastAlert("info", "Thank you for subscribing!");
       }
     } catch (error) {
       console.log(error);

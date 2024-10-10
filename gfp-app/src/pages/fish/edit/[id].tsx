@@ -3,11 +3,12 @@ import { useRouter } from "next/router";
 import { motion } from "framer-motion";
 import Loading from "@/components/Loading";
 import useAuth from "@/middleware/auth";
-import { API_URL } from "@/config";
+import { API_URL } from "@/utils/config";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import imageCompression from "browser-image-compression";
 import * as Yup from "yup";
 import axios from "axios";
+import { toastAlert } from "@/utils/toastAlert";
 
 const nationalityMap: { [key: string]: string } = {
   usa: "us",
@@ -136,10 +137,11 @@ const FishEditDetail: React.FC = () => {
       }
 
       const result = await response.json();
-      alert("Delete Success!");
+      toastAlert("success", "Delete Success!");
       router.push('/seller');
     } catch (error) {
-      console.error("Error fetching products:", error);
+      console.error("Error:", error);
+      toastAlert("error", "Delete Failed!");
     }
   };
 
@@ -171,21 +173,21 @@ const FishEditDetail: React.FC = () => {
       )
 
       if (response.status === 413) {
-        alert("The uploaded file is too large. Please upload a smaller file.");
+        toastAlert("error", "The uploaded file is too large. Please upload a smaller file.");
         return;
       }
 
       if (!response) {
-        alert("Product submission failed!");
+        toastAlert("error", "Product submission failed!");
         return;
       }
 
       const result = await response;
-      alert("Product added successfully!");
+      toastAlert("success", "Product added successfully!");
       router.push("/seller");
     } catch (error) {
       console.error("Error submitting the form", error);
-      alert("An error occurred while adding the product.");
+      toastAlert("error", "An error occurred while adding the product.");
     }
   };
 

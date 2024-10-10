@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { API_URL } from '@/config';
+import { API_URL } from '@/utils/config';
 import { TiShoppingCart } from "react-icons/ti";
+import { toastAlert } from "@/utils/toastAlert";
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -36,7 +37,7 @@ const Navbar: React.FC = () => {
       console.log(result);
       localStorage.removeItem('access_token');
       localStorage.removeItem('role');
-      alert("Logout success!");
+      toastAlert("success", "Logout success!");
       router.push('/');
     } catch (error) {
       console.error("Error fetching products:", error);

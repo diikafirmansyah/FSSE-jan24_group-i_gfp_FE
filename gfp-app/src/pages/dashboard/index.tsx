@@ -11,7 +11,8 @@ import {
   faCheckCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import useAuth from '@/middleware/auth';
-import { API_URL } from '@/config';
+import { API_URL } from '@/utils/config';
+import { toastAlert } from '@/utils/toastAlert';
 
 const Dashboard: React.FC = () => {
   useAuth();
@@ -71,7 +72,7 @@ const Dashboard: React.FC = () => {
       console.log(result);
       localStorage.removeItem('access_token');
       localStorage.removeItem('role');
-      alert('Logout success!');
+      toastAlert("success", "Logout Success!");
       router.push('/');
     } catch (error) {
       console.error('Error logging out:', error);

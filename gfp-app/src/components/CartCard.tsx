@@ -2,7 +2,8 @@
 import React from "react";
 import { useState } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
-import { API_URL } from "@/config";
+import { API_URL } from "@/utils/config";
+import { toastAlert } from "@/utils/toastAlert";
 
 interface Cart {
   id: number;
@@ -48,17 +49,17 @@ const CartCard: React.FC<CardProps> = ({ cart_items }) => {
       });
 
       if (!response.ok) {
-        alert("Product submission failed!");
+        toastAlert("error", "Product submission failed!");
         return;
       }
 
       const result = await response;
       console.log("Product added successfully", result);
-      alert("Product added successfully!");
+      toastAlert("success", "Product added successfully!");
       window.location.reload();
     } catch (error) {
       console.error("Error submitting the form", error);
-      alert("An error occurred while adding the product.");
+      toastAlert("error", "An error occurred while adding the product.");
     }
   };
 
@@ -78,17 +79,17 @@ const CartCard: React.FC<CardProps> = ({ cart_items }) => {
       );
 
       if (!response) {
-        alert("Product submission failed!");
+        toastAlert("error", "Product submission failed!");
         return;
       }
 
       const result = await response;
       console.log("Product deleted successfully", result);
-      alert("Deleted successfully!");
+      toastAlert("success", "Deleted successfully!");
       window.location.reload();
     } catch (error) {
       console.error("Error submitting the form", error);
-      alert("An error occurred while adding the product.");
+      toastAlert("error", "An error occurred while adding the product.");
     }
   };
 

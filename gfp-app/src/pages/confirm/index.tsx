@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import ConfirmationCard from "@/components/ConfirmationCard";
 import { useEffect, useState } from "react";
-import { API_URL } from "@/config";
+import { API_URL } from "@/utils/config";
 import useAuth from "@/middleware/auth";
 import Loading from "@/components/Loading";
 

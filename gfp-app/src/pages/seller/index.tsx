@@ -3,7 +3,7 @@ import SearchBar from "@/components/SearchBar";
 import FishCard from "@/components/FishCard";
 import Filter from "@/components/FilterComponent";
 import useAuth from "@/middleware/auth";
-import { API_URL } from "@/config";
+import { API_URL } from "@/utils/config";
 import Loading from "@/components/Loading";
 
 interface Product {
