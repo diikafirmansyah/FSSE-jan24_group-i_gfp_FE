@@ -1,5 +1,6 @@
 import { API_URL } from "@/utils/config";
 import { toastAlert } from "@/utils/toastAlert";
+import Link from "next/link";
 
 interface Confirmation {
   id: number;
@@ -53,10 +54,13 @@ const ConfirmationCard: React.FC<Confirmation> = ({
   };
 
   return (
-    <div className="border border-gray-300 p-6 rounded-lg shadow-lg bg-white">
+    <div className="border border-gray-300 p-6 rounded-lg bg-white shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out">
       <h2 className="text-2xl font-bold mb-4">Confirmation</h2>
       <p className="mb-2">
-        <strong className="font-medium">Product:</strong> {description}{" "}
+        <strong className="font-medium">Product: {" "}</strong>
+        <Link href={`/fish/${product_id}`}>
+          {description}
+        </Link>
       </p>
       <p className="mb-2">
         <strong className="font-medium">Quantity:</strong> {qty}{" "}
@@ -64,7 +68,7 @@ const ConfirmationCard: React.FC<Confirmation> = ({
       <p className="mb-2">
         <strong className="font-medium">Date:</strong> {created_at}{" "}
       </p>
-      <p className="mb-4">
+      <p className="mb-2">
         <strong className="font-medium">Total Price: </strong>
         {new Intl.NumberFormat("id-ID", {
           style: "currency",
