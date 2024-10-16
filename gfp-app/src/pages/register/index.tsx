@@ -8,7 +8,8 @@ import { FaUser } from "react-icons/fa";
 import { IoIosMail } from "react-icons/io";
 import { GiPadlock } from "react-icons/gi";
 import { BsPhone } from "react-icons/bs";
-import { API_URL } from '@/config';
+import { API_URL } from '@/utils/config';
+import { toastAlert } from "@/utils/toastAlert";
 
 const Register = () => {
 
@@ -72,9 +73,9 @@ const Register = () => {
 
     try {
       if (!response.ok) {
-        alert('Registration Failed!')
+        toastAlert('error','Registration Failed!')
       } else {
-        alert('Registration success!')
+        toastAlert('success', 'Registration success!')
         router.push('/login')
       }
     } catch (error) {

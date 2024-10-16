@@ -8,6 +8,8 @@ import '@/lib/fontawesome';
 import Navbar from '@/components/navbar'
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 config.autoAddCss = false;
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -16,6 +18,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <Navbar />
       <div className="flex-grow">
         <Component {...pageProps} />
+        <ToastContainer />
       </div>
       <Footer />
     </div>

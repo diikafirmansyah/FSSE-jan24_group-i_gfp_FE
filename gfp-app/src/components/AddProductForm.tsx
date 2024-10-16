@@ -3,8 +3,9 @@ import * as Yup from "yup";
 import useAuth from "@/middleware/auth";
 import imageCompression from "browser-image-compression";
 import axios from "axios";
-import { API_URL } from "@/config";
+import { API_URL } from "@/utils/config";
 import { useRouter } from "next/router";
+import { toastAlert } from "@/utils/toastAlert";
 
 interface FormValues {
   image: File | null;
@@ -68,22 +69,22 @@ const AddProductForm: React.FC = () => {
       });
 
       if (response.status === 413) {
-        alert("The uploaded file is too large. Please upload a smaller file.");
+        toastAlert("error", "The uploaded file is too large. Please upload a smaller file.");
         return;
       }
 
       if (!response) {
-        alert("Product submission failed!");
+        toastAlert("error", "Product submission failed!");
         return;
       }
 
       const result = await response;
       console.log("Product added successfully", result);
-      alert("Product added successfully!");
+      toastAlert("success", "Product added successfully!");
       router.push("/seller");
     } catch (error) {
       console.error("Error submitting the form", error);
-      alert("An error occurred while adding the product.");
+      toastAlert("error", "An error occurred while adding the product.");
     }
   };
 
@@ -149,6 +150,25 @@ const AddProductForm: React.FC = () => {
         </div>
 
         <div className="flex flex-col">
+          <label
+            htmlFor="fish-name"
+            className="mb-2 font-medium text-gray-700"
+          >
+            Fish Name
+          </label>
+          <input
+            id="fish-name"
+            name="fish-name"
+            onChange={formik.handleChange}
+            value={formik.values.description}
+            className="border border-gray-300 rounded-md p-2 text-black"
+          />
+          {formik.errors.description ? (
+            <div className="text-red-500 mt-1">{formik.errors.description}</div>
+          ) : null}
+        </div>
+
+        <div className="flex flex-col">
           <label htmlFor="size" className="mb-2 font-medium text-gray-700">
             Size
           </label>
@@ -162,25 +182,6 @@ const AddProductForm: React.FC = () => {
           />
           {formik.errors.size ? (
             <div className="text-red-500 mt-1">{formik.errors.size}</div>
-          ) : null}
-        </div>
-
-        <div className="flex flex-col">
-          <label
-            htmlFor="description"
-            className="mb-2 font-medium text-gray-700"
-          >
-            Description
-          </label>
-          <textarea
-            id="description"
-            name="description"
-            onChange={formik.handleChange}
-            value={formik.values.description}
-            className="border border-gray-300 rounded-md p-2 h-32 text-black"
-          />
-          {formik.errors.description ? (
-            <div className="text-red-500 mt-1">{formik.errors.description}</div>
           ) : null}
         </div>
 

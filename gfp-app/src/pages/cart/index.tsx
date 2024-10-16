@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Loading from "../../components/Loading";
 import CartCard from "../../components/CartCard";
-import { API_URL } from "@/config";
+import { API_URL } from "@/utils/config";
 import useAuth from "@/middleware/auth";
 
 interface Cart {
@@ -11,10 +11,17 @@ interface Cart {
   qty: number;
   price: number;
   description: string;
+  image: string;
+  seller: string;
+  contact_phone: string; 
 }
+
+const ITEMS_PER_PAGE = 4;
 
 const Cart: React.FC = () => {
   useAuth();
+
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const [cartItems, setCartItems] = useState<Cart[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -46,6 +53,20 @@ const Cart: React.FC = () => {
     fetchCarts();
   }, []);
 
+  const totalPages = Math.ceil(cartItems.length / ITEMS_PER_PAGE);
+  const paginatedCartItems = cartItems.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  )
+
+  const goToNextPage = () => {
+    setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+  }
+
+  const goToPreviousPage = () => {
+    setCurrentPage((prev) => Math.max(prev - 1, 1));
+  }
+
   if (loading) {
     return (
       <div className="max-w-5xl mx-auto py-12 px-4 flex justify-center items-center h-[calc(100vh-6rem)]">
@@ -55,27 +76,43 @@ const Cart: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-col items-center bg-gray-100 m-10 2xl:m-20 rounded-lg shadow-lg">
-      <h1 className="text-3xl font-bold text-gray-800 p-6 border-b border-gray-300 w-full text-center">
+    <div className="container mx-auto py-12 px-4 md:px-12 lg:px-32">
+      <h1 className="text-4xl font-extrabold text-black text-center mb-10">
         Your Cart
       </h1>
+      <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-8">
+        {paginatedCartItems.length > 0 ? (
+          paginatedCartItems.map((item) => (
+            <div className="flex-1">
+              <CartCard key={item.id} cart_items={item} />
+            </div>
+          ))
+        ) : (
+          <p className="col-span-full text-center text-gray-500">Your cart is empty.</p>
+        )}
+      </div>
 
-      {cartItems.length === 0 ? (
-        <p className="text-gray-600 py-8">Your cart is empty.</p>
-      ) : (
-        <ul className="p-6 w-full md:w-4/5 lg:w-3/5">
-          {cartItems.map((item) => (
-            <li
-              key={item.id}
-              className="bg-white border border-gray-300 rounded-lg shadow-md mb-4 p-4 flex items-center gap-4"
-            >
-              <div className="flex-1">
-                <CartCard cart_items={item} />
-              </div>
-            </li>
-          ))}
-        </ul>
-      )}
+      {paginatedCartItems.length > ITEMS_PER_PAGE && (
+        <div className="flex justify-center items-center mt-8 space-x-4">
+        <button
+          onClick={goToPreviousPage}
+          disabled={currentPage === 1}
+          className="min-w-[100px] px-4 py-2 text-white bg-blue-900 rounded hover:bg-blue-600"
+        >
+          Previous
+        </button>
+        <span className="text-gray-600">
+          {currentPage} of {totalPages}
+        </span>
+        <button
+          onClick={goToNextPage}
+          disabled={currentPage === totalPages}
+          className="min-w-[100px] px-4 py-2 text-white bg-blue-900 rounded hover:bg-blue-600"
+        >
+          Next
+        </button>
+      </div>
+      )} 
     </div>
   );
 };

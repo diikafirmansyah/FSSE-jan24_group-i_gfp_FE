@@ -3,8 +3,9 @@ import Link from "next/link";
 import { FaMapMarkerAlt, FaFish } from "react-icons/fa";
 import { AiOutlineTag } from "react-icons/ai";
 import { BiRuler } from "react-icons/bi";
-import { addToCart } from "@/pages/api/carts";
+import { addToCart } from "@/utils/api/carts";
 import { CiCirclePlus } from "react-icons/ci";
+import { toastAlert } from "@/utils/toastAlert";
 
 
 const nationalityMap: { [key: string]: string } = {
@@ -54,10 +55,10 @@ const FishCard: React.FC<Product> = ({
       if(!result.ok){
         throw new Error('fail');
       }
-      alert("success to add product to cart");
+      toastAlert("success", "success to add product to cart");
     } catch (error) {
       console.error("Error adding product to cart:", error);
-      alert("Failed to add product to cart");
+      toastAlert("error", "Failed to add product to cart");
     }
   };
 

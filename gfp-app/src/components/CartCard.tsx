@@ -2,7 +2,9 @@
 import React from "react";
 import { useState } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
-import { API_URL } from "@/config";
+import { API_URL } from "@/utils/config";
+import { toastAlert } from "@/utils/toastAlert";
+import Link from "next/link";
 
 interface Cart {
   id: number;
@@ -11,13 +13,16 @@ interface Cart {
   qty: number;
   price: number;
   description: string;
+  image: string;
+  seller: string;
+  contact_phone: string;
 }
 
-interface CardProps {
+interface CartProps {
   cart_items: Cart;
 }
 
-const CartCard: React.FC<CardProps> = ({ cart_items }) => {
+const CartCard: React.FC<CartProps> = ({ cart_items }) => {
   const [referralCode, setReferralCode] = useState<string>("");
 
   const onChangeReferralCode = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -48,17 +53,17 @@ const CartCard: React.FC<CardProps> = ({ cart_items }) => {
       });
 
       if (!response.ok) {
-        alert("Product submission failed!");
+        toastAlert("error", "Product submission failed!");
         return;
       }
 
       const result = await response;
       console.log("Product added successfully", result);
-      alert("Product added successfully!");
+      toastAlert("success", "Product added successfully!");
       window.location.reload();
     } catch (error) {
       console.error("Error submitting the form", error);
-      alert("An error occurred while adding the product.");
+      toastAlert("error", "An error occurred while adding the product.");
     }
   };
 
@@ -78,45 +83,70 @@ const CartCard: React.FC<CardProps> = ({ cart_items }) => {
       );
 
       if (!response) {
-        alert("Product submission failed!");
+        toastAlert("error", "Product submission failed!");
         return;
       }
 
       const result = await response;
       console.log("Product deleted successfully", result);
-      alert("Deleted successfully!");
+      toastAlert("success", "Deleted successfully!");
       window.location.reload();
     } catch (error) {
       console.error("Error submitting the form", error);
-      alert("An error occurred while adding the product.");
+      toastAlert("error", "An error occurred while adding the product.");
     }
   };
 
   return (
-    <div className="flex flex-col 2xl:flex-row justify-between bg-white p-4 max-w-4xl mx-auto gap-7">
-      <div className="flex flex-col  2xl:flex-row 2xl:items-center 2xl:gap-6 mb-4 2xl:mb-0">
-        <div className="flex flex-col flex-grow">
-          <h2 className="text-2xl font-bold text-gray-800 mb-2">
+    <div className="flex flex-col justify-between bg-white border border-gray-300 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out max-w-4xl mx-auto gap-6">
+      <Link href={`/fish/${cart_items.product_id}`}>
+        {cart_items.image ? (
+          <div className="relative w-full h-60 overflow-hidden rounded-lg">
+            <img
+              src={cart_items.image}
+              alt={cart_items.description}
+              className="w-full h-full object-cover transition-transform duration-300 ease-in-out transform hover:scale-110"
+              />
+          </div>
+        ) : (
+          <div className="w-full h-60 bg-gray-200 flex items-center justify-center text-gray-500">
+              No Image Available
+          </div>
+        )}
+      </Link>
+
+      <div className="flex flex-col flex-grow gap-4">
+        <Link href={`/fish/${cart_items.product_id}`}>
+          <h2 className="text-2xl font-bold text-gray-800">
             {cart_items.description}
           </h2>
-          <p className="text-gray-700 mb-1">
-            <strong className="font-medium">Quantity:</strong>
-            {cart_items.qty}
-          </p>
-          <p className="text-gray-700 mb-2">
-            <strong className="font-medium">Total Price:</strong>{" "}
-            {new Intl.NumberFormat("id-ID", {
-              style: "currency",
-              currency: "IDR",
-            }).format(cart_items.price)}
-          </p>
-        </div>
+        </Link>
+        <p className="text-gray-600">
+          <strong>Seller:{" "}</strong>
+          {cart_items.seller}
+        </p>
+        <p className="text-gray-600">
+          <strong>Contact Phone:{" "}</strong>
+          {cart_items.contact_phone}
+        </p>
+        <p className="text-gray-600">
+          <strong>Quantity:{" "}</strong>
+          {cart_items.qty}
+        </p>
+        <p className="text-gray-700">
+          <strong>Total Price:</strong>{" "}
+          {new Intl.NumberFormat("id-ID", {
+            style: "currency",
+            currency: "IDR",
+          }).format(cart_items.price)}
+        </p>
       </div>
-      <div className="flex flex-col 2xl:flex-row 2xl:items-center gap-2">
-        <div className="flex flex-col 2xl:flex-row 2xl:items-center 2xl:gap-2 mb-4 2xl:mb-0 w-full">
+
+      <div className="flex flex-col justify-between gap-4">
+        <div className="flex flex-col">
           <label
             htmlFor="referral_code"
-            className="text-gray-700 font-medium mb-1 2xl:mb-0"
+            className="text-gray-700 font-medium mb-2"
           >
             Referral Code
           </label>
@@ -126,22 +156,27 @@ const CartCard: React.FC<CardProps> = ({ cart_items }) => {
             type="text"
             value={referralCode}
             placeholder="Input for 20% discount"
+            maxLength={6}
             onChange={onChangeReferralCode}
-            className="bg-gray-200 border-2 border-gray-300 rounded-lg w-full 2xl:w-64 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
           />
         </div>
-        <button
-          onClick={onConfirm}
-          className="px-4 py-2 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
-        >
-          Confirm Purchase
-        </button>
-        <button
-          onClick={handleDelete}
-          className="flex items-center justify-center px-4 py-3 2xl:px-6 2xl:py-6 bg-red-600 rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500"
-        >
-          <FaRegTrashAlt className="text-white text-lg 2xl:text-xl" />
-        </button>
+
+        <div className="flex gap-4">
+          <button
+            onClick={onConfirm}
+            className="w-full px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition focus:outline-none focus:ring-2 focus:ring-green-500"
+          >
+            Confirm Purchase
+          </button>
+
+          <button
+            onClick={handleDelete}
+            className="w-full flex items-center justify-center px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition focus:outline-none focus:ring-2 focus:ring-red-500"
+          >
+            <FaRegTrashAlt className="text-lg" />
+          </button>
+        </div>
       </div>
     </div>
   );

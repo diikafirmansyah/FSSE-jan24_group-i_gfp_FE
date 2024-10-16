@@ -1,4 +1,4 @@
-import { API_URL } from "@/config";
+import { API_URL } from "@/utils/config";
 
 export const addToCart = async (product_id: number, quantity: number): Promise<any> => {
     

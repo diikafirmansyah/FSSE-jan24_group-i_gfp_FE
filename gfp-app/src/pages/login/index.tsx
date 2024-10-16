@@ -2,11 +2,12 @@ import { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useRouter } from "next/router";
-import { API_URL } from "@/config";
+import { API_URL } from "@/utils/config";
 import { IoEyeSharp } from "react-icons/io5";
 import { FaEyeSlash } from "react-icons/fa";
 import { IoIosMail } from "react-icons/io";
 import { GiPadlock } from "react-icons/gi";
+import { toastAlert } from "@/utils/toastAlert";
 
 const Login = () => {
   const [email, setEmail] = useState<string>("");
@@ -52,10 +53,10 @@ const Login = () => {
     const result = await response.json();
     try {
       if (!response.ok) {
-        alert("Login Failed!");
+        toastAlert("error" ,"Login Failed!");
       } else {
         localStorage.setItem('access_token', result.access_token);
-        alert("Login success!");
+        toastAlert("success", "Login Success!");
         router.push('/dashboard');
       }
     } catch (error) {

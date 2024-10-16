@@ -3,7 +3,7 @@ import SearchBar from "@/components/SearchBar";
 import FishCard from "@/components/FishCard";
 import Filter from "@/components/FilterComponent";
 import useAuth from "@/middleware/auth";
-import { API_URL } from "@/config";
+import { API_URL } from "@/utils/config";
 import Loading from "@/components/Loading";
 
 interface Product {
@@ -16,11 +16,12 @@ interface Product {
   location: string;
   created_at: string;
   updated_at: string | null;
-  nationality: string; // Added nationality field
-  size: string; // Added size field
+  nationality: string;
+  size: string;
 }
-
+const ITEMS_PER_PAGE = 9;
 const categories = ["Local", "Import"];
+
 const Seller: React.FC = () => {
   useAuth();
 
@@ -35,12 +36,13 @@ const Seller: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
   useEffect(() => {
-    if(!localStorage.getItem("role")) {
+    if (!localStorage.getItem("role")) {
       window.location.href = "/login";
-    }else{
-      if(localStorage.getItem("role") !== "seller") {
+    } else {
+      if (localStorage.getItem("role") !== "seller") {
         window.location.href = "/dashboard";
       }
     }
@@ -63,7 +65,7 @@ const Seller: React.FC = () => {
         setProducts(result.products || []);
       } catch (error) {
         console.error("Error fetching products:", error);
-      }  finally {
+      } finally {
         setLoading(false);
       }
     };
@@ -97,6 +99,20 @@ const Seller: React.FC = () => {
     return categoryMatch && locationMatch && searchMatch;
   });
 
+  const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
+  const paginatedProducts = filteredProducts.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
+
+  const goToNextPage = () => {
+    setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+  };
+
+  const goToPreviousPage = () => {
+    setCurrentPage((prev) => Math.max(prev - 1, 1));
+  };
+
   if (loading) {
     return (
       <div className="max-w-5xl mx-auto py-12 px-4 flex justify-center items-center h-[calc(100vh-6rem)]">
@@ -117,8 +133,8 @@ const Seller: React.FC = () => {
         </div>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        {filteredProducts.length > 0 ? (
-          filteredProducts.map((product) => (
+        {paginatedProducts.length > 0 ? (
+          paginatedProducts.map((product) => (
             <FishCard
               key={product.id}
               id={product.id}
@@ -128,7 +144,7 @@ const Seller: React.FC = () => {
               category={product.category}
               location={product.location}
               nationality={product.nationality}
-              size={product.size} 
+              size={product.size}
               isSellerPage={true}
             />
           ))
@@ -138,6 +154,28 @@ const Seller: React.FC = () => {
           </p>
         )}
       </div>
+
+      {filteredProducts.length > 9 && (
+        <div className="flex justify-center items-center mt-8 space-x-4">
+          <button
+            onClick={goToPreviousPage}
+            disabled={currentPage === 1}
+            className="min-w-[100px] px-4 py-2 text-white bg-blue-900 rounded hover:bg-blue-600"
+          >
+            Previous
+          </button>
+          <span className="text-gray-600">
+            {currentPage} of {totalPages}
+          </span>
+          <button
+            onClick={goToNextPage}
+            disabled={currentPage === totalPages}
+            className="min-w-[100px] px-4 py-2 text-white bg-blue-900 rounded hover:bg-blue-600"
+          >
+            Next
+          </button>
+        </div>
+      )}
     </div>
   );
 };

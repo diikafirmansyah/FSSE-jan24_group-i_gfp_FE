@@ -2,7 +2,7 @@ import { useState } from "react";
 import Slider from "react-slick";
 import FishCard from "../components/FishCard";
 import { GetStaticProps } from 'next';
-import { API_URL } from "@/config";
+import { API_URL } from "@/utils/config";
 
 interface Product {
   id: number;
@@ -28,9 +28,12 @@ export const getStaticProps: GetStaticProps<{ fishData: Product[] }> = async () 
     const res = await fetch(`${API_URL}/products`);
     const data = await res.json();
 
+    const products = data.products || [];
+    const limitedProducts = products.slice(0, 5);
+
     return {
       props: {
-        fishData: data.products || [],
+        fishData: limitedProducts,
       },
       revalidate: 10,
     };

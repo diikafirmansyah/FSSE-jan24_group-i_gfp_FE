@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import ConfirmationCard from "@/components/ConfirmationCard";
 import { useEffect, useState } from "react";
-import { API_URL } from "@/config";
+import { API_URL } from "@/utils/config";
 import useAuth from "@/middleware/auth";
 import Loading from "@/components/Loading";
 
@@ -10,6 +10,7 @@ interface Confirmation {
   user_id: number;
   buyer: string;
   product_id: number;
+  image: string;
   price: number;
   qty: number;
   description: string;
@@ -18,12 +19,16 @@ interface Confirmation {
   is_confirm: number;
 }
 
+const ITEMS_PER_PAGE = 6;
+const tabs = ["Ongoing", "History"];
+
 const ConfirmPage: NextPage = () => {
   useAuth();
 
+  const [activeTab, setActiveTab] = useState<string>("Ongoing");
   const [confirmations, setConfirmations] = useState<Confirmation[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<any>(null);
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
   useEffect(() => {
     if(!localStorage.getItem("role")) {
@@ -53,7 +58,6 @@ const ConfirmPage: NextPage = () => {
         // console.log(result.confirmations);
       } catch (error) {
         console.error("Error fetching confirmations:", error);
-        setError(error);
       } finally {
         setLoading(false);
       }
@@ -61,6 +65,28 @@ const ConfirmPage: NextPage = () => {
 
     fetchConfirmations();
   }, []);
+
+  const filteredConfirmations = confirmations.filter((item) => {
+    if (activeTab === tabs[0]) {
+      return !item.is_confirm;
+    } else if (activeTab === tabs[1]) {
+      return item.is_confirm;
+    }
+  })
+
+  const totalPages = Math.ceil(filteredConfirmations.length / ITEMS_PER_PAGE);
+  const paginatedConfirmations = filteredConfirmations.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  )
+
+  const goToNextPage = () => {
+    setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+  }
+
+  const goToPreviousPage = () => {
+    setCurrentPage((prev) => Math.max(prev - 1, 1));
+  }
 
   if (loading) {
     return (
@@ -71,9 +97,27 @@ const ConfirmPage: NextPage = () => {
   }
 
   return (
-    <div className="flex justify-center items-center h-screen flex-wrap gap-2">
-      {confirmations.length > 0 ? (
-        confirmations.map((item) => (
+    <div className="container mx-auto py-12 px-4 md:px-8 lg:px-12">
+      {/* Tab Navigation */}
+      <div className="flex justify-center mb-8">
+        <button
+          onClick={() => setActiveTab(tabs[0])}
+          className={`px-4 py-2 ${activeTab === tabs[0] ? "font-bold" : ""}`}
+        >
+          Ongoing
+        </button>
+        <button
+          onClick={() => setActiveTab(tabs[1])}
+          className={`px-4 py-2 ${activeTab === tabs[1] ? "font-bold" : ""}`}
+        >
+          History
+        </button>
+      </div>
+
+      {/* Confirmation Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      {paginatedConfirmations.length > 0 ? (
+        paginatedConfirmations.map((item) => (
           <ConfirmationCard
             key={item.id}
             id={item.id}
@@ -92,6 +136,30 @@ const ConfirmPage: NextPage = () => {
         <p className="col-span-full text-center text-gray-500">
           No confirmations
         </p>
+      )}
+      </div>
+
+      {/* Pagination */}
+      {paginatedConfirmations.length > ITEMS_PER_PAGE && (
+        <div className="flex justify-center items-center mt-8 space-x-4">
+        <button
+          onClick={goToPreviousPage}
+          disabled={currentPage === 1}
+          className="min-w-[100px] px-4 py-2 text-white bg-blue-900 rounded hover:bg-blue-600"
+        >
+          Previous
+        </button>
+        <span className="text-gray-600">
+          {currentPage} of {totalPages}
+        </span>
+        <button
+          onClick={goToNextPage}
+          disabled={currentPage === totalPages}
+          className="min-w-[100px] px-4 py-2 text-white bg-blue-900 rounded hover:bg-blue-600"
+        >
+          Next
+        </button>
+      </div>
       )}
     </div>
   );
