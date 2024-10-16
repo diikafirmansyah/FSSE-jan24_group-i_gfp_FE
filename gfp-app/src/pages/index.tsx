@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Slider from "react-slick";
 import FishCard from "../components/FishCard";
-import { GetStaticProps, NextPage } from 'next';
+import { GetStaticProps } from 'next';
 import { API_URL } from "@/utils/config";
 
 interface Product {
