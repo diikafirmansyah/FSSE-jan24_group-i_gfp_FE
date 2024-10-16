@@ -25,6 +25,7 @@ const nationalityMap: { [key: string]: string } = {
 interface Product {
   id: number;
   user_id: number;
+  seller: string;
   image: string | null;
   price: number;
   qty: number;
@@ -247,16 +248,16 @@ const FishDetail: React.FC = () => {
           </motion.p>
 
           <motion.p
-            className="text-base text-gray-700"
+            className="text-lg text-gray-600"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6, duration: 0.5 }}
           >
-            {product.description}
+            Seller: {product.seller}
           </motion.p>
 
           <motion.p
-            className="text-base text-gray-500"
+            className="text-lg text-gray-600"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.7, duration: 0.5 }}
@@ -264,7 +265,12 @@ const FishDetail: React.FC = () => {
             Quantity available: {product.qty}
           </motion.p>
 
-          <div className="flex items-center space-x-4 mb-6">
+          <motion.div
+            className="flex items-center space-x-4 mb-6"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.8, duration: 0.5 }}
+          >
             <label htmlFor="quantity" className="text-lg text-gray-600">Quantity:</label>
             <input
               id="quantity"
@@ -275,7 +281,7 @@ const FishDetail: React.FC = () => {
               onChange={handleQuantityChange}
               className="text-base text-gray-700 w-20 p-2 border border-gray-300 rounded-lg"
             />
-          </div>
+          </motion.div>
 
           <Button label="Add to Cart" onClick={handleCartClick} />
         </div>
