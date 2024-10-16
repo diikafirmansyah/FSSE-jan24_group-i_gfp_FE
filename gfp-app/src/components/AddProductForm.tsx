@@ -150,6 +150,25 @@ const AddProductForm: React.FC = () => {
         </div>
 
         <div className="flex flex-col">
+          <label
+            htmlFor="fish-name"
+            className="mb-2 font-medium text-gray-700"
+          >
+            Fish Name
+          </label>
+          <input
+            id="fish-name"
+            name="fish-name"
+            onChange={formik.handleChange}
+            value={formik.values.description}
+            className="border border-gray-300 rounded-md p-2 text-black"
+          />
+          {formik.errors.description ? (
+            <div className="text-red-500 mt-1">{formik.errors.description}</div>
+          ) : null}
+        </div>
+
+        <div className="flex flex-col">
           <label htmlFor="size" className="mb-2 font-medium text-gray-700">
             Size
           </label>
@@ -163,25 +182,6 @@ const AddProductForm: React.FC = () => {
           />
           {formik.errors.size ? (
             <div className="text-red-500 mt-1">{formik.errors.size}</div>
-          ) : null}
-        </div>
-
-        <div className="flex flex-col">
-          <label
-            htmlFor="description"
-            className="mb-2 font-medium text-gray-700"
-          >
-            Description
-          </label>
-          <textarea
-            id="description"
-            name="description"
-            onChange={formik.handleChange}
-            value={formik.values.description}
-            className="border border-gray-300 rounded-md p-2 h-32 text-black"
-          />
-          {formik.errors.description ? (
-            <div className="text-red-500 mt-1">{formik.errors.description}</div>
           ) : null}
         </div>
 
