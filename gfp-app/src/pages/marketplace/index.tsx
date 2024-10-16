@@ -140,7 +140,7 @@ const Marketplace: React.FC = () => {
         )}
       </div>
 
-      {filteredProducts.length > 9 && (
+      {filteredProducts.length > ITEMS_PER_PAGE && (
         <div className="flex justify-center items-center mt-8 space-x-4">
           <button
             onClick={goToPreviousPage}
