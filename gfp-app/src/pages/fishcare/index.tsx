@@ -26,7 +26,7 @@ const FishCare: React.FC = () => {
       </header>
 
       {/* Main Content */}
-      <main className="container mx-auto px-4 lg:px-8 py-12">
+      <main className="container mx-auto px-4 lg:px-12 py-12">
         {/* Introduction */}
         <motion.section
           className="mb-12"
@@ -49,7 +49,7 @@ const FishCare: React.FC = () => {
         >
           <h2 className="text-3xl font-semibold text-blue-700 mb-4">1. Proper Tank Setup</h2>
           <div className="flex flex-col lg:flex-row lg:space-x-8">
-            <div className="lg:w-1/2 mb-6 lg:mb-0">
+            <div className="md:w-max lg:w-max mb-6 lg:mb-0">
               <motion.div
                 className="relative rounded-lg overflow-hidden shadow-lg"
                 whileHover={{ scale: 1.05, transition: { duration: 0.3 } }}
@@ -57,7 +57,7 @@ const FishCare: React.FC = () => {
                 <Image
                   src="/assets/tanksetup.jpg"
                   alt="Tank Setup"
-                  width={750}
+                  width={550}
                   height={300}
                   className="object-cover"
                 />
@@ -106,7 +106,7 @@ const FishCare: React.FC = () => {
         >
           <h2 className="text-3xl font-semibold text-blue-700 mb-4">4. Choosing Compatible Tank Mates</h2>
           <div className="flex flex-col lg:flex-row lg:space-x-8">
-            <div className="lg:w-1/2 mb-6 lg:mb-0">
+            <div className="md:w-max lg:w-max mb-6 lg:mb-0">
               <motion.div
                 className="relative rounded-lg overflow-hidden shadow-lg"
                 whileHover={{ scale: 1.05, transition: { duration: 0.3 } }}
@@ -114,7 +114,7 @@ const FishCare: React.FC = () => {
                 <Image
                   src="/assets/tankmates.jpg"
                   alt="Compatible Tank Mates"
-                  width={750}
+                  width={550}
                   height={300}
                   className="object-cover"
                 />
